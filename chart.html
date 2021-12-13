@@ -1,0 +1,290 @@
+<html>
+<head>
+<?php
+require_once 'core/init.php';
+$userlevel = "";
+$user = new User();
+if(!$user->isLoggedIn()){
+  Redirect::to("login.php");
+}else{
+  $resultresult = $user->data();
+  $userlevel = $resultresult->role;
+  if($resultresult->verified == false || $resultresult->superadmin == true){
+    $user->logout();
+    Redirect::to("login.php?error=error");
+  }
+}
+$companyobject = new Company();
+$listcompany = $companyobject->searchCompanyCorporate( $resultresult->corporateID); 
+
+if ($userlevel == "Chief"){
+  $listcompany = $companyobject->searchCompanyCorporate($resultresult->corporateID);  
+
+
+}
+elseif ($userlevel== "Superior"){
+  $listcompany = $companyobject->searchCompanyLeadership($resultresult->userID);  
+
+ 
+}
+// $revenueobject = new Revenue();
+//   // $data = $revenueobject->searchRevenue($resultresult->userID, ,$comp, $year);
+//     $data = $revenueobject->searchRevenueestimate(21,2021,"estimatedrev");
+//     $data2 = $revenueobject->searchRevenueactual(21,2021,"actualrev");
+
+//     // foreach ($data2 as $row) {
+
+//       echo ($data->january);
+//       echo ($data2->january);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Budgeting - DoerHRM</title> 
+  <?php
+  include 'includes/header.php';
+  ?>
+</head>
+<body>
+  <?php include 'includes/topbar.php';?>
+  <div class="d-flex" id="wrapper">
+    <?php include 'includes/navbar.php';?>
+    <center>
+
+  <head>
+    <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {        
+        var chartDiv = document.getElementById('chart_div');
+
+        var data = google.visualization.arrayToDataTable([
+          ['Profit', 'Estimated', 'Actual'],
+          ['Jan', 18000, 20000],
+          ['Feb', 24000, 25000],
+          ['Mar', 30000, 34000],
+          ['Apr', 50000, 60000],
+          ['May', 30000, 45000],
+          ['Jun', 50000, 60000],
+          ['Jul', 50000, 60000],
+          ['Aug', 50000, 60000],
+          ['Sep', 50000, 60000],
+          ['Oct', 50000, 60000],
+          ['Nov', 50000, 60000],
+          ['Dec', 60000, 80000]
+        ]);
+        var classicOptions = {
+          width: 1000,
+          series: {
+            0: {targetAxisIndex: 0},
+          },
+          title: '',
+          vAxes: {
+            // Adds titles to each axis.
+            0: {title: 'Revenue'},
+            
+          }
+        };
+
+        function drawClassicChart() {
+          var classicChart = new google.visualization.ColumnChart(chartDiv);
+          classicChart.draw(data, classicOptions);
+          button.innerText = 'Change to Material';
+          button.onclick = drawMaterialChart;
+        }
+        drawClassicChart();
+    };
+    </script> -->
+     
+        <script>
+          $(document).ready(function(){
+          function monthrevenue(date) {
+
+           var day = new Date(date.getFullYear(), 1);
+           $('#revenueyear').datepicker('update', day);
+           $('#revenueyear').val(day.getFullYear());
+          var comp = document.getElementById("companyrevenue").value; 
+           var alldata = 
+           {
+             comp:comp,
+             year: day.getFullYear(),
+           };
+           console.log(alldata);
+           $.ajax({
+           url:"ajax-getviewrevenue.php",
+           data: alldata,
+           dataType: "json",
+           method: "POST",
+           success:function(data){
+           $("#showrevenueview").html(data); // This is A
+           }
+           });
+           }
+
+           weekpicker = $('#revenueyear');
+           weekpicker.datepicker({
+             autoclose: true,
+             forceParse: false,
+             orientation: 'bottom',
+             minViewMode: "years"
+             }).on("changeDate", function(e) {
+               monthrevenue(e.date);
+         });
+               monthrevenue(new Date);
+          });
+       </script>
+
+    </head>
+    </center>
+          <br>
+          <br>
+          
+
+<!-- revenue page -->
+            <div id="page-content-wrapper">
+            <div class="container-fluid" id="revenue"> 
+            <div class="row my-4">
+            <div class="col">
+                <h4 class="m-0"><i class="fas fa-dollar-sign"></i> Revenue</h4>
+            </div>
+            </div>
+<form class="form-inline">
+     <label for="ccompany"></label>
+              <select class="form-control" style="width:20%; transition: box-shadow .3s;" name="companyrevenue" id="companyrevenue">
+                 <?php foreach($listcompany as $row) 
+                 { ?>
+                  <option value="<?php echo $row->companyID ?>"><?php echo $row->company ?></option>
+                  <?php
+                }
+                ?>
+                    </select>
+                    <script type="text/javascript"> 
+                              $(document).ready(function(){
+                                $(document).on('click', ".saverev1", function(){
+                                 var companyID = document.getElementById("companyrevenue").value; 
+                                 var year = document.getElementById("revenueyear").value; 
+
+                                 { $("#addrevcompany").val(companyID);
+                                 $("#addrevenueyear").val(year);
+                               }
+                             });
+                              });
+                            </script>
+
+                            <script type="text/javascript"> 
+                                      $(document).ready(function(){
+                                        $(document).on('click', ".revhistory", function(){
+                                         var companyID = document.getElementById("companyrevenue").value; 
+                                         var year = document.getElementById("revenueyear").value; 
+
+                                         { $("#addrevcompany").val(companyID);
+                                         $("#addrevenueyear").val(year);
+                                       }
+                                     });
+                                      });
+                                    </script>
+          &nbsp;&nbsp;
+             <div class="col px-2">
+              <input class="form-control" id="revenueyear" style="width:30%; transition: box-shadow .3s;">
+            <!--   <script type="text/javascript"> 
+                        $(document).ready(function(){
+
+                          $(document).on('click', ".saverev1", function(){
+
+                           var companyID = document.getElementById("revenueyear").value; 
+
+                         //   { $("#addrevcompany").val(companyID);
+                         // }
+
+                       });
+                        });
+                      </script> -->
+            </div>
+            <div class="col-xl-3 col-6 text-right">
+              <button type="button" class="btn btn-primary shadow-sm saverev1 " data-toggle="modal" data-backdrop="static" data-target="#addRevenue"><i class="fas fa-plus"></i> Add Revenue</button>
+            </div>
+       
+
+              </form>
+    <br>
+   
+    <script>
+      $(document).ready(function(){
+
+      function getviewrev($year){
+        weekpicker = $('#revenueyear');
+        weekpicker.datepicker({
+            autoclose: true,
+            forceParse: false,
+            orientation: 'bottom',
+            minViewMode: "years"
+        }).on("changeDate", function(e) {
+            monthrevenue(e.date);
+        });
+        monthrevenue(new Date);
+      }
+        
+
+      function monthrevenue(date) {
+
+          var day = new Date(date.getFullYear(), 1);
+          $('#revenueyear').datepicker('update', day);
+          $('#revenueyear').val(day.getFullYear());
+         var comp = document.getElementById("companyrevenue").value; 
+          var alldata = 
+          {
+            comp:comp,
+            year: day.getFullYear(),
+          };
+          console.log(alldata);
+          $.ajax({
+      url:"ajax-getviewrevenue.php",
+      data: alldata,
+      dataType: "json",
+      method: "POST",
+      success:function(data){
+        $("#showrevenueview").html(data); // This is A
+      }
+    });
+     getviewrev();     
+        }});
+      </script>
+    <div id="showrevenueview"></div>
+
+              <!-- graph revenue -->
+
+              <div id="page-content-wrapper">
+           <!--    <div class="container-fluid" id="revenuegraph"> 
+              <div class="row my-4">
+                <div class="col">
+                  <h4 class="m-0"><i class="fa fa-bar-chart"></i> Revenue Graph</h4>
+                </div>
+              </div>
+              
+              
+                <div id="chart_div" style="width: 500px; height: 500px;"></div>
+            
+
+ 
+</div> -->
+<script type="text/javascript">
+    $(document).ready(function(){
+       $("#sidebar-wrapper .active").removeClass("active");
+       $("#budgetrevenue").addClass("active").addClass("disabled");
+       document.getElementById("budgetrevenue").style.backgroundColor = "DeepSkyBlue";
+    });
+  </script>
+
+  <?php include 'includes/footer.php';?>
+  <?php include 'includes/form.php';?>
+
+</div>
+</div>
+  </body>
+</head>
+</html>
+
+
