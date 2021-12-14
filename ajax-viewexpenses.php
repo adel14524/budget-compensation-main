@@ -20,7 +20,7 @@ if(Input::exists()){
   $budgetallocated = escape(Input::get('budgetallocated'));
   $balance = escape(Input::get('balance'));
 
-  // print_r($month);
+  //  
 
   $Expense1object = new Expense();
   $Bonusobject= new Calculation();
@@ -241,10 +241,11 @@ if(Input::exists()){
             $view .="
             <div class='row'>
                     <div class='col-12 text-right'>
-                      <button type='button' class='btn btn-primary shadow-sm addCompExpenses mt-2' data-id='".$row3->budgetSubAllocationID."' data-place='showexpenses".$month."' data-month='".$month."' data-toggle='modal' data-backdrop='static' data-target='#addCompensation1'><i class='fas fa-plus'></i> Add Expenses </button>
+                      <button type='button' class='btn btn-primary shadow-sm addCompExpenses mt-2' data-id='".$row3->budgetSubAllocationID."' data-place='showexpenses".$month."' data-month='".$month."' data-balance='".$balance."' data-budget='".$budgetallocated."' data-toggle='modal' data-backdrop='static' data-target='#addCompensation1'><i class='fas fa-plus'></i> Add Expenses </button>
                     </div>
                   </div>
             </div>
+            
             </div>      
             ";
           }
