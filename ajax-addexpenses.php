@@ -19,7 +19,7 @@ if(Input::exists()){
      $addamountuser= escape(Input::get('addamountuser'));
      $suballocationid= escape(Input::get('suballocationid'));
      $div = escape(Input::get('div'));
-    //  $month = escape(Input::get('month'));
+     $month = escape(Input::get('month'));
      
       $addamountcompany= escape(Input::get('addamountcompany'));
        $addamountcorporate= escape(Input::get('addamountcorporate'));
@@ -65,7 +65,8 @@ if($condition === "Passed"){
 [
    "condition" => $condition,
    "div" => $div,
-  //  "month" => $month
+   "date" => $datecomp,
+   "month" => $month
 
 ];
 }else{
