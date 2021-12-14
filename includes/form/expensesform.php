@@ -9,10 +9,14 @@ $(document).ready(function(){
              var inputValue = $(this).data("id");
              var div = $(this).data("place");
              var month = $(this).data("month");
+             var balance = $(this).data("balance");
+             var budgetallocated = $(this).data("budget");
              { $("#addamount").val(companyID);  
              $("#subid").val(inputValue); 
              $("#div").val(div); 
              $("#month").val(month); 
+             $("#balance").val(balance); 
+             $("#budgetallocated").val(budgetallocated); 
            }
          });
 
@@ -34,6 +38,8 @@ $(document).ready(function(){
        var suballocationid = document.getElementById("subid").value;
        var div = document.getElementById("div").value;
        var month = document.getElementById("month").value;
+       var balance = document.getElementById("balance").value;
+       var budgetallocated = document.getElementById("budgetallocated").value;
 
 
        var alldata = 
@@ -47,7 +53,9 @@ $(document).ready(function(){
      addamountcorporate:addamountcorporate,
      suballocationid:suballocationid,
      div:div,
-     month:month
+     month:month,
+     balance:balance,
+     budgetallocated:budgetallocated
 };
 console.log(alldata);
 $.ajax({
@@ -61,8 +69,7 @@ $.ajax({
     if(data.condition === "Passed"){
       document.getElementById("addexpenses").reset();
       $("#addCompensation1").modal("hide");
-      selectmonthaddexpenses(data.month,data.div); 
-      console.log(data.month);
+      selectmonthaddexpenses(data.month,data.balance,data.budgetallocated,data.amountcomp,data.div); 
     }else{
 
       checkvalidity("datecomperror", "#datecomperror","#datecomp",data.datecomp ); 
@@ -75,51 +82,49 @@ $.ajax({
 });
 });
 
-// function selectviewaddexpenses(date,place) { 
-
-// weekpicker = $('#expensesyear');
-// weekpicker.datepicker({
-//   autoclose: true,
-//   forceParse: false,
-//   orientation: 'bottom',
-//   minViewMode: "years"
-// }).on("changeDate", function(e) {
-//   selectmonthaddexpenses(e.date,place);
-// });
-// selectmonthaddexpenses(new Date, place);
-// }
-function selectmonthaddexpenses(month,place) {
-  // var date = new Date;
-  // var year = date.getFullYear();
-  // var month = date.getMonth()
-// var day = new Date(date.getFullYear(), date.getMonth());
-// console.log(date);
-// console.log(month);
-// $('#expensesyear').datepicker('update', year);
-// $('#expensesyear').val(year);
-var comp = document.getElementById("addamountcompany").value;
-var year = document.getElementById("expensesyear").value;
-var div = place;
-var month = month;
-var alldata = 
-{
-  year: year,
-  month: month,
-  comp:comp,
-  div:div,
-};
-console.log(alldata);
-$.ajax({
-  url:"ajax-viewexpenses.php",
-  data: alldata,
-  dataType: "json",
-  method: "POST",
-  success:function(data){
-    // console.log(data);
-    
-        $("#" + div).html(data); // This is A
-      }
-    });
+function selectmonthaddexpenses(month,balance,budget,amount,place) {
+  var comp = document.getElementById("addamountcompany").value;
+  var year = document.getElementById("expensesyear").value;
+  var div = place;
+  var month = month;
+  var balance = balance - amount;
+  var budgetallocated = budget;
+  var alldata = 
+  {
+    year: year,
+    month: month,
+    comp:comp,
+    div:div,
+    balance:balance,
+    budgetallocated:budgetallocated
+  };
+  var  overviewdata = 
+  {
+    year: year,
+    month: month
+  };
+  console.log(alldata);
+  console.log(overviewdata);
+  $.ajax({
+    url:"ajax-viewexpenses.php",
+    data: alldata,
+    dataType: "json",
+    method: "POST",
+    success:function(data){
+      // console.log(data);
+      $("#" + div).html(data); // This is A
+    }
+  });
+  $.ajax({
+    url:"ajax-viewoverviewexpenses.php",
+    data: overviewdata,
+    dataType: "json",
+    method: "POST",
+    success:function(data1){
+      // console.log(data);
+      $("#showoverviewexpenses" + "#" + div).html(data1); // This is A
+    }
+  });
 }
 function checkvalidity(data1, data2, data3, data4){ 
   document.getElementById(data1).innerHTML = data4;
@@ -158,6 +163,8 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
           <input class="form-control" type="hidden" id="subid" name="subid" value="">
           <input class="form-control" type="hidden" id="div" name="div" value="">
           <input class="form-control" type="hidden" id="month" name="month" value="">
+          <input class="form-control" type="hidden" id="balance" name="balance" value="">
+          <input class="form-control" type="hidden" id="budgetallocated" name="budgetallocated" value="">
 
 
           <div class="form-group">
