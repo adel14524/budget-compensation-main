@@ -20,6 +20,8 @@ if(Input::exists()){
      $suballocationid= escape(Input::get('suballocationid'));
      $div = escape(Input::get('div'));
      $month = escape(Input::get('month'));
+     $balance = escape(Input::get('balance'));
+     $budgetallocated = escape(Input::get('budgetallocated'));
      
       $addamountcompany= escape(Input::get('addamountcompany'));
        $addamountcorporate= escape(Input::get('addamountcorporate'));
@@ -66,7 +68,10 @@ if($condition === "Passed"){
    "condition" => $condition,
    "div" => $div,
    "date" => $datecomp,
-   "month" => $month
+   "month" => $month,
+   "balance" => $balance,
+   "budgetallocated" => $budgetallocated,
+   "amountcomp" => $amountcomp
 
 ];
 }else{
