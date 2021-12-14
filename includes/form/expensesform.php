@@ -8,11 +8,11 @@ $(document).ready(function(){
              var companyID = document.getElementById("addamountcompany").value; 
              var inputValue = $(this).data("id");
              var div = $(this).data("place");
-            //  var month = $(this).data("month");
+             var month = $(this).data("month");
              { $("#addamount").val(companyID);  
              $("#subid").val(inputValue); 
              $("#div").val(div); 
-            //  $("#month").val(month); 
+             $("#month").val(month); 
            }
          });
 
@@ -33,7 +33,7 @@ $(document).ready(function(){
        var addamountcorporate = document.getElementById("addamountcorporate").value;
        var suballocationid = document.getElementById("subid").value;
        var div = document.getElementById("div").value;
-      //  var month = document.getElementById("month").value;
+       var month = document.getElementById("month").value;
 
 
        var alldata = 
@@ -47,7 +47,7 @@ $(document).ready(function(){
      addamountcorporate:addamountcorporate,
      suballocationid:suballocationid,
      div:div,
-    //  month:month
+     month:month
 };
 console.log(alldata);
 $.ajax({
@@ -61,7 +61,8 @@ $.ajax({
     if(data.condition === "Passed"){
       document.getElementById("addexpenses").reset();
       $("#addCompensation1").modal("hide");
-      selectviewaddexpenses(data.date,data.div); 
+      selectmonthaddexpenses(data.month,data.div); 
+      console.log(data.month);
     }else{
 
       checkvalidity("datecomperror", "#datecomperror","#datecomp",data.datecomp ); 
@@ -74,30 +75,32 @@ $.ajax({
 });
 });
 
-function selectviewaddexpenses(date,place) { 
+// function selectviewaddexpenses(date,place) { 
 
-weekpicker = $('#expensesyear');
-weekpicker.datepicker({
-  autoclose: true,
-  forceParse: false,
-  orientation: 'bottom',
-  minViewMode: "years"
-}).on("changeDate", function(e) {
-  selectmonthaddexpenses(e.date,place);
-});
-selectmonthaddexpenses(new Date, place);
-}
-function selectmonthaddexpenses(date,place) {
-  var date = new Date;
-  var year = date.getFullYear();
-  var month = date.getMonth()
+// weekpicker = $('#expensesyear');
+// weekpicker.datepicker({
+//   autoclose: true,
+//   forceParse: false,
+//   orientation: 'bottom',
+//   minViewMode: "years"
+// }).on("changeDate", function(e) {
+//   selectmonthaddexpenses(e.date,place);
+// });
+// selectmonthaddexpenses(new Date, place);
+// }
+function selectmonthaddexpenses(month,place) {
+  // var date = new Date;
+  // var year = date.getFullYear();
+  // var month = date.getMonth()
 // var day = new Date(date.getFullYear(), date.getMonth());
-console.log(year);
-console.log(month);
+// console.log(date);
+// console.log(month);
 // $('#expensesyear').datepicker('update', year);
 // $('#expensesyear').val(year);
 var comp = document.getElementById("addamountcompany").value;
+var year = document.getElementById("expensesyear").value;
 var div = place;
+var month = month;
 var alldata = 
 {
   year: year,
@@ -154,7 +157,7 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
           <input class="form-control" type="hidden" id="addamount" name="addamount" value="">
           <input class="form-control" type="hidden" id="subid" name="subid" value="">
           <input class="form-control" type="hidden" id="div" name="div" value="">
-          <!-- <input class="form-control" type="hidden" id="month" name="month" value=""> -->
+          <input class="form-control" type="hidden" id="month" name="month" value="">
 
 
           <div class="form-group">
