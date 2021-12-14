@@ -20,6 +20,8 @@ if(Input::exists()){
   $budgetallocated = escape(Input::get('budgetallocated'));
   $balance = escape(Input::get('balance'));
 
+  // print_r($month);
+
   $Expense1object = new Expense();
   $Bonusobject= new Calculation();
 
