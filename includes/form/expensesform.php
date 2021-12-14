@@ -85,7 +85,7 @@ weekpicker.datepicker({
 }).on("changeDate", function(e) {
   selectmonthaddexpenses(e.date,place);
 });
-selectmonthaddexpenses(date,place);
+selectmonthaddexpenses(new Date, place);
 }
 function selectmonthaddexpenses(date,place) {
   var date = new Date;
