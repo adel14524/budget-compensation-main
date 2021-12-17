@@ -366,6 +366,8 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
       var updateamount = document.getElementById("updamount").value;
       var updatedesc = document.getElementById("upddesc").value;
       var updatedate = document.getElementById("upddate").value;
+      var comp = document.getElementById("addamountcompany").value;
+      var year = document.getElementById("expensesyear").value;
 
       var alldata = 
       {
@@ -376,8 +378,11 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
         month:month,
         div:div,
         balance:balance,
-        budget:budgetallocated
+        budget:budgetallocated,
+        comp:comp,
+        year:year
       };
+      console.log(alldata);
       $.ajax({
         url: "ajax-updateexpenses.php",
         type: "POST",
@@ -402,7 +407,7 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
 
   function selectmonthexpenses(month,place,balance,budget) {
     var month = month;
-    var div = div;
+    var div = place;
     var budgetallocated = budget;
     var balance = balance;
     var comp = document.getElementById("addamountcompany").value;
