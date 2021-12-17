@@ -202,27 +202,19 @@ if(Input::exists()){
 
           $view .="
           <div class='card my-2'>
-          <div class='card-body pb-3' style='height:500px;overflow-y:scroll;'>
+          <div class='card-body pb-3' style='height:300px;overflow-y:scroll;'>
           ";
 
           foreach ($databonus as $rowbonus){
             $view .= "
             <div class='row'>
-            <div class='col-7 text-left'>
+            <div class='col-8 text-left'>
               <h6><b>Bonus</b></h6>
               <small class='text-secondary'>".$rowbonus->date."</small>
             </div>
 
-            <div class='col-3 text-center'>
+            <div class='col-4 text-center'>
               <h4><b>RM ".$rowbonus->Total_Bonus."</b></h4>
-            </div>
-
-            <div class='col-2 text-right'>
-              <button type='button' class='btn btn-sm btn-white dropdown-toggle-split viewkroption' data-toggle='dropdown'><i class='fas fa-ellipsis-v'></i></button>
-              <div class='dropdown-menu dropdown-menu-right'>
-                <a href='#' class='dropdown-item updateExpenses' data-toggle='modal' data-backdrop='static' data-target='#updateExpenses' data-id=''><i class='far fa-edit'></i> Update </a>
-                <a href='#' class='dropdown-item deleteExpenses' data-toggle='modal' data-backdrop='static' data-target='#deleteExpense' data-id=''><i class='far fa-trash-alt'></i> Delete</a>
-              </div>
             </div>
           </div>
           <p><div class='dropdown-divider border-2'></div></p>
@@ -273,7 +265,7 @@ if(Input::exists()){
 
               $view .="
               <div class='card my-2'>
-                <div class='card-body pb-3' style='height:350px;overflow-y:scroll;'>
+                <div class='card-body pb-3' style='height:300px;overflow-y:scroll;'>
               ";
               foreach ($dataexpenses as $row4){
                 $view .= "
