@@ -19,8 +19,8 @@ if(Input::exists()){
   $month = escape(Input::get('month'));
   $budgetallocated = escape(Input::get('budgetallocated'));
   $balance = escape(Input::get('balance'));
-
-  //  
+  $othersallocation=0;
+  $bonusallocation=0;
 
   $Expense1object = new Expense();
   $Bonusobject= new Calculation();
@@ -84,6 +84,72 @@ if(Input::exists()){
         }
       }
     return $totalbonus;
+  }
+
+  function progressbar($month,$comp,$year){
+    $mainallocationobject1 = new Mainallocation();
+    $data1 = $mainallocationobject1->searchmain($comp,$year);
+    $suballocationobject1 = new Suballocation();
+    $expensesobject = new Expense();
+    $bonusallocation=0;
+    $othersallocation=0;
+
+    if ($data1) {
+      $amountbonus=0;
+      foreach ($data1 as $row) {
+        $data3 = $suballocationobject1->searchsub($row->budgetMainAllocationID);
+        $amountsub=0;
+        if ($row->categoryName=="Bonus") {
+          $bonusobject = new Calculation();
+          $bonusresult=$bonusobject->searchbonusmainid($row->budgetMainAllocationID);
+          $bonusallocation=$row->budgetAllocated;
+
+          if($bonusresult){
+            foreach ($bonusresult as $row1) {
+              $expmonth = date("m",strtotime($row1->date));
+              if($expmonth == $month){
+                $amountbonus+=$row1->Total_Bonus;
+              }
+            }
+          }
+        }
+        elseif ($row->categoryName=="Others") {
+          foreach ($data3 as $row3) {
+            $expensesresult = $expensesobject->searchbudgetsubid($row3->budgetSubAllocationID);
+            if($expensesresult){
+              foreach ($expensesresult as $row) {
+                $expmonth = date("m",strtotime($row->date));
+
+                if ($expmonth == $month) {
+                  $amountsub+=$row->amount;
+                }
+              }
+            }
+          }
+        }
+        if ($data3) {
+          foreach ($data3 as $row5) {
+            $othersallocation+=$row5->budgetAllocated;
+          }
+        }
+      }
+    }
+
+    $actual = $amountbonus + $amountsub;
+    $budgetallocation = round(($othersallocation + $bonusallocation)/12);
+    $percent = round(($actual/$budgetallocation)*100);
+
+    if ($percent == 100 ) {
+      $expensesprogress = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-danger' style='width:".$percent."%;'><b>".$percent."%</b></div></div>";
+    }elseif ($percent >= 80 && $percent <= 99) {
+      $expensesprogress = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-warning' style='width:".$percent."%;' ><b>".$percent."%</b></div></div>";
+    }elseif ($percent >= 0 && $percent <= 79) {
+      $expensesprogress = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-info' style='width:".$percent."%;'><b>".$percent."%</b></div></div>";
+    }elseif ($percent > 100) {
+      $expensesprogress = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-danger' style='width:".$percent."%;'><b>".$percent."%</b></div></div>";
+    }
+
+    return $expensesprogress;
   }
 
   $mainallocationobject = new Mainallocation();
@@ -224,8 +290,8 @@ if(Input::exists()){
                 <div class='col-2 text-right'>
                   <button type='button' class='btn btn-sm btn-white dropdown-toggle-split viewkroption' data-toggle='dropdown'><i class='fas fa-ellipsis-v'></i></button>
                   <div class='dropdown-menu dropdown-menu-right'>
-                    <a href='#' class='dropdown-item updateExpenses' data-toggle='modal' data-backdrop='static' data-target='#updateExpenses' data-id=''><i class='far fa-edit'></i> Update </a>
-                    <a href='#' class='dropdown-item deleteExpenses' data-toggle='modal' data-backdrop='static' data-target='#deleteExpense' data-id=''><i class='far fa-trash-alt'></i> Delete</a>
+                    <a href='#' class='dropdown-item updateExpenses' data-toggle='modal' data-backdrop='static' data-target='#updateExpenses' data-id='".$row4->budgetExpensesID."' data-month='".$month."' data-place='showexpenses".$month."' data-balance='".$balance."' data-budget='".$budgetallocated."'><i class='far fa-edit'></i> Update </a>
+                    <a href='#' class='dropdown-item deleteExpenses' data-toggle='modal' data-backdrop='static' data-target='#deleteExpense' data-id='".$row4->budgetExpensesID."' data-month='".$month."' data-place='showexpenses".$month."' data-balance='".$balance."' data-budget='".$budgetallocated."' data-amount='".$row4->amount."'><i class='far fa-trash-alt'></i> Delete</a>
                   </div>
                 </div>
                 </div>
@@ -245,7 +311,7 @@ if(Input::exists()){
                     </div>
                   </div>
             </div>
-            
+
             </div>      
             ";
           }
@@ -302,7 +368,17 @@ if(Input::exists()){
           </div>
           </div>
           </div>";
-      
+
+    $progress = progressbar($month,$comp,$year);
+
+    $array = [
+      "view" => $view,
+      "grandtotal" => $grand,
+      "balance" => $balance,
+      "month" => $month,
+      "progressvalue" => $progress,
+      "budgetallocated" => $budgetallocated
+    ];   
   }
   else{
     $view.="
@@ -312,8 +388,12 @@ if(Input::exists()){
       </div>
     </div>
     ";
+
+    $array = [
+      "view" => $view
+    ];
   }
 
-echo json_encode($view);
+echo json_encode($array);
 }
 ?>
