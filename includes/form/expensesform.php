@@ -98,13 +98,7 @@ function selectmonthaddexpenses(month,balance,budget,amount,place) {
     balance:balance,
     budgetallocated:budgetallocated
   };
-  var  overviewdata = 
-  {
-    year: year,
-    month: month
-  };
   console.log(alldata);
-  console.log(overviewdata);
   $.ajax({
     url:"ajax-viewexpenses.php",
     data: alldata,
@@ -112,17 +106,13 @@ function selectmonthaddexpenses(month,balance,budget,amount,place) {
     method: "POST",
     success:function(data){
       // console.log(data);
-      $("#" + div).html(data); // This is A
-    }
-  });
-  $.ajax({
-    url:"ajax-viewoverviewexpenses.php",
-    data: overviewdata,
-    dataType: "json",
-    method: "POST",
-    success:function(data1){
-      // console.log(data);
-      $("#showoverviewexpenses" + "#" + div).html(data1); // This is A
+      $("#" + div).html(data.view); // This is A
+      var actualid = document.getElementById("actual" + data.month);
+      var balanceid = document.getElementById("balance" + data.month);
+      var progressid = document.getElementById("expensesprogress" + data.month);
+      actualid.innerHTML = data.grandtotal;
+      balanceid.innerHTML = data.balance;
+      progressid.innerHTML = data.progressvalue;
     }
   });
 }
@@ -210,14 +200,40 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
 
   $(document).on('click', ".deleteExpenses", function(){
     var budgetExpensesID = $(this).data('id');
-    $("#deleteexpensesid").val(budgetExpensesID);
+    var delmonth = $(this).data('month');
+    var deldiv = $(this).data('place');
+    var delbalance = $(this).data('balance');
+    var delbudgetallocated = $(this).data('budget');
+    var delamount = $(this).data('amount');
+    {
+      $("#deleteexpensesid").val(budgetExpensesID);
+      $("#deletemonth").val(delmonth);
+      $("#deletediv").val(deldiv);
+      $("#deletebalance").val(delbalance);
+      $("#deletebudget").val(delbudgetallocated);
+      $("#deleteamount").val(delamount);
+    }
+    
   });
 
   form.on('submit', function(e){
     e.preventDefault();
     e.stopPropagation();
     var deleteexpensesid = document.getElementById("deleteexpensesid").value;
-    var alldata = "deleteexpensesid="+deleteexpensesid;
+    var delmonth = document.getElementById("deletemonth").value;
+    var deldiv = document.getElementById("deletediv").value;
+    var delbalance = document.getElementById("deletebalance").value;
+    var delbudgetallocated = document.getElementById("deletebudget").value;
+    var delamount = document.getElementById("deleteamount").value;
+    var alldata = 
+    {
+      deleteexpensesid:deleteexpensesid,
+      deletemonth:delmonth,
+      deletediv:deldiv,
+      deletebalance:delbalance,
+      deletebudget:delbudgetallocated,
+      deleteamount:delamount,
+    } 
     console.log(alldata);
     $.ajax({
       url: "ajax-deleteexpenses.php?lang=<?php echo $extlg;?>",
@@ -228,7 +244,7 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
         console.log(obj);
         if(obj.condition === "Passed"){
           $("#deleteExpense").modal("hide"); 
-          selectviewexpenses();
+          selectdeletemonthexpenses(obj.deletemonth,obj.deletediv,obj.amountdelete,obj.deletebalance,obj.budgetallocated);
         }
       }
     });
@@ -238,39 +254,39 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
     document.getElementById("admindeleteuserform").reset(); 
   });
 });  
- function selectviewexpenses(date) {
 
-   weekpicker = $('#expensesyear');
-   weekpicker.datepicker({
-     autoclose: true,
-     forceParse: false,
-     orientation: 'bottom',
-     minViewMode: "months"
-   }).on("changeDate", function(e) {
-     selectmonthexpenses(e.date);
-   });
-   selectmonthexpenses(new Date);
- }
- function selectmonthexpenses(date) {
-   var day = new Date(date.getFullYear(), 1);
-   $('#expensesyear').datepicker('update', day);
-   $('#expensesyear').val(day.getFullYear());
+ function selectdeletemonthexpenses(month,place,amount,balance,budget) {
+   var deletemonth = month;
+   var year = document.getElementById("expensesyear").value;
    var comp = document.getElementById("addamountcompany").value;
+   var balance = Number(balance) + Number(amount);
+   var budgetallocated = budget;
+   var div = place;
    var alldata = 
    {
-     year: day.getFullYear(),
+     year:year,
      comp:comp,
+     month:deletemonth,
+     balance:balance,
+     budgetallocated:budgetallocated
    };
+   console.log(alldata);
    $.ajax({
-     url:"ajax-getviewexpenses.php",
+     url:"ajax-viewexpenses.php",
      data: alldata,
      dataType: "json",
      method: "POST",
      success:function(data){
        console.log(data);
-           $("#showexpensesview").html(data); // This is A
-         }
-       });
+       $("#" + div).html(data.view); // This is A
+       var actualid = document.getElementById("actual" + data.month);
+       var balanceid = document.getElementById("balance" + data.month);
+       var progressid = document.getElementById("expensesprogress" + data.month);
+       actualid.innerHTML = data.grandtotal;
+       balanceid.innerHTML = data.balance;
+       progressid.innerHTML = data.progressvalue;
+     }
+   });
  }
 </script>
 
@@ -284,6 +300,11 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
       </div>
       <form id="deleteexpensesform">
         <input type="hidden" class="form-control" name="deleteexpensesid" id="deleteexpensesid">
+        <input type="hidden" class="form-control" name="deletemonth" id="deletemonth">
+        <input type="hidden" class="form-control" name="deletediv" id="deletediv">
+        <input type="hidden" class="form-control" name="deletebalance" id="deletebalance">
+        <input type="hidden" class="form-control" name="deletebudget" id="deletebudget">
+        <input type="hidden" class="form-control" name="deleteamount" id="deleteamount">
         <div class="modal-body"> Are you sure you want to delete this? </div>
         <div class="modal-footer">
           <button name="delete" value="delete" type="delete" class="btn btn-primary shadow-sm">Delete</button>
@@ -302,16 +323,32 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
 
     $(document).on('click', ".updateExpenses", function(){
       var budgetExpensesID = $(this).data('id');
+      var month = $(this).data('month');
+      var div = $(this).data('place');
+      var balance = $(this).data('balance');
+      var budgetallocated = $(this).data('budget');
+      var alldata = 
+      {
+        budgetExpensesID:budgetExpensesID,
+        month:month,
+        div:div,
+        balance:balance,
+        budgetallocated:budgetallocated,
+      }
       $.ajax({
         url: "ajax-getexpenses.php?lang=<?php echo $extlg;?>",
         type: "POST",
-        data: {budgetExpensesID:budgetExpensesID},
+        data: alldata,
         dataType:"json",
         success:function(data){
           $("#updateexpensesid").val(data.id);
           $("#upddate").val(data.date);
           $("#updamount").val(data.amount);
           $("#upddesc").val(data.description);
+          $("#updmonth").val(data.month);
+          $("#upddiv").val(data.div);
+          $("#updbalance").val(data.balance);
+          $("#updbudget").val(data.budgetallocated);
         }
       });
     });
@@ -322,6 +359,10 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
       document.getElementById("submitupdate").innerHTML = "<span class='spinner-border spinner-border-sm'></span> Updating";
       document.getElementById("submitupdate").disabled = true; 
       var budgetExpensesID = document.getElementById("updateexpensesid").value;
+      var month = document.getElementById("updmonth").value;
+      var div = document.getElementById("upddiv").value;
+      var balance = document.getElementById("updbalance").value;
+      var budgetallocated = document.getElementById("updbudget").value;
       var updateamount = document.getElementById("updamount").value;
       var updatedesc = document.getElementById("upddesc").value;
       var updatedate = document.getElementById("upddate").value;
@@ -332,7 +373,10 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
         updateamount1:updateamount,
         updatedescription1:updatedesc,
         updatedate1:updatedate,
-
+        month:month,
+        div:div,
+        balance:balance,
+        budget:budgetallocated
       };
       $.ajax({
         url: "ajax-updateexpenses.php",
@@ -344,7 +388,7 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
           document.getElementById("submitupdate").disabled = false; // Refer to 8)
           if(data.condition === "Passed"){
             $("#updateExpenses").modal("hide");
-            selectviewexpenses();
+            selectmonthexpenses(data.month,data.div,data.balance,data.budgetallocated);
           
           }else{
             checkvalidity("upddateerror","#upddateerror", "#upddate", data.upddate);/*data.update keno guna dkt ajax belah kanan*/
@@ -355,42 +399,41 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
       });
     });
   });
-  function selectviewexpenses(date) {
 
-    weekpicker = $('#expensesyear');
-    weekpicker.datepicker({
-      autoclose: true,
-      forceParse: false,
-      orientation: 'bottom',
-      minViewMode: "months"
-    }).on("changeDate", function(e) {
-      selectmonthexpenses(e.date);
-    });
-    selectmonthexpenses(new Date);
-  }
-  function selectmonthexpenses(date) {
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var day = new Date(date.getFullYear(), date.getMonth());
-    $('#expensesyear').datepicker('update', day);
-    $('#expensesyear').val(months[day.getMonth()]+' '+day.getFullYear());
+  function selectmonthexpenses(month,place,balance,budget) {
+    var month = month;
+    var div = div;
+    var budgetallocated = budget;
+    var balance = balance;
     var comp = document.getElementById("addamountcompany").value;
+    var year = document.getElementById("expensesyear").value;
     var alldata = 
     {
-      month: day.getMonth()+1,
-      year: day.getFullYear(),
+      month: month,
+      year: year,
       comp:comp,
+      div:div,
+      budgetallocated:budgetallocated,
+      balance:balance
     };
     console.log(alldata);
     $.ajax({
-      url:"ajax-getviewexpenses.php",
+      url:"ajax-viewexpenses.php",
       data: alldata,
       dataType: "json",
       method: "POST",
       success:function(data){
         console.log(data);
-            $("#showexpensesview").html(data); // This is A
-          }
-        });
+        $("#" + div).html(data.view); // This is A
+        newbalance = Number(data.budgetallocated) - Number(data.grandtotal);
+        var actualid = document.getElementById("actual" + data.month);
+        var balanceid = document.getElementById("balance" + data.month);
+        var progressid = document.getElementById("expensesprogress" + data.month);
+        actualid.innerHTML = data.grandtotal;
+        balanceid.innerHTML = newbalance;
+        progressid.innerHTML = data.progressvalue;
+      }
+    });
   }
   function checkvalidity(data1, data2, data3, data4){
     document.getElementById(data1).innerHTML = data4;
@@ -429,6 +472,10 @@ function clearform(data1, data2, data3,data4, data5){ //clear the error whenever
             </div>
             <br>
             <input type="hidden" class="form-control" name="updateexpensesid" id="updateexpensesid">
+            <input type="hidden" class="form-control" name="updmonth" id="updmonth">
+            <input type="hidden" class="form-control" name="upddiv" id="upddiv">
+            <input type="hidden" class="form-control" name="updbalance" id="updbalance">
+            <input type="hidden" class="form-control" name="updbudget" id="updbudget">
             <div class="modal-body">
 
              <div class="form-group">
