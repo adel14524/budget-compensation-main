@@ -205,11 +205,11 @@ $percent12=round(($actual12/$budgetallocation)*100);
 
 
 if ($percent6 == 100 ) {
-    $expensesprogress = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-danger' style='width:".$percent6."%;'><b>".$percent6."%</b></div></div>";
+    $expensesprogress6 = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-danger' style='width:".$percent6."%;'><b>".$percent6."%</b></div></div>";
     }elseif ($percent6 >= 80 && $percent6 <= 99) {
-      $expensesprogress = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-warning' style='width:".$percent6."%;' ><b>".$percent6."%</b></div></div>";
+      $expensesprogress6 = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-warning' style='width:".$percent6."%;' ><b>".$percent6."%</b></div></div>";
     }elseif ($percent6>= 0 && $percent6 <= 79) {
-      $expensesprogress = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-info' style='width:".$percent6."%;'><b>".$percent6."%</b></div></div>";
+      $expensesprogress6 = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-info' style='width:".$percent6."%;'><b>".$percent6."%</b></div></div>";
     }elseif ($percent6 > 100) {
          $expensesprogress6 = "<div class='progress' style='width:80%; margin:0 auto;'><div class='progress-bar bg-danger' style='width:".$percent6."%;'><b>".$percent6."%</b></div></div>";
         }
@@ -357,7 +357,7 @@ $view.="
             dataType: 'json',
             method: 'POST',
             success:function(data){
-  $('#' + div).html(data);
+  $('#' + div).html(data.view);
 }
 });
         });
@@ -387,9 +387,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>January</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual1."</div>
-        <div class='col'>".$balance1."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress1."</div>
+        <div class='col' id='actual1'>".$actual1."</div>
+        <div class='col' id='balance1'>".$balance1."</div>
+        <div class='col' id='expensesprogress1' style='text-align:center; vertical-align:middle;'>".$expensesprogress1."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' id='janexpensescol' type='button' data-toggle='collapse' data-target='#janexpenses' aria-expanded='false' data-month='1' data-place='showexpenses1' data-balance='".$balance1."'>
             <i class='fas fa-caret-down'></i>
@@ -411,9 +411,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>February</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual2."</div>
-        <div class='col'>".$balance2."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress2."</div>
+        <div class='col' id='actual2'>".$actual2."</div>
+        <div class='col' id='balance2'>".$balance2."</div>
+        <div class='col' id='expensesprogress2' style='text-align:center; vertical-align:middle;'>".$expensesprogress2."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#febexpenses' aria-expanded='false' data-month='2' data-place='showexpenses2' data-balance='".$balance2."'>
             <i class='fas fa-caret-down'></i>
@@ -434,9 +434,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>March</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual3."</div>
-        <div class='col'>".$balance3."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress3."</div>
+        <div class='col' id='actual3'>".$actual3."</div>
+        <div class='col' id='balance3'>".$balance3."</div>
+        <div class='col' id='expensesprogress3' style='text-align:center; vertical-align:middle;'>".$expensesprogress3."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#marexpenses' aria-expanded='false'  data-month='3' data-place='showexpenses3' data-balance='".$balance3."'>
             <i class='fas fa-caret-down'></i>
@@ -457,9 +457,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>April</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual4."</div>
-        <div class='col'>".$balance4."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress4."</div>
+        <div class='col' id='actual4'>".$actual4."</div>
+        <div class='col' id='balance4'>".$balance4."</div>
+        <div class='col' id='expensesprogress4' style='text-align:center; vertical-align:middle;'>".$expensesprogress4."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#aprexpenses' aria-expanded='false' data-month='4' data-place='showexpenses4' data-balance='".$balance4."'>
             <i class='fas fa-caret-down'></i>
@@ -480,9 +480,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>May</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual5."</div>
-        <div class='col'>".$balance5."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress5."</div>
+        <div class='col' id='actual5'>".$actual5."</div>
+        <div class='col' id='balance5'>".$balance5."</div>
+        <div class='col' id='expensesprogress5' style='text-align:center; vertical-align:middle;'>".$expensesprogress5."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#mayexpenses' aria-expanded='false' data-month='5' data-place='showexpenses5' data-balance='".$balance5."'>
             <i class='fas fa-caret-down'></i>
@@ -503,9 +503,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>June</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual6."</div>
-        <div class='col'>".$balance6."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress."</div>
+        <div class='col' id='actual6'>".$actual6."</div>
+        <div class='col' id='balance6'>".$balance6."</div>
+        <div class='col' id='expensesprogress6' style='text-align:center; vertical-align:middle;'>".$expensesprogress6."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#junexpenses' aria-expanded='false' data-month='6' data-place='showexpenses6' data-balance='".$balance6."'>
             <i class='fas fa-caret-down'></i>
@@ -526,9 +526,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>July</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual7."</div>
-        <div class='col'>".$balance7."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress7."</div>
+        <div class='col' id='actual7'>".$actual7."</div>
+        <div class='col' id='balance7'>".$balance7."</div>
+        <div class='col' id='expensesprogress7' style='text-align:center; vertical-align:middle;'>".$expensesprogress7."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#julyexpenses' aria-expanded='false' data-month='7' data-place='showexpenses7' data-balance='".$balance7."'>
             <i class='fas fa-caret-down'></i>
@@ -549,9 +549,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>August</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual8."</div>
-        <div class='col'>".$balance8."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress8."</div>
+        <div class='col' id='actual8'>".$actual8."</div>
+        <div class='col' id='balance8'>".$balance8."</div>
+        <div class='col' id='expensesprogress8' style='text-align:center; vertical-align:middle;'>".$expensesprogress8."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#augexpenses' aria-expanded='false'data-month='8' data-place='showexpenses8' data-balance='".$balance8."'>
             <i class='fas fa-caret-down'></i>
@@ -572,9 +572,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>September</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual9."</div>
-        <div class='col'>".$balance9."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress9."</div>
+        <div class='col' id='actual9'>".$actual9."</div>
+        <div class='col' id='balance9'>".$balance9."</div>
+        <div class='col' id='expensesprogress9' style='text-align:center; vertical-align:middle;'>".$expensesprogress9."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#septexpenses' aria-expanded='false' data-month='9' data-place='showexpenses9' data-balance='".$balance9."'>
             <i class='fas fa-caret-down'></i>
@@ -595,9 +595,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>October</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual10."</div>
-        <div class='col'>".$balance10."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress10."</div>
+        <div class='col' id='actual10'>".$actual10."</div>
+        <div class='col' id='balance10'>".$balance10."</div>
+        <div class='col' id='expensesprogress10' style='text-align:center; vertical-align:middle;'>".$expensesprogress10."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#octexpenses' aria-expanded='false' data-month='10' data-place='showexpenses10' data-balance='".$balance10."'>
             <i class='fas fa-caret-down'></i>
@@ -618,9 +618,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>November</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual11."</div>
-        <div class='col'>".$balance11."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress11."</div>
+        <div class='col' id='actual11'>".$actual11."</div>
+        <div class='col' id='balance11'>".$balance11."</div>
+        <div class='col' id='expensesprogress11' style='text-align:center; vertical-align:middle;'>".$expensesprogress11."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#novexpenses' aria-expanded='false' data-month='11' data-place='showexpenses11' data-balance='".$balance11."'>
             <i class='fas fa-caret-down'></i>
@@ -641,9 +641,9 @@ $view.="
       <div class='row'>
         <div class='col'><b>December</b></div>
         <div class='col'>".$budgetallocation."</div>
-        <div class='col'>".$actual12."</div>
-        <div class='col'>".$balance12."</div>
-        <div class='col' style='text-align:center; vertical-align:middle;'>".$expensesprogress12."</div>
+        <div class='col' id='actual12'>".$actual12."</div>
+        <div class='col' id='balance12'>".$balance12."</div>
+        <div class='col' id='expensesprogress12' style='text-align:center; vertical-align:middle;'>".$expensesprogress12."</div>
         <div class='col'>
           <button class='btn btn-sm btn-link collapsed viewmore' type='button' data-toggle='collapse' data-target='#decexpenses' aria-expanded='false' data-month='12' data-place='showexpenses12' data-balance='".$balance12."'>
             <i class='fas fa-caret-down'></i>
@@ -670,7 +670,12 @@ $view.="
         $(this).parent().addClass('zeroPadding');
       });
     </script>
-";
+  ";
+
+  $view.="
+  
+  ";
+
 }
 else{
   $view.= 
