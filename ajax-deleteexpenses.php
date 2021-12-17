@@ -14,13 +14,23 @@ if(!$user->isLoggedIn()){
 if(Input::exists()){
      
 $budgetExpensesID = escape(Input::get('deleteexpensesid'));
+$month = escape(Input::get('deletemonth'));
+$div = escape(Input::get('deletediv'));
+$balance = escape(Input::get('deletebalance'));
+$budget = escape(Input::get('deletebudget'));
+$amount = escape(Input::get('deleteamount'));
 $expensesobject = new Expense();
 $expensesobject->deleteexpenses1($budgetExpensesID);
 
 $array = 
 [
  "condition" => "Passed",
+ "deletemonth" => $month,
+ "deletediv" => $div,
+ "amountdelete" => $amount,
  "budgetExpensesID" => $budgetExpensesID,
+ "deletebalance" => $balance,
+ "budgetallocated" => $budget,
 ];
 echo json_encode($array); 
 }
