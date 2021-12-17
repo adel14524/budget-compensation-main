@@ -19,6 +19,10 @@ if(Input::exists()){
       $upddate= escape(Input::get('updatedate1'));
       $updamount = escape(Input::get('updateamount1'));
       $upddesc = escape(Input::get('updatedescription1'));
+      $updmonth = escape(Input::get('month'));
+      $upddiv = escape(Input::get('div'));
+      $updbalance = escape(Input::get('balance'));
+      $updbudget = escape(Input::get('budget'));
  
 
       function exists($data){ 
@@ -56,6 +60,11 @@ if($condition === "Passed"){
    $array = 
 [
    "condition" => $condition,
+   "amount" =>$updamount,
+   "month" => $updmonth,
+   "div" => $upddiv,
+   "balance" => $updbalance,
+   "budgetallocated" => $updbudget
 ];
 }
 else{
