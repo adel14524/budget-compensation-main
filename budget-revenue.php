@@ -149,7 +149,6 @@ elseif ($userlevel== "Superior"){
           </li>
     </ul>
     <br>
-    <br>
 
     <script>
       $(document).ready(function(){
