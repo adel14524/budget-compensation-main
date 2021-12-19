@@ -1531,9 +1531,9 @@ function clearform(data1, data2, data3){
     <script type="text/javascript">
       $(document).ready(function(){
 
-        $(document).on('click', ".updrevenue", function(){
+        $(document).on('change', ".updrev", function(){
           var budgetRevenueID = $(this).data('id');
-
+          var type = $(this).data('type');
           $.ajax({
             url: "ajax-getRevenue.php?lang=<?php echo $extlg;?>",
             type: "POST",
