@@ -1534,82 +1534,24 @@ function clearform(data1, data2, data3){
         $(document).on('change', ".updrev", function(){
           var budgetRevenueID = $(this).data('id');
           var type = $(this).data('type');
-          $.ajax({
-            url: "ajax-getRevenue.php?lang=<?php echo $extlg;?>",
-            type: "POST",
-            data: {budgetRevenueID:budgetRevenueID},
-            dataType:"json",
-            success:function(data){
-              $("#updestimateid").val(data.id);
-              $("#updyear").val(data.updyear);
-              $("#updrevtype").val(data.updrevtype);
-              $("#updrevJan").val(data.updrevjan);
-              $("#updrevFeb").val(data.updrevfeb);
-              $("#updrevMar").val(data.updrevmar);
-              $("#updrevApr").val(data.updrevapr);
-              $("#updrevMay").val(data.updrevmay);
-              $("#updrevJun").val(data.updrevjun);
-              $("#updrevJul").val(data.updrevjul);
-              $("#updrevAug").val(data.updrevaug);
-              $("#updrevSep").val(data.updrevsep);
-              $("#updrevOct").val(data.updrevoct);
-              $("#updrevNov").val(data.updrevnov);
-              $("#updrevDec").val(data.updrevdec);  
-              $("#updrevcompany").val(data.company);  
-              $("#updrevcorporate").val(data.corporate);  
-              $("#updrevuser").val(data.user);  
-            }
-          });
-        });
-
-        var form = $('#updateRevenueForm');
-        form.on('submit', function(e){
-          e.preventDefault();
-          e.stopPropagation();
-          document.getElementById("saveupdrevenue").innerHTML = "<span class='spinner-border spinner-border-sm'></span> Updating";
-          document.getElementById("saveupdrevenue").disabled = true; 
-          var budgetRevenueID = document.getElementById("updestimateid").value;
-          var updyear = document.getElementById("updyear").value;
-          var updrevtype = document.getElementById("updrevtype").value;
-          var updrevJan = document.getElementById("updrevJan").value;
-          var updrevFeb = document.getElementById("updrevFeb").value;
-          var updrevMar = document.getElementById("updrevMar").value;
-          var updrevApr = document.getElementById("updrevApr").value;
-          var updrevMay = document.getElementById("updrevMay").value;
-          var updrevJun = document.getElementById("updrevJun").value;
-          var updrevJul = document.getElementById("updrevJul").value;
-          var updrevAug = document.getElementById("updrevAug").value;
-          var updrevSep = document.getElementById("updrevSep").value;
-          var updrevOct = document.getElementById("updrevOct").value;
-          var updrevNov = document.getElementById("updrevNov").value;
-          var updrevDec = document.getElementById("updrevDec").value;
-
-          var updrevcorporate = document.getElementById("updrevcorporate").value;
-          var updrevuser = document.getElementById("updrevuser").value;
-          var updrevcompany = document.getElementById("updrevcompany").value;
-
+          var column = $(this).data('column');
+          var month = $(this).data('month');
+          var prev = $(this).data('prev');
+          if (type == "estimatedrev") {
+            var value = document.getElementById("estimated" + month).value;
+          }
+          else{
+            var value = document.getElementById("actual" + month).value;
+          }
           var alldata = 
           {
             budgetRevenueID:budgetRevenueID,
-            updyear:updyear,
-            updrevtype:updrevtype,
-            updrevjan:updrevJan,
-            updrevfeb:updrevFeb,
-            updrevmar:updrevMar,
-            updrevapr:updrevApr,
-            updrevmay:updrevMay,
-            updrevjun:updrevJun,
-            updrevjul:updrevJul,
-            updrevaug:updrevAug,
-            updrevsep:updrevSep,
-            updrevoct:updrevOct,
-            updrevnov:updrevNov,
-            updrevdec:updrevDec, 
-            updrevcorporate:updrevcorporate, 
-            updrevuser:updrevuser, 
-            updrevcompany:updrevcompany, 
-
-          };
+            type:type,
+            column:column,
+            month:month,
+            value:value,
+            prev:prev
+          }
           console.log(alldata);
           $.ajax({
             url: "ajax-updaterevenue.php",
@@ -1617,31 +1559,115 @@ function clearform(data1, data2, data3){
             data: alldata,
             dataType:"json",
             success:function(data){
-              document.getElementById("saveupdrevenue").innerHTML = "Confirm";
-              document.getElementById("saveupdrevenue").disabled = false; 
               if(data.condition === "Passed"){
-               $("#updestimaterev").modal("hide");
+               $("#revtable").DataTable().destroy();
                getviewrev();
-               getchartview();
-
-             }else{
-              checkvalidity("updrevtypeerror", "#updrevtypeerror","#updrevtype",data.updrevtype); 
-              checkvalidity("updrevJanerror", "#updrevJanerror","#updrevJan",data.updrevjan); 
-              checkvalidity("updrevFeberror", "#updrevFeberror","#updrevFeb",data.updrevfeb); 
-              checkvalidity("updrevMarerror", "#updrevMarerror","#updrevMar",data.updrevmar); 
-              checkvalidity("updrevAprerror", "#updrevAprerror","#updrevApr",data.updrevapr); 
-              checkvalidity("updrevMayerror", "#updrevMayerror","#updrevMay",data.updrevmay); 
-              checkvalidity("updrevJunerror", "#updrevJunerror","#updrevJun",data.updrevjun); 
-              checkvalidity("updrevJulerror", "#updrevJulerror","#updrevJul",data.updrevjul); 
-              checkvalidity("updrevAugerror", "#updrevAugerror","#updrevAug",data.updrevaug); 
-              checkvalidity("updrevSeperror", "#updrevSeperror","#updrevSep",data.updrevsep); 
-              checkvalidity("updrevOcterror", "#updrevOcterror","#updrevOct",data.updrevoct); 
-              checkvalidity("updrevNoverror", "#updrevNoverror","#updrevNov",data.updrevnov); 
-              checkvalidity("updrevDecerror", "#updrevDecerror","#updrevDec",data.updrevdec); 
+              }
+              else{
+                checkvalidity("estimatederror" + data.month, "#estimatederror" + data.month,"#estimated" + data.month,data.value); 
+              }
+              // $("#updestimateid").val(data.id);
+              // $("#updyear").val(data.updyear);
+              // $("#updrevtype").val(data.updrevtype);
+              // $("#updrevJan").val(data.updrevjan);
+              // $("#updrevFeb").val(data.updrevfeb);
+              // $("#updrevMar").val(data.updrevmar);
+              // $("#updrevApr").val(data.updrevapr);
+              // $("#updrevMay").val(data.updrevmay);
+              // $("#updrevJun").val(data.updrevjun);
+              // $("#updrevJul").val(data.updrevjul);
+              // $("#updrevAug").val(data.updrevaug);
+              // $("#updrevSep").val(data.updrevsep);
+              // $("#updrevOct").val(data.updrevoct);
+              // $("#updrevNov").val(data.updrevnov);
+              // $("#updrevDec").val(data.updrevdec);  
+              // $("#updrevcompany").val(data.company);  
+              // $("#updrevcorporate").val(data.corporate);  
+              // $("#updrevuser").val(data.user);  
             }
-          }
+          });
         });
-        });
+
+        // var form = $('#updateRevenueForm');
+        // form.on('submit', function(e){
+        //   e.preventDefault();
+        //   e.stopPropagation();
+        //   document.getElementById("saveupdrevenue").innerHTML = "<span class='spinner-border spinner-border-sm'></span> Updating";
+        //   document.getElementById("saveupdrevenue").disabled = true; 
+        //   var budgetRevenueID = document.getElementById("updestimateid").value;
+        //   var updyear = document.getElementById("updyear").value;
+        //   var updrevtype = document.getElementById("updrevtype").value;
+        //   var updrevJan = document.getElementById("updrevJan").value;
+        //   var updrevFeb = document.getElementById("updrevFeb").value;
+        //   var updrevMar = document.getElementById("updrevMar").value;
+        //   var updrevApr = document.getElementById("updrevApr").value;
+        //   var updrevMay = document.getElementById("updrevMay").value;
+        //   var updrevJun = document.getElementById("updrevJun").value;
+        //   var updrevJul = document.getElementById("updrevJul").value;
+        //   var updrevAug = document.getElementById("updrevAug").value;
+        //   var updrevSep = document.getElementById("updrevSep").value;
+        //   var updrevOct = document.getElementById("updrevOct").value;
+        //   var updrevNov = document.getElementById("updrevNov").value;
+        //   var updrevDec = document.getElementById("updrevDec").value;
+
+        //   var updrevcorporate = document.getElementById("updrevcorporate").value;
+        //   var updrevuser = document.getElementById("updrevuser").value;
+        //   var updrevcompany = document.getElementById("updrevcompany").value;
+
+        //   var alldata = 
+        //   {
+        //     budgetRevenueID:budgetRevenueID,
+        //     updyear:updyear,
+        //     updrevtype:updrevtype,
+        //     updrevjan:updrevJan,
+        //     updrevfeb:updrevFeb,
+        //     updrevmar:updrevMar,
+        //     updrevapr:updrevApr,
+        //     updrevmay:updrevMay,
+        //     updrevjun:updrevJun,
+        //     updrevjul:updrevJul,
+        //     updrevaug:updrevAug,
+        //     updrevsep:updrevSep,
+        //     updrevoct:updrevOct,
+        //     updrevnov:updrevNov,
+        //     updrevdec:updrevDec, 
+        //     updrevcorporate:updrevcorporate, 
+        //     updrevuser:updrevuser, 
+        //     updrevcompany:updrevcompany, 
+
+        //   };
+        //   console.log(alldata);
+        //   $.ajax({
+        //     url: "ajax-updaterevenue.php",
+        //     type: "POST",
+        //     data: alldata,
+        //     dataType:"json",
+        //     success:function(data){
+        //       document.getElementById("saveupdrevenue").innerHTML = "Confirm";
+        //       document.getElementById("saveupdrevenue").disabled = false; 
+        //       if(data.condition === "Passed"){
+        //        $("#updestimaterev").modal("hide");
+        //        getviewrev();
+        //        getchartview();
+
+        //      }else{
+        //       checkvalidity("updrevtypeerror", "#updrevtypeerror","#updrevtype",data.updrevtype); 
+        //       checkvalidity("updrevJanerror", "#updrevJanerror","#updrevJan",data.updrevjan); 
+        //       checkvalidity("updrevFeberror", "#updrevFeberror","#updrevFeb",data.updrevfeb); 
+        //       checkvalidity("updrevMarerror", "#updrevMarerror","#updrevMar",data.updrevmar); 
+        //       checkvalidity("updrevAprerror", "#updrevAprerror","#updrevApr",data.updrevapr); 
+        //       checkvalidity("updrevMayerror", "#updrevMayerror","#updrevMay",data.updrevmay); 
+        //       checkvalidity("updrevJunerror", "#updrevJunerror","#updrevJun",data.updrevjun); 
+        //       checkvalidity("updrevJulerror", "#updrevJulerror","#updrevJul",data.updrevjul); 
+        //       checkvalidity("updrevAugerror", "#updrevAugerror","#updrevAug",data.updrevaug); 
+        //       checkvalidity("updrevSeperror", "#updrevSeperror","#updrevSep",data.updrevsep); 
+        //       checkvalidity("updrevOcterror", "#updrevOcterror","#updrevOct",data.updrevoct); 
+        //       checkvalidity("updrevNoverror", "#updrevNoverror","#updrevNov",data.updrevnov); 
+        //       checkvalidity("updrevDecerror", "#updrevDecerror","#updrevDec",data.updrevdec); 
+        //     }
+        //   }
+        // });
+        // });
 });
 
     function getviewrev($year){
