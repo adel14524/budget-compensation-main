@@ -14,129 +14,107 @@ if(!$user->isLoggedIn()){
 }
 if(Input::exists()){
 
-    /*guna nama kat check validity*/ 
-      $budgetRevenueID = escape(Input::get('budgetRevenueID'));
-      $updyear = escape(Input::get('updyear'));
-      $updrevtype = escape(Input::get('updrevtype'));
-      $updrevjan= escape(Input::get('updrevjan'));
-      $updrevfeb= escape(Input::get('updrevfeb'));
-      $updrevmar= escape(Input::get('updrevmar'));
-      $updrevapr= escape(Input::get('updrevapr'));
-      $updrevmay= escape(Input::get('updrevmay'));
-      $updrevjun= escape(Input::get('updrevjun'));
-      $updrevjul= escape(Input::get('updrevjul'));
-      $updrevaug= escape(Input::get('updrevaug'));
-      $updrevsep= escape(Input::get('updrevsep'));
-      $updrevoct= escape(Input::get('updrevoct'));
-      $updrevnov= escape(Input::get('updrevnov'));
-      $updrevdec= escape(Input::get('updrevdec'));
-      $updrevcorporate= escape(Input::get('updrevcorporate'));
-      $updrevuser= escape(Input::get('updrevuser'));
-      $updrevcompany= escape(Input::get('updrevcompany'));
+  /*guna nama kat check validity*/ 
+  $budgetRevenueID = escape(Input::get('budgetRevenueID'));
+  $updrevtype = escape(Input::get('type'));
+  $updcolumn = escape(Input::get('column'));
+  $updvalue = escape(Input::get('value'));
+  $month = escape(Input::get('month'));
+  $prevvalue = escape(Input::get('prev'));
 
- 
-      function exists($data){ 
-       if(empty($data)){
-         return "Required";
-       }else{
-         return "Valid";
-       }
-     }
+  function exists($data){ 
+    if(empty($data)){
+      return "Required";
+    }
+    else{
+      return "Valid";
+    }
+  }
 
-      function condition($data1, $data2, $data3, $data4, $data5, $data6, $data7, $data8, $data9, $data10, $data11, $data12, $data13){ 
-        if($data1 === "Valid" && $data2 === "Valid" && $data3 === "Valid" && $data4 === "Valid" && $data5 === "Valid" && $data6 === "Valid" && $data7 === "Valid" && $data8 === "Valid" && $data9 === "Valid" && $data10 === "Valid" && $data11 === "Valid" && $data12 === "Valid"  && $data13 === "Valid"){ 
-           return "Passed";
-}
-else{
-    return "Failed";
-}
-}
+  function month($month){
+    if ($month === 1) {
+      return "January";
+    }
+    elseif ($month === 2) {
+      return "February";
+    }
+    elseif ($month === 3) {
+      return "March";
+    }
+    elseif ($month === 4) {
+      return "April";
+    }
+    elseif ($month === 5) {
+      return "May";
+    }
+    elseif ($month === 6) {
+      return "June";
+    }
+    elseif ($month === 7) {
+      return "July";
+    }
+    elseif ($month === 8) {
+      return "August";
+    }
+    elseif ($month === 9) {
+      return "September";
+    }
+    elseif ($month === 10) {
+      return "October";
+    }
+    elseif ($month === 11) {
+      return "November";
+    }
+    elseif ($month === 12) {
+      return "December";
+    }
+  }
 
-$updyearerror = exists($updyear);
-$updrevtypeerror = exists($updrevtype);
-$updrevJanerror = exists($updrevjan);
-$updrevFeberror = exists($updrevfeb);
-$updrevMarerror = exists($updrevmar);
-$updrevAprerror = exists($updrevapr);
-$updrevMayerror = exists($updrevmay);
-$updrevJunerror = exists($updrevjun);
-$updrevJulerror = exists($updrevjul);
-$updrevAugerror = exists($updrevaug);
-$updrevSeperror = exists($updrevsep);
-$updrevOcterror = exists($updrevoct);
-$updrevNoverror = exists($updrevnov);
-$updrevDecerror = exists($updrevdec);
+  function condition($data1){ 
+    if($data1 === "Valid"){ 
+      return "Passed";
+    }
+    else{
+      return "Failed";
+    }
+  }
 
-$condition = condition($updrevtypeerror,$updrevJanerror,$updrevFeberror,$updrevMarerror,$updrevAprerror,$updrevMayerror, $updrevJunerror,$updrevJulerror,$updrevAugerror,$updrevSeperror,$updrevOcterror, $updrevNoverror, $updrevDecerror);
+  $updvalueerror = exists($updvalue);
 
-if($condition === "Passed"){
+  $condition = condition($updvalueerror);
 
-   $revenueobject = new Revenue();
-   $revenueobject->updateRevenue(array(
-   "year" =>$updyear,
-   "typeRevenue" =>$updrevtype,
-   "january" =>$updrevjan,
-   "february" =>$updrevfeb,
-   "march" =>$updrevmar,
-   "april" =>$updrevapr,
-   "may" =>$updrevmay,
-   "june" =>$updrevjun,
-   "july" =>$updrevjul,
-   "august" =>$updrevaug,
-   "september" =>$updrevsep,
-   "october" =>$updrevoct,
-   "november" =>$updrevnov,
-   "december" =>$updrevdec,
+  $strmonth = month($month);
 
-), $budgetRevenueID,"budgetRevenueID");
+  if($condition === "Passed"){
+    $revenueobject = new Revenue();
+    $revenueobject->updateRevenue(array(
+      $updcolumn =>$updvalue
+    ), $budgetRevenueID,"budgetRevenueID");
 
-      $revenueobject = new Revenue();
-      $revenueobject->addRevenueLog(array(
-        'budgetRevenueID'=>$budgetRevenueID,
-       'typeRevenueLog'=>$updrevtype,
-       'yearLog'=> $updyear,
-        'januaryLog' =>$updrevjan,
-        'februaryLog' =>$updrevfeb,
-        'marchLog' =>$updrevmar,
-        'aprilLog' =>$updrevapr,
-        'mayLog' =>$updrevmay,
-        'juneLog' =>$updrevjun,
-        'julyLog' =>$updrevjul,
-        'augustLog' =>$updrevaug,
-        'septemberLog' =>$updrevsep,
-        'octoberLog' =>$updrevoct,
-        'novemberLog' =>$updrevnov,
-        'decemberLog' =>$updrevdec,
-        'action' =>"update",
+    // $revenueobject = new Revenue();
+    // $revenueobject->addRevenueLog(array(
+    //   'budgetRevenueID'=> $budgetRevenueID,
+    //   'revMonth' => $strmonth,
+    //   'previousValue' => $prevvalue,
+    //   'newValue' =>$updvalue,
+    //   'action' => 'Update'
+    // ));
 
-        'userID' =>$updrevuser,
-        'corporateID' =>$updrevcorporate,
-        'companyID' =>$updrevcompany,
-   ));
-   $array = 
-[
-   "condition" => $condition,
-];
-}
-else{
-   $array = 
-[
-  "condition" => $condition,
-  "updrevtype" => $updrevtypeerror,
-  "updrevjan" => $updrevJanerror,
-  "updrevfeb" => $updrevFeberror,
-  "updrevmar" => $updrevMarerror,
-  "updrevapr" => $updrevAprerror,
-  "updrevmay" => $updrevMayerror,
-  "updrevjun" => $updrevJunerror,
-  "updrevjul" => $updrevJulerror,
-  "updrevaug" => $updrevAugerror,
-  "updrevsep" => $updrevSeperror,
-  "updrevoct" => $updrevOcterror,
-  "updrevnov" => $updrevNoverror,
-  "updrevdec" => $updrevDecerror,
-];
-}
-echo json_encode($array); 
+    $array = 
+    [
+      "condition" => $condition,
+      "month" => $month,
+      "value" => $updvalue
+    ];
+  }
+  else{
+    $array = 
+    [
+      "condition" => $condition,
+      "month" => $month,
+      "value" => $updvalue
+    ];
+  }
+  echo json_encode($array); 
 }
 ?>
