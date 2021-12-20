@@ -33,7 +33,7 @@ if(Input::exists()){
        <div class='dropdown-menu dropdown-menu-right'>
        <a href='#' class='dropdown-item updrevenue' data-id='".$data->budgetRevenueID."' data-toggle='modal' data-backdrop='static' data-target='#updestimaterev'><i class='far fa-edit'></i> Update Estimated  </a>
        <a href='#' class='dropdown-item updrevenue'  data-id='".$data2->budgetRevenueID."' data-toggle='modal' data-backdrop='static' data-target='#updestimaterev'><i class='far fa-edit'></i> Update Actual</a></div> -->
-       <table style='text-align:center; width:100%;' class='table'>
+       <table style='text-align:center; width:100%;' class='table' id='revtable'>
 
             <thead>
               <tr>
@@ -84,9 +84,9 @@ if(Input::exists()){
            <tbody>
              <tr style='text-align:center;'>
                <td style='vertical-align:middle;'><b>January</b> </td>
-               <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+               <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='estimated1' name='estimated1' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='january' data-month='1' data-prev='".$janestimate."'><small><span id='estimatederror1'></span></small></div></td>
                <td style='vertical-align:middle;'><a href ='#janestimated' class='' data-toggle='modal' data-target='#janestimated' ><i class='fas fa-history'></i> </a></td>
-               <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+               <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='actual1' name='actual1' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='january' data-month='1' data-prev='".$janactual."'><small><span id='actualerror1'></span></small></div></td>
                <td style='vertical-align:middle;'> <a href ='#janactual' class='' data-toggle='modal' data-target='#janactual' ><i class='fas fa-history'></i> </a></td>
 
                <div class='modal fade' id='janestimated'>
@@ -181,9 +181,9 @@ if(Input::exists()){
            </tr>
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>February</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='estimated2' name='estimated2'  data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='february' data-month='2' data-prev='".$febestimate."'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#febestimated' class='' data-toggle='modal' data-target='#febestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='actual2' name='actual2' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='february' data-month='2' data-prev='".$febactual."'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#febactual' class='' data-toggle='modal' data-target='#febactual' ><i class='fas fa-history'></i> </a></td>
 
              <div class='modal fade' id='febestimated'>
@@ -282,9 +282,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>March</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='estimated3' name='estimated3' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='march' data-month='3' data-prev='".$marestimate."'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#marestimated' class='' data-toggle='modal' data-target='#marestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='actual3' name='actual3' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='march' data-month='3' data-prev='".$maractual."'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#maractual' class='' data-toggle='modal' data-target='#maractual' ><i class='fas fa-history'></i> </a></td>
 
              <div class='modal fade' id='marestimated'>
@@ -382,9 +382,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>April</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='estimated4' name='estimated4' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='april' data-month='4' data-prev='".$aprestimate."'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#aprestimated' class='' data-toggle='modal' data-target='#aprestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='actual4' name='actual4' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='april' data-month='4' data-prev='".$apractual."'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#apractual' class='' data-toggle='modal' data-target='#apractual' ><i class='fas fa-history'></i> </a></td>
 
              <div class='modal fade' id='aprestimated'>
@@ -482,9 +482,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>May</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='estimated5' name='estimated5' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='may' data-month='5'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#mayestimated' class='' data-toggle='modal' data-target='#mayestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='actual5' name='actual5' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='may' data-month='5'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#mayactual' class='' data-toggle='modal' data-target='#mayactual' ><i class='fas fa-history'></i> </a></td>
 
              <div class='modal fade' id='mayestimated'>
@@ -583,9 +583,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>June</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='estimated6' name='estimated6' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='june' data-month='6'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#junestimated' class='' data-toggle='modal' data-target='#junestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='actual6' name='actual6' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='june' data-month='6'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#junactual' class='' data-toggle='modal' data-target='#junactual' ><i class='fas fa-history'></i> </a></td>
 
              <div class='modal fade' id='junestimated'>
@@ -683,9 +683,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>July</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='estimated7' name='estimated7' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='july' data-month='7'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#julestimated' class='' data-toggle='modal' data-target='#julestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='actual7' name='actual7' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='july' data-month='7'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#julactual' class='' data-toggle='modal' data-target='#julactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='julestimated'>
@@ -784,9 +784,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>August</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='estimated8' name='estimated8' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='august' data-month='8'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#augestimated' class='' data-toggle='modal' data-target='#augestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='actual8' name='actual8' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='august' data-month='8'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#augactual' class='' data-toggle='modal' data-target='#augactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='augestimated'>
@@ -885,9 +885,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>September</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='estimated9' name='estimated9' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='september' data-month='9'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#sepestimated' class='' data-toggle='modal' data-target='#sepestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='actual9' name='actual9' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='september' data-month='9'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#sepactual' class='' data-toggle='modal' data-target='#sepactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='sepestimated'>
@@ -985,9 +985,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>October</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='estimated10' name='estimated10' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='october' data-month='10'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#octestimated' class='' data-toggle='modal' data-target='#octestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='actual10' name='actual10' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='october' data-month='10'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#octactual' class='' data-toggle='modal' data-target='#octactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='octestimated'>
@@ -1086,9 +1086,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>November</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='estimated11' name='estimated11' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='november' data-month='11'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#novestimated' class='' data-toggle='modal' data-target='#novestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='actual11' name='actual11' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='november' data-month='11'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#novactual' class='' data-toggle='modal' data-target='#novactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='novestimated'>
@@ -1187,9 +1187,9 @@ if(Input::exists()){
 
            <tr style='text-align:center;'>
              <td style='vertical-align:middle;'><b>December</b> </td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='estimated12' name='estimated12' data-id='".$data->budgetRevenueID."' data-type='estimatedrev' data-column='december' data-month='12'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#decestimated' class='' data-toggle='modal' data-target='#decestimated' ><i class='fas fa-history'></i> </a></td>
-             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+             <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='actual12' name='actual12' data-id='".$data2->budgetRevenueID."' data-type='actualrev' data-column='december' data-month='12'><small><span id='costerror'></span></small></div></td>
              <td style='vertical-align:middle;'> <a href ='#decactual' class='' data-toggle='modal' data-target='#decactual' ><i class='fas fa-history'></i> </a></td>
              <div class='modal fade' id='decestimated'>
                <div class='modal-dialog modal-lg'>
@@ -1382,9 +1382,9 @@ if(Input::exists()){
             <tbody>
             <tr style='text-align:center;'>
               <td style='vertical-align:middle;'><b>January</b> </td>
-              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='addcost' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
               <td style='vertical-align:middle;'><a href ='#janestimated' class='' data-toggle='modal' data-target='#janestimated' ><i class='fas fa-history'></i> </a></td>
-              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
               <td style='vertical-align:middle;'> <a href ='#janactual' class='' data-toggle='modal' data-target='#janactual' ><i class='fas fa-history'></i> </a></td>
 
               <div class='modal fade' id='janestimated'>
@@ -1479,9 +1479,9 @@ if(Input::exists()){
           </tr>
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>February</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#febestimated' class='' data-toggle='modal' data-target='#febestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#febactual' class='' data-toggle='modal' data-target='#febactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='febestimated'>
@@ -1580,9 +1580,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>March</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#marestimated' class='' data-toggle='modal' data-target='#marestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#maractual' class='' data-toggle='modal' data-target='#maractual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='marestimated'>
@@ -1680,9 +1680,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>April</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#aprestimated' class='' data-toggle='modal' data-target='#aprestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#apractual' class='' data-toggle='modal' data-target='#apractual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='aprestimated'>
@@ -1780,9 +1780,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>May</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#mayestimated' class='' data-toggle='modal' data-target='#mayestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#mayactual' class='' data-toggle='modal' data-target='#mayactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='mayestimated'>
@@ -1881,9 +1881,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>June</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#junestimated' class='' data-toggle='modal' data-target='#junestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#junactual' class='' data-toggle='modal' data-target='#junactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='junestimated'>
@@ -1981,9 +1981,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>July</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#julestimated' class='' data-toggle='modal' data-target='#julestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#julactual' class='' data-toggle='modal' data-target='#julactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='julestimated'>
@@ -2082,9 +2082,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>August</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#augestimated' class='' data-toggle='modal' data-target='#augestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#augactual' class='' data-toggle='modal' data-target='#augactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='augestimated'>
@@ -2183,9 +2183,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>September</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#sepestimated' class='' data-toggle='modal' data-target='#sepestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#sepactual' class='' data-toggle='modal' data-target='#sepactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='sepestimated'>
@@ -2283,9 +2283,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>October</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#octestimated' class='' data-toggle='modal' data-target='#octestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='' name='addcost' data-id='".$data2->budgetRevenueID."' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#octactual' class='' data-toggle='modal' data-target='#octactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='octestimated'>
@@ -2384,9 +2384,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>November</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#novestimated' class='' data-toggle='modal' data-target='#novestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#novactual' class='' data-toggle='modal' data-target='#novactual' ><i class='fas fa-history'></i> </a></td>
 
           <div class='modal fade' id='novestimated'>
@@ -2485,9 +2485,9 @@ if(Input::exists()){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>December</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#decestimated' class='' data-toggle='modal' data-target='#decestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#decactual' class='' data-toggle='modal' data-target='#decactual' ><i class='fas fa-history'></i> </a></td>
             <div class='modal fade' id='decestimated'>
               <div class='modal-dialog modal-lg'>
@@ -2681,9 +2681,9 @@ if($data==null && $data2 !== null){
             <tbody>
             <tr style='text-align:center;'>
               <td style='vertical-align:middle;'><b>January</b> </td>
-              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='' name='addcost' data-id='".$data->budgetRevenueID."' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
               <td style='vertical-align:middle;'><a href ='#janestimated' class='' data-toggle='modal' data-target='#janestimated' ><i class='fas fa-history'></i> </a></td>
-              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
               <td style='vertical-align:middle;'> <a href ='#janactual' class='' data-toggle='modal' data-target='#janactual' ><i class='fas fa-history'></i> </a></td>
 
               <div class='modal fade' id='janestimated'>
@@ -2778,9 +2778,9 @@ if($data==null && $data2 !== null){
           </tr>
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>February</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#febestimated' class='' data-toggle='modal' data-target='#febestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#febactual' class='' data-toggle='modal' data-target='#febactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='febestimated'>
@@ -2879,9 +2879,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>March</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#marestimated' class='' data-toggle='modal' data-target='#marestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#maractual' class='' data-toggle='modal' data-target='#maractual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='marestimated'>
@@ -2979,9 +2979,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>April</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#aprestimated' class='' data-toggle='modal' data-target='#aprestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#apractual' class='' data-toggle='modal' data-target='#apractual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='aprestimated'>
@@ -3079,9 +3079,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>May</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#mayestimated' class='' data-toggle='modal' data-target='#mayestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#mayactual' class='' data-toggle='modal' data-target='#mayactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='mayestimated'>
@@ -3180,9 +3180,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>June</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#junestimated' class='' data-toggle='modal' data-target='#junestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#junactual' class='' data-toggle='modal' data-target='#junactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='junestimated'>
@@ -3280,9 +3280,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>July</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#julestimated' class='' data-toggle='modal' data-target='#julestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#julactual' class='' data-toggle='modal' data-target='#julactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='julestimated'>
@@ -3381,9 +3381,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>August</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#augestimated' class='' data-toggle='modal' data-target='#augestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#augactual' class='' data-toggle='modal' data-target='#augactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='augestimated'>
@@ -3482,9 +3482,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>September</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#sepestimated' class='' data-toggle='modal' data-target='#sepestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#sepactual' class='' data-toggle='modal' data-target='#sepactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='sepestimated'>
@@ -3582,9 +3582,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>October</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#octestimated' class='' data-toggle='modal' data-target='#octestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#octactual' class='' data-toggle='modal' data-target='#octactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='octestimated'>
@@ -3683,9 +3683,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>November</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#novestimated' class='' data-toggle='modal' data-target='#novestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#novactual' class='' data-toggle='modal' data-target='#novactual' ><i class='fas fa-history'></i> </a></td>
 
           <div class='modal fade' id='novestimated'>
@@ -3784,9 +3784,9 @@ if($data==null && $data2 !== null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>December</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#decestimated' class='' data-toggle='modal' data-target='#decestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#decactual' class='' data-toggle='modal' data-target='#decactual' ><i class='fas fa-history'></i> </a></td>
             <div class='modal fade' id='decestimated'>
               <div class='modal-dialog modal-lg'>
@@ -4023,9 +4023,9 @@ if($data==null && $data2==null){
             <tbody>
             <tr style='text-align:center;'>
               <td style='vertical-align:middle;'><b>January</b> </td>
-              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
               <td style='vertical-align:middle;'><a href ='#janestimated' class='' data-toggle='modal' data-target='#janestimated' ><i class='fas fa-history'></i> </a></td>
-              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+              <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$janactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
               <td style='vertical-align:middle;'> <a href ='#janactual' class='' data-toggle='modal' data-target='#janactual' ><i class='fas fa-history'></i> </a></td>
 
               <div class='modal fade' id='janestimated'>
@@ -4120,9 +4120,9 @@ if($data==null && $data2==null){
           </tr>
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>February</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#febestimated' class='' data-toggle='modal' data-target='#febestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$febactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#febactual' class='' data-toggle='modal' data-target='#febactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='febestimated'>
@@ -4221,9 +4221,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>March</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$marestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#marestimated' class='' data-toggle='modal' data-target='#marestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$maractual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#maractual' class='' data-toggle='modal' data-target='#maractual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='marestimated'>
@@ -4321,9 +4321,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>April</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$aprestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#aprestimated' class='' data-toggle='modal' data-target='#aprestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$apractual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#apractual' class='' data-toggle='modal' data-target='#apractual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='aprestimated'>
@@ -4421,9 +4421,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>May</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#mayestimated' class='' data-toggle='modal' data-target='#mayestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$mayactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#mayactual' class='' data-toggle='modal' data-target='#mayactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='mayestimated'>
@@ -4522,9 +4522,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>June</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#junestimated' class='' data-toggle='modal' data-target='#junestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$junactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#junactual' class='' data-toggle='modal' data-target='#junactual' ><i class='fas fa-history'></i> </a></td>
 
             <div class='modal fade' id='junestimated'>
@@ -4622,9 +4622,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>July</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#julestimated' class='' data-toggle='modal' data-target='#julestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$julactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#julactual' class='' data-toggle='modal' data-target='#julactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='julestimated'>
@@ -4723,9 +4723,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>August</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#augestimated' class='' data-toggle='modal' data-target='#augestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$augactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#augactual' class='' data-toggle='modal' data-target='#augactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='augestimated'>
@@ -4824,9 +4824,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>September</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#sepestimated' class='' data-toggle='modal' data-target='#sepestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$sepactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#sepactual' class='' data-toggle='modal' data-target='#sepactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='sepestimated'>
@@ -4924,9 +4924,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>October</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#octestimated' class='' data-toggle='modal' data-target='#octestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$octactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#octactual' class='' data-toggle='modal' data-target='#octactual' ><i class='fas fa-history'></i> </a></td>
 
            <div class='modal fade' id='octestimated'>
@@ -5025,9 +5025,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>November</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#novestimated' class='' data-toggle='modal' data-target='#novestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$novactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#novactual' class='' data-toggle='modal' data-target='#novactual' ><i class='fas fa-history'></i> </a></td>
 
           <div class='modal fade' id='novestimated'>
@@ -5126,9 +5126,9 @@ if($data==null && $data2==null){
 
           <tr style='text-align:center;'>
             <td style='vertical-align:middle;'><b>December</b> </td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='addcost' name='addcost' data-type='projrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decestimate."' id='addcost' name='addcost' data-type='estimatedrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#decestimated' class='' data-toggle='modal' data-target='#decestimated' ><i class='fas fa-history'></i> </a></td>
-            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='addcost' name='addcost' data-type='actualrevenue'><small><span id='costerror'></span></small></div></td>
+            <td><div class='form-group' align='center' style='margin-bottom:0.2rem;'><input class='form-control updrev' style='max-width:110px; text-align:center;' type='number' value='".$decactual."' id='addcost' name='addcost' data-type='actualrev'><small><span id='costerror'></span></small></div></td>
             <td style='vertical-align:middle;'> <a href ='#decactual' class='' data-toggle='modal' data-target='#decactual' ><i class='fas fa-history'></i> </a></td>
             <div class='modal fade' id='decestimated'>
               <div class='modal-dialog modal-lg'>
