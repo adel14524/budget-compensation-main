@@ -1757,6 +1757,138 @@ function clearform(data1, data2, data3){
                        </div>
                      </div>
 
+  <!-- update cost of goods sold script -->
+  <script type="text/javascript">
+      $(document).ready(function(){
+
+        $(document).on('change', ".updcost", function(){
+          var budgetRevenueID = $(this).data('id');
+          var type = $(this).data('type');
+          var column = $(this).data('column');
+          var month = $(this).data('month');
+          var prev = $(this).data('prev');
+          var value = document.getElementById("cost" + month).value;
+          var alldata = 
+          {
+            budgetRevenueID:budgetRevenueID,
+            type:type,
+            column:column,
+            month:month,
+            value:value,
+            prev:prev,
+          }
+          console.log(alldata);
+          $.ajax({
+            url: "ajax-updatecost.php",
+            type: "POST",
+            data: alldata,
+            dataType:"json",
+            success:function(data){
+              if(data.condition === "Passed"){
+               $("#revtable").DataTable().destroy();
+               getviewcost();
+              }
+              else{
+                checkvalidity("costerror" + data.month, "#costerror" + data.month,"#cost" + data.month,data.value); 
+              } 
+            }
+          });
+        });
+      });
+
+    function getviewcost($year){
+      weekpicker = $('#revenueyear');
+      weekpicker.datepicker({
+        autoclose: true,
+        forceParse: false,
+        orientation: 'bottom',
+        minViewMode: "years"
+      }).on("changeDate", function(e) {
+        monthrevenue(e.date);
+      });
+      monthrevenue(new Date);
+    }
+  
+    function monthrevenue(date) {
+
+      var day = new Date(date.getFullYear(), 1);
+      $('#revenueyear').datepicker('update', day);
+      $('#revenueyear').val(day.getFullYear());
+      var comp = document.getElementById("companyrevenue").value; 
+      var alldata = 
+      {
+        comp:comp,
+        year: day.getFullYear(),
+      };
+      console.log(alldata);
+      $.ajax({
+        url:"ajax-viewcost.php",
+        data: alldata,
+        dataType: "json",
+        method: "POST",
+        success:function(data){
+          $("#showcostview").html(data); 
+        }
+      });
+      
+    }
+
+    // function getchartview($year){
+    //   weekpicker = $('#revenueyear');
+    //   weekpicker.datepicker({
+    //     autoclose: true,
+    //     forceParse: false,
+    //     orientation: 'bottom',
+    //     minViewMode: "years"
+    //   }).on("changeDate", function(e) {
+    //     getchart(e.date);
+    //   });
+    //   getchart(new Date);
+    // }
+        
+    // function getchart(date){ 
+    //   var day = new Date(date.getFullYear(), 1);
+    //   $('#revenueyear').datepicker('update', day);
+    //   $('#revenueyear').val(day.getFullYear());
+    //   var comp = document.getElementById("companyrevenue").value; 
+    //   var alldata = 
+    //   {
+    //     comp:comp,
+    //     year: day.getFullYear(),
+    //   };
+    //   $.ajax({
+    //    url:"ajax-getviewrevchart.php",
+    //    data: alldata,
+    //    dataType: "json",
+    //    method: "POST",
+    //    success:function(data){
+    //     $("#showchartview").html(data);
+    //   }
+    // });
+    // }
+
+
+    function checkvalidity(data1, data2, data3, data4){
+      document.getElementById(data1).innerHTML = data4;
+      if(data4 === "Required"){
+        $(data2).removeClass("text-success").addClass("text-danger");
+        $(data3).removeClass("border-success").addClass("border-danger");
+      }else if(data4 === "Valid"){
+        $(data2).removeClass("text-danger").addClass("text-success");
+        $(data3).removeClass("border-danger").addClass("border-success");
+      }else{
+        $(data2).removeClass("text-success").addClass("text-danger");
+        $(data3).removeClass("border-success").addClass("border-danger");
+      }
+    }
+
+    function clearform(data1, data2, data3){
+      $(data1).removeClass("text-success").removeClass("text-danger");
+      document.getElementById(data2).textContent="";
+      $(data3).removeClass("border-success").removeClass("border-danger");
+    }
+  </script>
+
   <!-- addgross profit -->
 
   <script type="text/javascript">
