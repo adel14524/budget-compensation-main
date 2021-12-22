@@ -57,9 +57,9 @@ class Revenue{
 	}
 
 
-	public function searchRevenueEstLog($company =null, $year=null,  $typeRevenue=null){
-		if($company && $year){
-			$data = $this->_db->get2('revenuelog', array("companyID", '=', $company), array("yearLog", '=', $year), array("typeRevenueLog", '=', $typeRevenue));
+	public function searchRevenueEstLog($budgetRevenueID =null){
+		if($budgetRevenueID){
+			$data = $this->_db->get('revenuelog', array("budgetRevenueID", '=', $budgetRevenueID));
 			// $field = (is_numeric($revenueLogID)) ? 'revenueLogID' : 'revenuelog';
 			if($data->count()){
 				$this->_data = $data->results();
@@ -67,9 +67,9 @@ class Revenue{
 			}
 		}
 	}
-	public function searchRevenueActLog($company =null, $year=null,  $typeRevenue=null){
-		if($company && $year){
-			$data = $this->_db->get2('revenuelog', array("companyID", '=', $company), array("yearLog", '=', $year), array("typeRevenueLog", '=', $typeRevenue));
+	public function searchRevenueActLog($budgetRevenueID =null){
+		if($budgetRevenueID){
+			$data = $this->_db->get('revenuelog', array("budgetRevenueID", '=', $budgetRevenueID));
 			// $field = (is_numeric($revenueLogID)) ? 'revenueLogID' : 'revenuelog';
 			if($data->count()){
 				$this->_data = $data->results();
