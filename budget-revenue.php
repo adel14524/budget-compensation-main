@@ -91,7 +91,7 @@ elseif ($userlevel== "Superior"){
 
 <!-- revenue page -->
             <div id="page-content-wrapper">
-            <div class="container-fluid" id="revenu  e"> 
+            <div class="container-fluid" id="revenue"> 
             <div class="row my-4">
             <div class="col">
                 <h4 class="m-0"><i class="fas fa-dollar-sign"></i> Revenue</h4>
@@ -107,7 +107,7 @@ elseif ($userlevel== "Superior"){
                 }
                 ?>
                     </select>
-                    <script type="text/javascript"> 
+                    <!-- <script type="text/javascript"> 
                       $(document).ready(function(){
                         $(document).on('click', ".saverev1", function(){
                          var companyID = document.getElementById("companyrevenue").value; 
@@ -131,7 +131,7 @@ elseif ($userlevel== "Superior"){
                        }
                      });
                       });
-                    </script>
+                    </script> -->
           &nbsp;&nbsp;
              <div class="col px-2">
               <input class="form-control" id="revenueyear" style="width:30%; transition: box-shadow .3s;">
@@ -150,7 +150,7 @@ elseif ($userlevel== "Superior"){
     </ul>
     <br>
 
-    <script>
+    <!-- <script>
       $(document).ready(function(){
 
         function getviewrev($year){
@@ -189,7 +189,7 @@ elseif ($userlevel== "Superior"){
           });
           getviewrev();     
         }});
-      </script>
+      </script> -->
 
       <!-- Revenue Tab -->
       <div class="tab-content">
