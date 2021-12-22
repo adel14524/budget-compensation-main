@@ -32,40 +32,40 @@ if(Input::exists()){
   }
 
   function month($month){
-    if ($month === 1) {
+    if ($month == 1) {
       return "January";
     }
-    elseif ($month === 2) {
+    elseif ($month == 2) {
       return "February";
     }
-    elseif ($month === 3) {
+    elseif ($month == 3) {
       return "March";
     }
-    elseif ($month === 4) {
+    elseif ($month == 4) {
       return "April";
     }
-    elseif ($month === 5) {
+    elseif ($month == 5) {
       return "May";
     }
-    elseif ($month === 6) {
+    elseif ($month == 6) {
       return "June";
     }
-    elseif ($month === 7) {
+    elseif ($month == 7) {
       return "July";
     }
-    elseif ($month === 8) {
+    elseif ($month == 8) {
       return "August";
     }
-    elseif ($month === 9) {
+    elseif ($month == 9) {
       return "September";
     }
-    elseif ($month === 10) {
+    elseif ($month == 10) {
       return "October";
     }
-    elseif ($month === 11) {
+    elseif ($month == 11) {
       return "November";
     }
-    elseif ($month === 12) {
+    elseif ($month == 12) {
       return "December";
     }
   }
@@ -83,7 +83,6 @@ if(Input::exists()){
 
   $condition = condition($updvalueerror);
 
-  $strmonth = month($month);
 
   if($condition === "Passed"){
     $revenueobject = new Revenue();
@@ -91,14 +90,14 @@ if(Input::exists()){
       $updcolumn =>$updvalue
     ), $budgetRevenueID,"budgetRevenueID");
 
-    // $revenueobject = new Revenue();
-    // $revenueobject->addRevenueLog(array(
-    //   'budgetRevenueID'=> $budgetRevenueID,
-    //   'revMonth' => $strmonth,
-    //   'previousValue' => $prevvalue,
-    //   'newValue' =>$updvalue,
-    //   'action' => 'Update'
-    // ));
+    $revenueobject = new Revenue();
+    $revenueobject->addRevenueLog(array(
+      'budgetRevenueID'=> $budgetRevenueID,
+      'revMonth' => month($month),
+      'newValue' => $updvalue,
+      'previousValue' => $prevvalue,
+      'action' => "Update",
+    ));
 
     $array = 
     [
