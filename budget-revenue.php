@@ -68,6 +68,15 @@ elseif ($userlevel== "Superior"){
            $("#showrevenueview").html(data); 
            }
            });
+           $.ajax({
+            url:"ajax-viewcost.php",
+            data: alldata,
+            dataType: "json",
+            method: "POST",
+            success:function(data){
+              $("#showcostview").html(data); 
+            }
+           });
            }
 
            weekpicker = $('#revenueyear');
@@ -150,7 +159,7 @@ elseif ($userlevel== "Superior"){
     </ul>
     <br>
 
-    <!-- <script>
+    <script>
       $(document).ready(function(){
 
         function getviewrev($year){
@@ -187,9 +196,18 @@ elseif ($userlevel== "Superior"){
               $("#showrevenueview").html(data); 
             }
           });
+          $.ajax({
+            url:"ajax-viewcost.php",
+            data: alldata,
+            dataType: "json",
+            method: "POST",
+            success:function(data){
+              $("#showcostview").html(data); 
+            }
+          });
           getviewrev();     
         }});
-      </script> -->
+      </script>
 
       <!-- Revenue Tab -->
       <div class="tab-content">
