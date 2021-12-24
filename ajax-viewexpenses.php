@@ -317,7 +317,7 @@ if(Input::exists()){
   
     list($expcategoryList,$expamount) = getCategory($month,$year,$comp,$balance);
 
-    $view.=" 
+    $view.="
       </div>
         <div class='col-sm-12 col-lg-5'>
           <canvas id='expensesChart".$month."' width='30' height='18'>
@@ -374,11 +374,17 @@ if(Input::exists()){
   }
   else{
     $view.="
-    <div class='card box rounded-0'>
-      <div class='card-body'>
-        <b>No data found</b>
-      </div>
-    </div>
+        <br><br>
+        <div class='card box rounded-0'>
+          <div class='card-body text-center'>
+            <b>No data found. Please allocate your budget first</b><br><br>
+            <div class='text-center'>
+              <a href='budget-allocation.php'>
+                <button type='button' class='btn btn-success shadow-sm'>Go to Allocation</button>
+              </a>
+            </div>
+          </div>
+        </div>
     ";
 
     $array = [
