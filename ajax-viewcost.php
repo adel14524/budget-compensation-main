@@ -27,6 +27,7 @@ if (Input::exists()) {
     if ($data2) {
         if ($data) {
             $view .="
+                <br>
                 <div class='table-responsive text-nowrap'>
                 <table style='text-align:center; width:100%;' class='table'>
 
