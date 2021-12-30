@@ -29,9 +29,9 @@ if (Input::exists()) {
     if ($data && $data2) {
 
       $view .="
-        <div class='col-xl-12 col-6 text-right'>
-          <button type='button' class='btn btn-success shadow-sm saverev1 ' data-toggle='modal' data-backdrop='static' data-target='#addRevenue'> Get Actual Revenue from Baseline</button>
-        </div><br>
+        <!-- <div class='col-xl-12 col-6 text-right'>
+          <button type='button' class='btn btn-success shadow-sm saverev1 ' data-toggle='modal' data-backdrop='static' data-target='#baselineValue'> Get Actual Revenue from Baseline</button>
+        </div> --><br>
   
         <div class='table-responsive text-nowrap'>
         <table style='text-align:center; width:100%;' class='table' id='revtable'>
@@ -1029,9 +1029,9 @@ if (Input::exists()) {
     /*view estimate*/ 
     elseif ($data != null && $data2 == null) {
       $view .="
-        <div class='col-xl-12 col-6 text-right'>
+        <!-- <div class='col-xl-12 col-6 text-right'>
           <button type='button' class='btn btn-success shadow-sm saverev1 ' data-toggle='modal' data-backdrop='static' data-target='#addRevenue'> Get Actual Revenue from Baseline</button>
-        </div><br>
+        </div> --><br>
   
         <div class='table-responsive text-nowrap'>
         <table style='text-align:center; width:100%;' class='table' id='revtable'>
@@ -2053,9 +2053,9 @@ if (Input::exists()) {
     /*view actual*/ 
     elseif ($data == null && $data2 !== null) {
       $view .="
-        <div class='col-xl-12 col-6 text-right'>
+        <!-- <div class='col-xl-12 col-6 text-right'>
           <button type='button' class='btn btn-success shadow-sm saverev1 ' data-toggle='modal' data-backdrop='static' data-target='#addRevenue'> Get Actual Revenue from Baseline</button>
-        </div><br>
+        </div> --><br>
   
         <div class='table-responsive text-nowrap'>
         <table style='text-align:center; width:100%;' class='table' id='revtable'>
@@ -3076,9 +3076,9 @@ if (Input::exists()) {
     } 
     elseif ($data == null && $data2 == null) {
       $view .="
-        <div class='col-xl-12 col-6 text-right'>
+        <!-- <div class='col-xl-12 col-6 text-right'>
           <button type='button' class='btn btn-success shadow-sm saverev1 ' data-toggle='modal' data-backdrop='static' data-target='#addRevenue'> Get Actual Revenue from Baseline</button>
-        </div><br>
+        </div> --> <br>
   
         <div class='table-responsive text-nowrap'>
         <table style='text-align:center; width:100%;' class='table' id='revtable'>
