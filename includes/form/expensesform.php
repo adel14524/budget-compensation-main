@@ -1295,11 +1295,26 @@ function clearform(data1, data2, data3){
     </div>
   </div>
 
+  <script type="text/javascript"> 
+                      $(document).ready(function(){
+                        
+                      });
+                    </script>
+
   <!-- script add revenue  -->
   <script type="text/javascript">
     $(document).ready(function(){
-     var form = $('#addRevenueForm');
-     form.on('submit', function(e){
+      $(document).on('click', ".saverev1", function(){
+        var companyID = document.getElementById("companyrevenue").value; 
+        var year = document.getElementById("revenueyear").value; 
+
+        { 
+          $("#addrevcompany").val(companyID);
+          $("#addrevenueyear").val(year);
+        }
+      });
+      var form = $('#getBaselineForm');
+      form.on('submit', function(e){
       e.preventDefault();  
       e.stopPropagation(); 
 
@@ -1356,7 +1371,7 @@ function clearform(data1, data2, data3){
         document.getElementById("saveRev").disabled = false; 
 
         if(data.condition === "Passed"){
-         document.getElementById("addRevenueForm").reset();
+         document.getElementById("getBaselineForm").reset();
          $("#addRevenue").modal("hide");
          getviewrev();
 
@@ -1436,10 +1451,21 @@ function clearform(data1, data2, data3){
       document.getElementById(data2).textContent="";
       $(data3).removeClass("border-success").removeClass("border-danger");
     }
+
+
+  </script>
+
+  <script>
+    $('#baselineyear').datepicker({
+            autoclose: true,
+            forceParse: false,
+            orientation: 'bottom',
+            minViewMode: "years"
+    });
   </script>
 
         <!-- add revenue form  -->
-        <div class="modal fade" id="addRevenue" aria-hidden="true" style="display: none;">
+        <div class="modal fade" id="baselineValue" aria-hidden="true" style="display: none;">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-body">
@@ -1447,13 +1473,21 @@ function clearform(data1, data2, data3){
                   <div class="col-12"><button type="button" class="close" data-dismiss="modal">×</button></div>
                   <div class="col-1"></div>
                   <div class="col-12 col-sm-10 py-4">
-                    <h4 class="modal-title">Revenue</h4>
-                    <form class="mt-5" id="addRevenueForm">
+                    <h4 class="modal-title">Get Actual Revenue from Baseline</h4>
+                    <form class="mt-5" id="getBaselineForm">
+                    <div class="form-group">
+                       <label><h6 class="m-0">Company</h6></label>
+                       <input class="form-control" disabled type="text" id="basecompanyID" name="basecompanyID"><span id="basecompanyIDerror"></span>
+                       </div>
+                    <div class="form-group">
+                       <label><h6 class="m-0">Year</h6></label>
+                       <input class="form-control" type="text" id="baselineyear" name="baselineyear"><span id="baselineyearerror"></span>
+                     </div>
                       <div class="form-group">
                         <div class="row">
                           <div class="col">
-                            <label><h6 class="m-0">Revenue Type</h6></label>
-                            <select class="form-control" id="revtype" name="revtype">
+                            <label><h6 class="m-0">Baseline Category</h6></label>
+                            <select class="form-control" id="basecategory" name="basecategory">
                               <option value="estimatedrev">Estimated</option>
                               <option value="actualrev">Actual</option>
                             </select>
@@ -1463,59 +1497,11 @@ function clearform(data1, data2, data3){
                       </div>
                       <br>
                       <input class="form-control" type="hidden" id="addrevcorporate" name="addrevcorporate" value="<?php echo $resultresult->corporateID ?>">
-                      <input class="form-control" type="text" id="addrevcompany" name="addrevcompany" value="">
+                      <input class="form-control" type="hidden" id="compID" name="compID" value="">
                       <input class="form-control" type="hidden" id="addrevuser" name="addrevuser" value="<?php echo $resultresult->userID ?>">
                       <input class="form-control" type="hidden" id="addrevenueyear" name="addrevenueyear" value="">
 
-                      <div class="form-group">
-                       <label><h6 class="m-0">January </h6></label>
-                       <input class="form-control" type="text" id="revJan" name="revJan"><span id="revJanerror"></span>
-                     </div>
-                     <div class="form-group">
-                       <label><h6 class="m-0">February </h6></label>
-                       <input class="form-control" type="text" id="revFeb" name="revFeb"><span id="revFeberror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">March </h6></label>
-                         <input class="form-control" type="text" id="revMar" name="revMar"><span id="revMarerror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">April </h6></label>
-                         <input class="form-control" type="text" id="revApr" name="revApr"><span id="revAprerror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">May</h6></label>
-                         <input class="form-control" type="text" id="revMay" name="revMay"><span id="revMayerror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">Jun </h6></label>
-                         <input class="form-control" type="text" id="revJun" name="revJun"><span id="revJunerror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">July</h6></label>
-                         <input class="form-control" type="text" id="revJul" name="revJul"><span id="revJulerror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">August </h6></label>
-                         <input class="form-control" type="text" id="revAug" name="revAug"><span id="revAugerror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">September </h6></label>
-                         <input class="form-control" type="text" id="revSep" name="revSep"><span id="revSeperror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">October </h6></label>
-                         <input class="form-control" type="text" id="revOct" name="revOct"><span id="revOcterror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">November </h6></label>
-                         <input class="form-control" type="text" id="revNov" name="revNov"><span id="revNoverror"></span>
-                       </div>
-                       <div class="form-group">
-                         <label><h6 class="m-0">December </h6></label>
-                         <input class="form-control" type="text" id="revDec" name="revDec"><span id="revDecerror"></span>
-                       </div>
-
+                      <br>
                        <div class="row">
                         <div class="col text-right">
                           <button id="saveRev" name="saveRev" value="submit" type="submit" class="btn btn-primary shadow-sm" >Save</button>
@@ -1666,7 +1652,7 @@ function clearform(data1, data2, data3){
                
                 <!-- updaterevenue form -->
 
-                <div class="modal fade" id="updestimaterev" aria-hidden="true" style="display: none;">
+                <!-- <div class="modal fade" id="updestimaterev" aria-hidden="true" style="display: none;">
                  <div class="modal-dialog modal-lg">
                    <div class="modal-content">
                      <div class="modal-body">
@@ -1755,7 +1741,7 @@ function clearform(data1, data2, data3){
                            </form>
                          </div></div></div></div>           
                        </div>
-                     </div>
+                     </div> -->
 
   <!-- update cost of goods sold script -->
   <script type="text/javascript">
@@ -1887,401 +1873,4 @@ function clearform(data1, data2, data3){
       document.getElementById(data2).textContent="";
       $(data3).removeClass("border-success").removeClass("border-danger");
     }
-  </script>
-
-  <!-- addgross profit -->
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-     var form = $('#gpform');
-     form.on('submit', function(e){
-      e.preventDefault();  
-      e.stopPropagation(); 
-
-      document.getElementById("savegp").innerHTML = "<span class='spinner-border spinner-border-sm'></span> Adding";
-      document.getElementById("savegp").disabled = true;
-
-
-      var gp1 = document.getElementById("gpJan").value;
-      var gp2 = document.getElementById("gpFeb").value;
-      var gp3 = document.getElementById("gpMar").value;
-      var gp4 = document.getElementById("gpApr").value;
-      var gp5 = document.getElementById("gpMay").value;
-      var gp6 = document.getElementById("gpJun").value;
-      var gp7 = document.getElementById("gpJul").value;
-      var gp8 = document.getElementById("gpAug").value;
-      var gp9 = document.getElementById("gpSept").value;
-      var gp10 = document.getElementById("gpOct").value;
-      var gp11 = document.getElementById("gpNov").value;
-      var gp12 = document.getElementById("gpDec").value;
-      var addgpuser = document.getElementById("addgpuser").value;
-      var choosegpcomp = document.getElementById("choosegpcomp").value;
-      var choosegpyear= document.getElementById("choosegpyear").value;
-      var addgpcorporate = document.getElementById("addgpcorporate").value;
-
-      var alldata = 
-      {
-       G1:gp1,
-       G2:gp2,
-       G3:gp3,
-       G4:gp4,
-       G5:gp5,
-       G6:gp6,
-       G7:gp7,
-       G8:gp8,
-       G9:gp9,
-       G10:gp10,
-       G11:gp11,
-       G12:gp12,
-       
-       addgpuser: addgpuser,
-       choosegpcomp:choosegpcomp,
-       choosegpyear:choosegpyear,
-       addgpcorporate:addgpcorporate,
-     };
-     $.ajax({
-      url: "ajax-addgp.php",
-      type: "POST",
-      data: alldata,
-      dataType:"json",
-      success:function(data){
-        document.getElementById("savegp").innerHTML = "Add";
-        document.getElementById("savegp").disabled = false;
-        if(data.condition === "Passed"){
-          document.getElementById("gpform").reset();
-          $("#gpmodal").modal("hide");
-          getGPview();
-        }else{
-         checkvalidity("gpJanerror", "#gpJanerror","#gpJan",data.gpJan );
-         checkvalidity("gpFeberror", "#gpFeberror","#gpFeb",data.gpFeb );
-         checkvalidity("gpMarerror", "#gpMarerror","#gpMar",data.gpMar );
-         checkvalidity("gpAprerror", "#gpAprerror","#gpApr",data.gpApr );
-         checkvalidity("gpMayerror", "#gpMayerror","#gpMay",data.gpMay);
-         checkvalidity("gpJunerror", "#gpJunerror","#gpJun",data.gpJun );
-         checkvalidity("gpJulerror", "#gpJulerror","#gpJul",data.gpJul );
-         checkvalidity("gpAugerror", "#gpAugerror","#gpAug",data.gpAug );
-         checkvalidity("gpSepterror", "#gpSepterror","#gpSept",data.gpSept );
-         checkvalidity("gpOcterror", "#gpOcterror","#gpOct",data.gpOct );
-         checkvalidity("gpNoverror", "#gpNoverror","#gpNov",data.gpNov );
-         checkvalidity("gpDecerror", "#gpDecerror","#gpDec",data.gpDec ); 
-       }
-  }
-  });
-   });
-  });
-    function getGPview(){ 
-          $.ajax({
-            url:"ajax-viewgp.php",
-            success:function(data){
-              $("#showgpview").html(data);
-            }
-          });
-        }
-    function checkvalidity(data1, data2, data3, data4){ 
-      document.getElementById(data1).innerHTML = data4;
-      if(data4 === "Required"){
-        $(data2).removeClass("text-success").addClass("text-danger");
-        $(data3).removeClass("border-success").addClass("border-danger");
-      }else if(data4 === "Valid"){
-        $(data2).removeClass("text-danger").addClass("text-success");
-        $(data3).removeClass("border-danger").addClass("border-success");
-      }else{
-        $(data2).removeClass("text-success").addClass("text-danger");
-        $(data3).removeClass("border-success").addClass("border-danger");
-      }
-    }
-    function clearform(data1, data2, data3,data4, data5){ 
-      $(data1).removeClass("text-success").removeClass("text-danger");
-      document.getElementById(data2).textContent="";
-      $(data3).removeClass("border-success").removeClass("border-danger");
-    }
-  </script>
-
-  <div class="modal fade" id="gpmodal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content" style="padding: 70px">
-        <div class="modal-body"  >
-          <form id="gpform">
-            <div class="form-group">
-
-
-              <div class="modal-header">
-                <h6 class="modal-title">Gross Profit</h6>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <br>
-              <input class="form-control" type="hidden" id="choosegpcomp" name="choosegpcomp" value="">
-              <input class="form-control" type="hidden" id="choosegpyear" name="choosegpyear" value="">
-              <input class="form-control" type="hidden" id="addgpuser" name="addgpuser" value="<?php echo $resultresult->userID ?>">
-
-              <input class="form-control" type="hidden" id="addgpcorporate" name="addgpcorporate" value="<?php echo $resultresult->corporateID ?>">
-
-
-              <div class="form-group">
-                <label><h6 class="m-0">January </h6></label>
-                <input class="form-control" type="text" id="gpJan" name="gpJan"><span id="gpJanerror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">February </h6></label>
-                <input class="form-control" type="text" id="gpFeb" name="gpFeb"><span id="gpFeberror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">March </h6></label>
-                <input class="form-control" type="text" id="gpMar" name="gpMar"><span id="gpMarerror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">April </h6></label>
-                <input class="form-control" type="text" id="gpApr" name="gpApr"><span id="gpAprerror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">May</h6></label>
-                <input class="form-control" type="text" id="gpMay" name="gpMay"><span id="gpMayerror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">Jun </h6></label>
-                <input class="form-control" type="text" id="gpJun" name="gpJun"><span id="gpJunerror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">July</h6></label>
-                <input class="form-control" type="text" id="gpJul" name="gpJul"><span id="gpJulerror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">August </h6></label>
-                <input class="form-control" type="text" id="gpAug" name="gpAug"><span id="gpAugerror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">September </h6></label>
-                <input class="form-control" type="text" id="gpSept" name="gpSept"><span id="gpSepterror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">October </h6></label>
-                <input class="form-control" type="text" id="gpOct" name="gpOct"><span id="gpOcterror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">November </h6></label>
-                <input class="form-control" type="text" id="gpNov" name="gpNov"><span id="gpNoverror"></span>
-              </div>
-              <div class="form-group">
-                <label><h6 class="m-0">December </h6></label>
-                <input class="form-control" type="text" id="gpDec" name="gpDec"><span id="gpDecerror"></span>
-              </div>
-
-              <br>
-              <center><button name="submit" value="submit" id="savegp" type="submit" class="btn btn-primary shadow-sm">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></center>
-              </div>
-            </form>
-
-          </div>
-        </div>
-
-      </div></div>
-
-      <!-- update gross profit -->
-
-      <script type="text/javascript">
-        $(document).ready(function(){
-
-          $(document).on('click', ".updategpmodal", function(){
-            var budgetGrossProfitID = $(this).data('id');
-            $.ajax({
-              url: "ajax-getgrossprofit.php?lang=<?php echo $extlg;?>",
-              type: "POST",
-              data: {budgetGrossProfitID:budgetGrossProfitID},
-              dataType:"json",
-              success:function(data){
-                $("#updgpid").val(data.id);
-                $("#updgpJan").val(data.updgpJan);
-                $("#updgpFeb").val(data.updgpFeb);
-                $("#updgpMar").val(data.updgpMar);
-                $("#updgpApr").val(data.updgpApr);
-                $("#updgpMay").val(data.updgpMay);
-                $("#updgpJun").val(data.updgpJun);
-                $("#updgpJul").val(data.updgpJul);
-                $("#updgpAug").val(data.updgpAug);
-                $("#updgpSept").val(data.updgpSept);
-                $("#updgpOct").val(data.updgpOct);
-                $("#updgpNov").val(data.updgpNov);
-                $("#updgpDec").val(data.updgpDec);
-              }
-            });
-          });
-          var form = $('#updategpform');
-          form.on('submit', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById("updsavegp").innerHTML = "<span class='spinner-border spinner-border-sm'></span> Updating";
-            document.getElementById("updsavegp").disabled = true; 
-            var budgetGrossProfitID = document.getElementById("updgpid").value;
-            var updgpJan = document.getElementById("updgpJan").value;
-            var updgpFeb = document.getElementById("updgpFeb").value;
-            var updgpMar = document.getElementById("updgpMar").value;
-            var updgpApr = document.getElementById("updgpApr").value;
-            var updgpMay = document.getElementById("updgpMay").value;
-            var updgpJun = document.getElementById("updgpJun").value;
-            var updgpJul = document.getElementById("updgpJul").value;
-            var updgpAug = document.getElementById("updgpAug").value;
-            var updgpSept = document.getElementById("updgpSept").value;
-            var updgpOct = document.getElementById("updgpOct").value;
-            var updgpNov = document.getElementById("updgpNov").value;
-            var updgpDec = document.getElementById("updgpDec").value;
-            
-            var alldata = 
-            {
-              gpid:budgetGrossProfitID,
-              updgpJan:updgpJan,
-              updgpFeb:updgpFeb,
-              updgpMar:updgpMar,
-              updgpApr:updgpApr,
-              updgpMay:updgpMay,
-              updgpJun:updgpJun,
-              updgpJul:updgpJul,
-              updgpAug:updgpAug,
-              updgpSept:updgpSept,
-              updgpOct: updgpOct,
-              updgpNov:updgpNov,
-              updgpDec:updgpDec,
-              
-            };
-            $.ajax({
-              url: "ajax-updategp.php",
-              type: "POST",
-              data: alldata,
-              dataType:"json",
-              success:function(data){
-                document.getElementById("updsavegp").innerHTML = "Confirm";
-                document.getElementById("updsavegp").disabled = false; 
-                if(data.condition === "Passed"){
-                 document.getElementById("updategpform").reset();
-                 
-                  $("#updategpmodal").modal("hide");
-                  getGPview();
-                  
-                }else{
-                  checkvalidity("updgpJanerror","#updgpJanerror", "#updgpJan", data.updgpJan);
-                  checkvalidity("updgpFeberror","#updgpFeberror", "#updgpFeb", data.updgpFeb);
-                  checkvalidity("updgpMarerror","#updgpMarerror", "#updgpMar", data.updgpMar);
-                  checkvalidity("updgpAprerror","#updgpAprerror", "#updgpApr", data.updgpApr);
-                  checkvalidity("updgpMayerror","#updgpMayerror", "#updgpMay", data.updgpMay);
-                  checkvalidity("updgpJunerror","#updgpJunerror", "#updgpJun", data.updgpJun);
-                  checkvalidity("updgpJulerror","#updgpJulerror", "#updgpJul", data.updgpJul);
-                  checkvalidity("updgpAugerror","#updgpAugerror", "#updgpAug", data.updgpAug);
-                  checkvalidity("updgpSepterror","#updgpSepterror", "#updgpSept", data.updgpSept);
-                  checkvalidity("updgpOcterror","#updgpOcterror", "#updgpOct", data.updgpOct);
-                  checkvalidity("updgpNoverror","#updgpNoverror", "#updgpNov", data.updgpNov);
-                  checkvalidity("updgpDecerror","#updgpDecerror", "#updgpDec", data.updgpDec);
-                }
-              }
-            });
-          });
-        });
-            
-          function getGPview(){ 
-            $.ajax({
-              url:"ajax-viewgp.php",
-              success:function(data){
-                      $("#showgpview").html(data); 
-                    }
-                  });
-          }
-          function checkvalidity(data1, data2, data3, data4){
-            document.getElementById(data1).innerHTML = data4;
-            if(data4 === "Required"){
-              $(data2).removeClass("text-success").addClass("text-danger");
-              $(data3).removeClass("border-success").addClass("border-danger");
-            }else if(data4 === "Valid"){
-              $(data2).removeClass("text-danger").addClass("text-success");
-              $(data3).removeClass("border-danger").addClass("border-success");
-            }else{
-              $(data2).removeClass("text-success").addClass("text-danger");
-              $(data3).removeClass("border-success").addClass("border-danger");
-            }
-          }
-          function clearform(data1, data2, data3){
-            $(data1).removeClass("text-success").removeClass("text-danger");
-            document.getElementById(data2).textContent="";
-            $(data3).removeClass("border-success").removeClass("border-danger");
-          }
-      </script>
-
-      <div class="modal fade" id="updategpmodal">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content" style="padding: 70px">
-            <div class="modal-body"  >
-              <form id="updategpform">
-                <div class="form-group">
-
-
-                  <div class="modal-header">
-                    <h6 class="modal-title"> Update Gross Profit</h6>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-                  <br>
-                  <input class="form-control" type="hidden" id="updgpid" name="updgpid" value="">
-                  <input class="form-control" type="hidden" id="updgpuser" name="updgpuser" value="<?php 
-                  echo $resultresult->userID ?>">
-
-                  <input class="form-control" type="hidden" id="updgpcorporate" name="updgpcorporate" value="<?php echo $resultresult->corporateID ?>">
-
-
-                  <div class="form-group">
-                    <label><h6 class="m-0">January </h6></label>
-                    <input class="form-control" type="text" id="updgpJan" name="updgpJan"><span id="updgpJanerror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">February </h6></label>
-                    <input class="form-control" type="text" id="updgpFeb" name="updgpFeb"><span id="updgpFeberror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">March </h6></label>
-                    <input class="form-control" type="text" id="updgpMar" name="updgpMar"><span id="updgpMarerror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">April </h6></label>
-                    <input class="form-control" type="text" id="updgpApr" name="updgpApr"><span id="updgpAprerror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">May</h6></label>
-                    <input class="form-control" type="text" id="updgpMay" name="updgpMay"><span id="updgpMayerror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">Jun </h6></label>
-                    <input class="form-control" type="text" id="updgpJun" name="updgpJun"><span id="updgpJunerror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">Julai</h6></label>
-                    <input class="form-control" type="text" id="updgpJul" name="gpJul"><span id="updgpJulerror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">August </h6></label>
-                    <input class="form-control" type="text" id="updgpAug" name="updgpAug"><span id="updgpAugerror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">September </h6></label>
-                    <input class="form-control" type="text" id="updgpSept" name="updgpSept"><span id="updgpSepterror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">October </h6></label>
-                    <input class="form-control" type="text" id="updgpOct" name="updgpOct"><span id="updgpOcterror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">November </h6></label>
-                    <input class="form-control" type="text" id="updgpNov" name="updgpNov"><span id="updgpNoverror"></span>
-                  </div>
-                  <div class="form-group">
-                    <label><h6 class="m-0">December </h6></label>
-                    <input class="form-control" type="text" id="updgpDec" name="updgpDec"><span id="updgpDecerror"></span>
-                  </div>
-
-                  <br>
-                  <center><button name="submit" value="submit" id="updsavegp" type="submit" class="btn btn-primary shadow-sm">Update</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></center>
-                  </div>
-                </form>
-                
-              </div>
-            </div>
-
-          </div>
-        </div>
-    
+  </script>    
