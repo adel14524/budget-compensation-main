@@ -108,6 +108,18 @@ return $data;
         }
         return false;
     }
+	
+	public function searchbudgetsubidmonth($budgetSubAllocationID = null,$month = null){
+        if($budgetSubAllocationID && $month){
+            $field = (is_numeric($budgetSubAllocationID)) ? 'budgetSubAllocationID' : 'budget_expenses';
+            $data = $this->_db->getOne('budget_expenses', array($field, '=', $budgetSubAllocationID), array("EXTRACT(MONTH FROM date)", '=', $month));
+            if($data->count()){
+                $this->_data = $data->results();
+                return $this->_data;
+            }
+        }
+        return false;
+    }
 
 
 
