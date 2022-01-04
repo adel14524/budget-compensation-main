@@ -58,7 +58,16 @@ return $data;
 }
 	  }
 	}
-	      
+
+	  public function searchmaincategory($value = null, $year=null,$type = null){
+	  if($value){
+	    $data = $this->_db->get2('budget_main_allocation', array("companyID", '=', $value), array("year", '=', $year), array("categoryName", '=', $type));
+	    if($data->count()){
+	      $this->_data = $data->first();
+	      return $this->_data;
+}
+	  }
+	}    
     public function searchmainbudgetid($budgetInitialID=null){
           if($budgetInitialID){
             $data = $this->_db->get('budget_main_allocation', array("budgetInitialID", '=', $budgetInitialID));
