@@ -22,9 +22,22 @@ if(Input::exists()){
 
     $mainallocationobject = new Mainallocation();
     $suballocationobject = new Suballocation();
+    $Bonusobject = new Calculation();
 
     $data2 = $mainallocationobject->searchmain($comp,$year);
 
+    $bonusallocation = $mainallocationobject->searchmaincategory($comp,$year,"Bonus");
+
+    if ($bonusallocation) {
+        $bonusdata=$Bonusobject->searchbonusmainid($bonusallocation->budgetMainAllocationID);
+    }
+    
+    $othersallocation = $mainallocationobject->searchmaincategory($comp,$year,"Others");
+
+    if ($othersallocation) {
+        $othersdata = $suballocationobject->searchsub($othersallocation->budgetMainAllocationID);
+    }
+    
     $revenueobject = new Revenue();
     $actualrevdata = $revenueobject->searchRevenueactual($comp,$year,"actualrev");
 
@@ -751,158 +764,99 @@ if(Input::exists()){
         return $data;
     }
 
-    // need to make some amendment
-    function categoryexpenses($maindata){
-        if ($maindata) {
-            $amountbonus1=0;$amountbonus2=0;$amountbonus3=0;$amountbonus4=0;$amountbonus5=0;
-            $amountbonus6=0;$amountbonus7=0;$amountbonus8=0;$amountbonus9=0;$amountbonus10=0;
-            $amountbonus11=0;$amountbonus12=0;
-            $expamountList = array();
-            $test = array();
-            $bonusamount = array();
-            $subamount = array();
-            $expcategoryList = array();
+    function bonuscategory($bonusresult){
+        $amountbonus1=0;$amountbonus2=0;$amountbonus3=0;$amountbonus4=0;$amountbonus5=0;
+        $amountbonus6=0;$amountbonus7=0;$amountbonus8=0;$amountbonus9=0;$amountbonus10=0;
+        $amountbonus11=0;$amountbonus12=0;
+        $bonusamount = array();
+            
+        if ($bonusresult) {
+            foreach ($bonusresult as $row1) {
+                $month = date("m",strtotime($row1->date));
 
-            array_push($expcategoryList,"Bonus");
-
-            $suballocationobject = new Suballocation();
-
-            foreach ($maindata as $row) {
-                $data3 = $suballocationobject->searchsub($row->budgetMainAllocationID);
-
-                $amountsub1=0;$amountsub2=0;$amountsub3=0;$amountsub4=0;$amountsub5=0;
-                $amountsub6=0;$amountsub7=0;$amountsub8=0;$amountsub9=0; $amountsub10=0;
-                $amountsub11=0;$amountsub12=0;
-
-                if ($row->categoryName == "Bonus") {
-                    $Bonusobject= new Calculation();
-                    $bonusresult=$Bonusobject->searchbonusmainid($row->budgetMainAllocationID);
-                    $bonusallocation=$row->budgetAllocated;
-
-                    if ($bonusresult) {
-                        foreach ($bonusresult as $row1) {
-                            $month = date("m",strtotime($row1->date));
-
-                            if ($month == "01") {
-                                $amountbonus1 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "02") {
-                                $amountbonus2 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "03") {
-                                $amountbonus3 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "04") {
-                                $amountbonus4 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "05") {
-                                $amountbonus5 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "06") {
-                                $amountbonus6 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "07") {
-                                $amountbonus7 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "08") {
-                                $amountbonus8 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "09") {
-                                $amountbonus9 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "10") {
-                                $amountbonus10 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "11") {
-                                $amountbonus11 += $row1->Total_Bonus;
-                            }
-                            elseif ($month == "12") {
-                                $amountbonus12 += $row1->Total_Bonus;
-                            }
-                        }
-                        array_push($bonusamount,$amountbonus1);
-                        array_push($bonusamount,$amountbonus2);
-                        array_push($bonusamount,$amountbonus3);
-                        array_push($bonusamount,$amountbonus4);
-                        array_push($bonusamount,$amountbonus5);
-                        array_push($bonusamount,$amountbonus6);
-                        array_push($bonusamount,$amountbonus7);
-                        array_push($bonusamount,$amountbonus8);
-                        array_push($bonusamount,$amountbonus9);
-                        array_push($bonusamount,$amountbonus10);
-                        array_push($bonusamount,$amountbonus11);
-                        array_push($bonusamount,$amountbonus12);
-                    }
+                if ($month == "01") {
+                    $amountbonus1 += $row1->Total_Bonus;
                 }
-                elseif ($row->categoryName == "Others") {
-                    foreach ($data3 as $row2) {
-                        array_push($expcategoryList,$row2->categoryName);
-                        $Expense1object = new Expense();
-                        $expensesresult=$Expense1object->searchbudgetsubid($row2->budgetSubAllocationID);
-
-                        if ($expensesresult) {
-                            foreach ($expensesresult as $row3) {
-                                $month = date("m",strtotime($row3->date));
-
-                                if ($month == "01") {
-                                    $amountsub1 += $row3->amount;
-                                }
-                                elseif ($month == "02") {
-                                    $amountsub2 += $row3->amount;
-                                }
-                                elseif ($month == "03") {
-                                    $amountsub3 += $row3->amount;
-                                }
-                                elseif ($month == "04") {
-                                    $amountsub4 += $row3->amount;
-                                }
-                                elseif ($month == "05") {
-                                    $amountsub5 += $row3->amount;
-                                }
-                                elseif ($month == "06") {
-                                    $amountsub6 += $row3->amount;
-                                }
-                                elseif ($month == "07") {
-                                    $amountsub7 += $row3->amount;
-                                }
-                                elseif ($month == "08") {
-                                    $amountsub8 += $row3->amount;
-                                }
-                                elseif ($month == "09") {
-                                    $amountsub9 += $row3->amount;
-                                }
-                                elseif ($month == "10") {
-                                    $amountsub10 += $row3->amount;
-                                }
-                                elseif ($month == "11") {
-                                    $amountsub11 += $row3->amount;
-                                }
-                                elseif ($month == "12") {
-                                    $amountsub12 += $row3->amount;
-                                }
-
-                                array_push($subamount,$amountsub1);
-                                array_push($subamount,$amountsub2);
-                                array_push($subamount,$amountsub3);
-                                array_push($subamount,$amountsub4);
-                                array_push($subamount,$amountsub5);
-                                array_push($subamount,$amountsub6);
-                                array_push($subamount,$amountsub7);
-                                array_push($subamount,$amountsub8);
-                                array_push($subamount,$amountsub9);
-                                array_push($subamount,$amountsub10);
-                                array_push($subamount,$amountsub11);
-                                array_push($subamount,$amountsub12);
-
-                                array_push($test,$subamount);
-                            }
-                        }
-                    }
+                elseif ($month == "02") {
+                    $amountbonus2 += $row1->Total_Bonus;
+                }
+                elseif ($month == "03") {
+                    $amountbonus3 += $row1->Total_Bonus;
+                }
+                elseif ($month == "04") {
+                    $amountbonus4 += $row1->Total_Bonus;
+                }
+                elseif ($month == "05") {
+                    $amountbonus5 += $row1->Total_Bonus;
+                }
+                elseif ($month == "06") {
+                    $amountbonus6 += $row1->Total_Bonus;
+                }
+                elseif ($month == "07") {
+                    $amountbonus7 += $row1->Total_Bonus;
+                }
+                elseif ($month == "08") {
+                    $amountbonus8 += $row1->Total_Bonus;
+                }
+                elseif ($month == "09") {
+                    $amountbonus9 += $row1->Total_Bonus;
+                }
+                elseif ($month == "10") {
+                    $amountbonus10 += $row1->Total_Bonus;
+                }
+                elseif ($month == "11") {
+                    $amountbonus11 += $row1->Total_Bonus;
+                }
+                elseif ($month == "12") {
+                    $amountbonus12 += $row1->Total_Bonus;
                 }
             }
-        }
+            array_push($bonusamount,$amountbonus1);
+            array_push($bonusamount,$amountbonus2);
+            array_push($bonusamount,$amountbonus3);
+            array_push($bonusamount,$amountbonus4);
+            array_push($bonusamount,$amountbonus5);
+            array_push($bonusamount,$amountbonus6);
+            array_push($bonusamount,$amountbonus7);
+            array_push($bonusamount,$amountbonus8);
+            array_push($bonusamount,$amountbonus9);
+            array_push($bonusamount,$amountbonus10);
+            array_push($bonusamount,$amountbonus11);
+            array_push($bonusamount,$amountbonus12);
+        }  
+        return $bonusamount;
+    }
 
-        return $test;
+    function otherscategory($dataothers){
+        $month = array("01","02","03","04","05","06","07","08","09","10","11","12");
+        $arrayresult = array();
+        $categoryList = array();
+        $resultList = array();
+  
+        foreach ($dataothers as $row2) {
+            $subamount = array();
+            array_push($categoryList,$row2->categoryName);
+            foreach ($month as $keymonth) {
+                $Expense1object = new Expense();
+                $expensesresult=$Expense1object->searchbudgetsubidmonth($row2->budgetSubAllocationID,$keymonth);
+
+                if ($expensesresult) {
+                    $totalmonth = 0;
+                    foreach ($expensesresult as $row3) {
+                        $totalmonth += $row3->amount;
+                    }
+                    array_push($subamount,$totalmonth);
+                }
+                else{
+                    array_push($subamount,0);
+                }
+            } 
+            array_push($arrayresult,$subamount);
+        }
+        array_push($resultList,$categoryList);
+        array_push($resultList,$arrayresult);
+
+        return $resultList;
     }
 
     $view = "";
@@ -912,9 +866,6 @@ if(Input::exists()){
             $totalexp = totalexpensesyear($data2);
             $totalrevenue = totalrevyear($actualrevdata);
             $totalnetprofit = totalnetprofityear($actualrevdata,$data2,$costdata1);
-            // $test = categoryexpenses($data2);
-            // print_r($test);
-
 
             $view ="
                 <style type='text/css'>
@@ -924,7 +875,7 @@ if(Input::exists()){
                 </style>
                 <br>
                 <div class='card-deck mr-0'>
-                    <div class='card my-3 box' style='background-color:#00E1BC; transition: box-shadow .3s; color: #ffffff; border-radius: 11px;'>
+                    <div class='card my-3 box' style='background-color:rgb(0,225,188); transition: box-shadow .3s; color: #ffffff; border-radius: 11px;'>
                         <div class='card-body p-3'>
                             <div class='m-2'><img src='https://img.icons8.com/ios-filled/45/ffffff/total-sales-1.png'/></div>
                             <h2 class='m-3'><b>RM&nbsp;".number_format($totalrevenue)."</b></h2>
@@ -977,10 +928,13 @@ if(Input::exists()){
                                                     label: 'First Dataset',
                                                     data: ".json_encode($allocationamountList).",
                                                     backgroundColor: [
-                                                        'rgba(8,10,51,1)',
-                                                        'rgba(5,183,138,1)',
-                                                        'rgba(220,53,69,1)',
-                                                        'rgba(224,228,232,1)',
+            ";
+                                                        for ($i=0; $i < count($allocationcategoryList); $i++) {
+                                                            $view .=" 
+                                                                bgRGBcolor(),
+                                                            ";
+                                                        }
+            $view .="                                        
                                                     ],
                                                     hoverOffset: 4
                                                 }],
@@ -991,6 +945,23 @@ if(Input::exists()){
                                                 },
                                             },
                                         });
+
+                                        function bgRGBcolor(){
+                                            max = 255;
+                                            min = 100
+                                            range = max - min;
+                                            var randomR = Math.floor((Math.random() * range) + min);
+                                            var randomG = Math.floor((Math.random() * range) + min);
+                                            var randomB = Math.floor((Math.random() * range) + min);
+                                         
+                                            var graphBackground = \"rgb(\" 
+                                                     + randomR + \", \" 
+                                                     + randomG + \", \" 
+                                                     + randomB + \")\";
+                                         
+                                         
+                                            return graphBackground;
+                                        }
                                     </script>
                                 </div>
                             </div>
@@ -1135,8 +1106,8 @@ if(Input::exists()){
                 ";
             } 
 
-
-
+            list($category,$totalamount) = otherscategory($othersdata);
+            $bonusdata1 = bonuscategory($bonusdata);
             
             $view .="
                 <!-- Expenses Card -->
@@ -1155,25 +1126,24 @@ if(Input::exists()){
                                                 data: {
                                                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                                                     datasets: [{
-                                                        label: 'Category1',
-                                                        data: [2000,4000,7000,5000,7000,1000,800,500,1000,2000,4000,1020],
-                                                        backgroundColor: 'rgba(8,10,51,1)',
+                                                        label: 'Bonus',
+                                                        data: ".json_encode($bonusdata1).",
+                                                        backgroundColor: bgRGBcolor(),
                                                         },
+            ";
+                                                for ($i=0; $i < count($category); $i++) { 
+                                                    $view .="
+
                                                         {
-                                                        label: 'Category2',
-                                                        data: [100,50,400,200,300,500,1000,800,100,500,600,300],
-                                                        backgroundColor: 'rgba(224,228,232,1)',
+                                                            label: '".$category[$i]."',
+                                                            data: ".json_encode($totalamount[$i]).",
+                                                            backgroundColor: bgRGBcolor(),
                                                         },
-                                                        {
-                                                        label: 'Category3',
-                                                        data: [100,50,400,200,300,500,1000,800,100,500,600,300],
-                                                        backgroundColor: 'rgba(5,183,138,1)',
-                                                        },
-                                                        {
-                                                        label: 'Category4',
-                                                        data: [100,50,400,200,300,500,1000,800,100,500,600,300],
-                                                        backgroundColor: 'rgba(5,42,229,1)',
-                                                    }],
+                                                    ";
+                                                }
+
+            $view .="
+                                                ],
                                                 },
                                                 options: {
                                                     tooltips: {
@@ -1202,13 +1172,30 @@ if(Input::exists()){
                                                 } 
                                             });
                                             
+                                            function bgRGBcolor(){
+
+                                                var randomR = Math.floor((Math.random() * 130) + 100);
+                                                var randomG = Math.floor((Math.random() * 130) + 100);
+                                                var randomB = Math.floor((Math.random() * 130) + 100);
+                                             
+                                                var graphBackground = \"rgb(\" 
+                                                         + randomR + \", \" 
+                                                         + randomG + \", \" 
+                                                         + randomB + \")\";
+                                             
+                                             
+                                                return graphBackground;
+                                            }
                                         </script>
+
                                     </div>
                                 </div>
                                 <br>
                                 <div class='row'>
                                     <div class='col-12 text-right'>
-                                        <button type='button' class='btn btn-outline-primary shadow-sm m-3' data-id='' data-toggle='modal' data-backdrop='static' data-target=''>View More...</button>
+                                        <a href='budgetexpense.php'>
+                                            <button type='button' class='btn btn-outline-primary shadow-sm m-3' data-id='' data-toggle='modal' data-backdrop='static' data-target=''>View More...</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
