@@ -87,7 +87,7 @@ padding: 70px;
                 dataType: "json",
                 method: "POST",
                 success:function(data){
-                  console.log(data);
+                  // console.log(data);
           $("#showoverviewexpenses").html(data); // This is A
         }
       });
