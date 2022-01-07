@@ -714,10 +714,12 @@ if(Input::exists()){
     function categorybudgetallocation($maindata){
         $suballocationobject1 = new Suballocation();
         $categoryList = array();
+        $colorList = array();
         $amountList = array();
         $resultList = array();
 
         array_push($categoryList,"Bonus");
+        array_push($colorList,"rgb(237, 242, 89)");
 
         if($maindata){
             foreach ($maindata as $categoryrow) {
@@ -729,9 +731,15 @@ if(Input::exists()){
                     $datasub = $suballocationobject1->searchsub($categoryrow->budgetMainAllocationID);
                     if ($datasub) {
                         foreach ($datasub as $rowsub) {
-                            $sub_category = $rowsub->categoryName;
+                            $categorydata = $suballocationobject1->searchcategory($rowsub->categoryID);
+
+                            if ($categorydata) {
+                                foreach ($categorydata as $categoryrow) {
+                                    array_push($categoryList,$categoryrow->category);
+                                    array_push($colorList,$categoryrow->rgb);
+                                }
+                            }
                             $othersallocated = $rowsub->budgetAllocated;
-                            array_push($categoryList,$sub_category);
                             array_push($amountList,$othersallocated);
                         }
                     }
@@ -741,27 +749,9 @@ if(Input::exists()){
 
         array_push($resultList,$categoryList);
         array_push($resultList,$amountList);
+        array_push($resultList,$colorList);
 
         return $resultList;
-    }
-
-    function test(){
-        $label = array("Bonus","Salary","Expand");
-        $data = array();
-        $data2 = array();
-
-        $data_count = count($label);
-        
-        for ($i=0; $i < $data_count; $i++) { 
-            for ($i=0; $i < 12; $i++) { 
-                $x=$i+1;
-
-                array_push($data, $x);
-            }
-            array_push($data2,$data);
-        }
-
-        return $data;
     }
 
     function bonuscategory($bonusresult){
@@ -829,13 +819,23 @@ if(Input::exists()){
 
     function otherscategory($dataothers){
         $month = array("01","02","03","04","05","06","07","08","09","10","11","12");
+        $suballocationobject = new Suballocation();
         $arrayresult = array();
         $categoryList = array();
+        $colorList = array();
         $resultList = array();
   
         foreach ($dataothers as $row2) {
             $subamount = array();
-            array_push($categoryList,$row2->categoryName);
+            $categorydata = $suballocationobject->searchcategory($row2->categoryID);
+
+            if ($categorydata) {
+                foreach ($categorydata as $categoryrow) {
+                    array_push($categoryList,$categoryrow->category);
+                    array_push($colorList,$categoryrow->rgb);
+                }
+            }
+            
             foreach ($month as $keymonth) {
                 $Expense1object = new Expense();
                 $expensesresult=$Expense1object->searchbudgetsubidmonth($row2->budgetSubAllocationID,$keymonth);
@@ -855,6 +855,7 @@ if(Input::exists()){
         }
         array_push($resultList,$categoryList);
         array_push($resultList,$arrayresult);
+        array_push($resultList,$colorList);
 
         return $resultList;
     }
@@ -903,7 +904,7 @@ if(Input::exists()){
                 $initialbudget = $compbudget->initialBudget;
             }
 
-            list($allocationcategoryList, $allocationamountList) = categorybudgetallocation($data2);
+            list($allocationcategoryList, $allocationamountList,$color) = categorybudgetallocation($data2);
 
             $view .="
                 <div class='card-deck m-0'>
@@ -927,15 +928,7 @@ if(Input::exists()){
                                                 datasets: [{
                                                     label: 'First Dataset',
                                                     data: ".json_encode($allocationamountList).",
-                                                    backgroundColor: [
-            ";
-                                                        for ($i=0; $i < count($allocationcategoryList); $i++) {
-                                                            $view .=" 
-                                                                bgRGBcolor(),
-                                                            ";
-                                                        }
-            $view .="                                        
-                                                    ],
+                                                    backgroundColor: ".json_encode($color).",
                                                     hoverOffset: 4
                                                 }],
                                             },
@@ -945,23 +938,6 @@ if(Input::exists()){
                                                 },
                                             },
                                         });
-
-                                        function bgRGBcolor(){
-                                            max = 255;
-                                            min = 100
-                                            range = max - min;
-                                            var randomR = Math.floor((Math.random() * range) + min);
-                                            var randomG = Math.floor((Math.random() * range) + min);
-                                            var randomB = Math.floor((Math.random() * range) + min);
-                                         
-                                            var graphBackground = \"rgb(\" 
-                                                     + randomR + \", \" 
-                                                     + randomG + \", \" 
-                                                     + randomB + \")\";
-                                         
-                                         
-                                            return graphBackground;
-                                        }
                                     </script>
                                 </div>
                             </div>
@@ -1106,7 +1082,7 @@ if(Input::exists()){
                 ";
             } 
 
-            list($category,$totalamount) = otherscategory($othersdata);
+            list($category,$totalamount,$categoryColor) = otherscategory($othersdata);  
             $bonusdata1 = bonuscategory($bonusdata);
             
             $view .="
@@ -1128,7 +1104,7 @@ if(Input::exists()){
                                                     datasets: [{
                                                         label: 'Bonus',
                                                         data: ".json_encode($bonusdata1).",
-                                                        backgroundColor: bgRGBcolor(),
+                                                        backgroundColor: 'rgb(237, 242, 89)',
                                                         },
             ";
                                                 for ($i=0; $i < count($category); $i++) { 
@@ -1137,7 +1113,7 @@ if(Input::exists()){
                                                         {
                                                             label: '".$category[$i]."',
                                                             data: ".json_encode($totalamount[$i]).",
-                                                            backgroundColor: bgRGBcolor(),
+                                                            backgroundColor: '".$categoryColor[$i]."',
                                                         },
                                                     ";
                                                 }
