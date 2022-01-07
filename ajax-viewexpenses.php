@@ -42,10 +42,12 @@ if(Input::exists()){
     $category_data = $mainallocationobject1->searchmain($comp,$year);
     $suballocationobject1 = new Suballocation();
     $categoryList = array();
+    $colorList = array();
     $amountList = array();
     $resultList = array();
     
     array_push($categoryList,"Bonus");
+    array_push($colorList,"rgb(224, 228, 232)");
 
     if($category_data){
       foreach ($category_data as $category_row){
@@ -57,10 +59,17 @@ if(Input::exists()){
           $datasub = $suballocationobject1->searchsub($category_row->budgetMainAllocationID);
           if($datasub){
             foreach($datasub as $rowsub){
+              $categorydata = $suballocationobject1->searchcategory($rowsub->categoryID);
               $totalexp = totalexpenses($rowsub->budgetSubAllocationID,$month,$year);
-              $sub_category = $rowsub->categoryName;
+
+              if ($categorydata) {
+                foreach ($categorydata as $categoryrow) {
+                  array_push($categoryList,$categoryrow->category);
+                  array_push($colorList,$categoryrow->rgb);
+                }
+              }
               array_push($amountList,$totalexp);
-              array_push($categoryList,$sub_category);
+              
             }
           }
         }
@@ -68,9 +77,11 @@ if(Input::exists()){
     }
 
     array_push($categoryList,"The Amount Left (RM)");
+    array_push($colorList, "rgb(237, 242, 89)");
     array_push($amountList,$balance);
     array_push($resultList,$categoryList);
     array_push($resultList,$amountList);
+    array_push($resultList,$colorList);
     return $resultList;
   }
 
@@ -190,8 +201,6 @@ if(Input::exists()){
             </div>
           </div>
           <p><div class='dropdown-divider border-2'></div></p>
-
-        
         ";
 
 
@@ -233,31 +242,38 @@ if(Input::exists()){
       elseif($row2->categoryName ==="Others"){
         $data3 = $suballocationobject->searchsub($row2->budgetMainAllocationID);
         $grandtotal=0;
+
         if($data3){
           $view .="
           ";
           foreach ($data3 as $row3){
+            
+            $categorydata = $suballocationobject->searchcategory($row3->categoryID);
             $totalexpenses=totalexpenses($row3->budgetSubAllocationID,$month,$year);
             $grandtotal+=$totalexpenses;
 
-            $view .= "
-            <div class='card my-3'>
-            <div class='card-body pb-3'>
-              <div class='row'>
-                <div class='col-8 text-left'>
-                  <h6 class='mb-1'><i class='fas fa-bullseye'></i>&nbsp;&nbsp;".$row3->categoryName."<i class=''></i></h6>
-                  <small><span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> <span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> </small> <br>
-                </div>
+            if ($categorydata) {
+              foreach ($categorydata as $categoryrow) {
+                $view .= "
+                  <div class='card my-3'>
+                  <div class='card-body pb-3'>
+                    <div class='row'>
+                      <div class='col-8 text-left'>
+                        <h6 class='mb-1'><i class='fas fa-bullseye'></i>&nbsp;&nbsp;".$categoryrow->category."<i class=''></i></h6>
+                        <small><span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> <span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> </small> <br>
+                      </div>
 
-                <div class='col-4 text-center'>
-                  <div><b>Total Amount (RM)</b></div>
-                  <div>".$totalexpenses."</div>
-                </div>
-              </div>
-              <p><div class='dropdown-divider border-2'></div></p>
+                      <div class='col-4 text-center'>
+                        <div><b>Total Amount (RM)</b></div>
+                        <div>".$totalexpenses."</div>
+                      </div>
+                    </div>
+                    <p><div class='dropdown-divider border-2'></div></p>
+                ";
+              }
+            }
 
-      
-            ";
+            
 
             $Expenseobject = new Expense();
             $dataexpenses = $Expenseobject->searchexpensessubid($row3->budgetSubAllocationID,$month,$year);
@@ -315,7 +331,7 @@ if(Input::exists()){
       }
     }
   
-    list($expcategoryList,$expamount) = getCategory($month,$year,$comp,$balance);
+    list($expcategoryList,$expamount,$color) = getCategory($month,$year,$comp,$balance);
 
     $view.="
       </div>
@@ -330,15 +346,7 @@ if(Input::exists()){
                   datasets: [{
                     label: 'First Dataset',
                     data: ".json_encode($expamount).",
-                    backgroundColor: [
-                      'rgba(5,183,138,1)',
-                      'rgba(8,10,51,1)',
-                      'rgba(5,42,229,1)',
-                      'rgba(220,53,69,1)',
-                      'rgba(224,228,232,1)',   //find more color
-                      'rgba(248,90,62,1)',
-                      'rgba(218,36,200,1)'
-                    ],
+                    backgroundColor: ".json_encode($color).",
                     hoverOffset: 4
                   }],
                 }, 
