@@ -905,7 +905,7 @@ function clearform(data1, data2, data3){
 
 
                   function getviewsub($year){
-                    weekpicker = $('#mainallocationyear');
+                    weekpicker = $('#mainallocationyear'); 
                     weekpicker.datepicker({
                       autoclose: true,
                       forceParse: false,
@@ -1006,11 +1006,11 @@ function clearform(data1, data2, data3){
 
               </div>
               <div class="form-group">
-                <label><h6 class="m-0">Percent of Allocation </h6></label>
+                <label><h6 class="m-0">Percent of Allocation</h6></label>
                 <input class="form-control" type="text" id="subpercent" name="subpercent" >
                 <small><span id="subpercenterror"></span></small>
               </div>
-
+              
               <br>
               <center><button name="submit" id="saveSub" value="submit" type="submit" class="btn btn-primary shadow-sm">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></center>
@@ -1470,7 +1470,7 @@ function clearform(data1, data2, data3){
             <div class="modal-content">
               <div class="modal-body">
                 <div class="row">
-                  <div class="col-12"><button type="button" class="close" data-dismiss="modal">×</button></div>
+                  <div class="col-12"><button type="button" class="close" data-dismiss="modal"></button></div>
                   <div class="col-1"></div>
                   <div class="col-12 col-sm-10 py-4">
                     <h4 class="modal-title">Get Actual Revenue from Baseline</h4>
@@ -1676,9 +1676,9 @@ function clearform(data1, data2, data3){
                              </div>
                              <br>
                              <input class="form-control" type="hidden" id="updyear" name="updyear" value="">
-                             <input class="form-control" type="hidden" id="updrevcorporate" name="updrevcorporate" value="<?php echo $resultresult->corporateID ?>">
+                             <input class="form-control" type="hidden" id="updrevcorporate" name="updrevcorporate" value="">
                              <input class="form-control" type="hidden" id="updrevcompany" name="updrevcompany" value="">
-                             <input class="form-control" type="hidden" id="updrevuser" name="updrevuser" value="<?php echo $resultresult->userID ?>">
+                             <input class="form-control" type="hidden" id="updrevuser" name="updrevuser" value="">
                              
                              <input class="form-control" type="hidden" id="updestimateid" name="updestimateid" value="">
 
