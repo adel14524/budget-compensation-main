@@ -713,6 +713,7 @@ if(Input::exists()){
 
     function categorybudgetallocation($maindata){
         $suballocationobject1 = new Suballocation();
+        $budgetcatObj = new Budgetcategory();
         $categoryList = array();
         $colorList = array();
         $amountList = array();
@@ -731,13 +732,11 @@ if(Input::exists()){
                     $datasub = $suballocationobject1->searchsub($categoryrow->budgetMainAllocationID);
                     if ($datasub) {
                         foreach ($datasub as $rowsub) {
-                            $categorydata = $suballocationobject1->searchcategory($rowsub->categoryID);
+                            $categorydata = $budgetcatObj->searchBudgetCategoryByID($rowsub->categoryID);
 
                             if ($categorydata) {
-                                foreach ($categorydata as $categoryrow) {
-                                    array_push($categoryList,$categoryrow->category);
-                                    array_push($colorList,$categoryrow->rgb);
-                                }
+                                array_push($categoryList,$categorydata->category);
+                                array_push($colorList,$categorydata->rgb);
                             }
                             $othersallocated = $rowsub->budgetAllocated;
                             array_push($amountList,$othersallocated);
@@ -819,7 +818,7 @@ if(Input::exists()){
 
     function otherscategory($dataothers){
         $month = array("01","02","03","04","05","06","07","08","09","10","11","12");
-        $suballocationobject = new Suballocation();
+        $budgetcatObj = new Budgetcategory();
         $arrayresult = array();
         $categoryList = array();
         $colorList = array();
@@ -827,13 +826,11 @@ if(Input::exists()){
   
         foreach ($dataothers as $row2) {
             $subamount = array();
-            $categorydata = $suballocationobject->searchcategory($row2->categoryID);
+            $categorydata = $budgetcatObj->searchBudgetCategoryByID($row2->categoryID);
 
             if ($categorydata) {
-                foreach ($categorydata as $categoryrow) {
-                    array_push($categoryList,$categoryrow->category);
-                    array_push($colorList,$categoryrow->rgb);
-                }
+                array_push($categoryList,$categorydata->category);
+                array_push($colorList,$categorydata->rgb);
             }
             
             foreach ($month as $keymonth) {
@@ -1017,6 +1014,32 @@ if(Input::exists()){
                     </div>
                 ";
             }
+            else{
+                $view .="
+                    <!-- My Compensation Plan card -->
+                    <div class='card mx-3 box mybox' style='transition: box-shadow .3s; color:##2E2C38; border-radius: 11px; margin:16px 0;'>
+                        <div class='card-body p-3 mb-0'>
+                            <h3 class='m-3'><strong><em>My Compensation Plan</em></strong></h3>
+                            <br>
+                            <div style='height:52vh;'>
+                                <div class='card mx-3'>
+                                    <div class='card-body text-center'>
+                                        <b>You have no plan yet for ".$year.".</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class='row'>
+                                <div class='col-12 text-right'>
+                                    <a href='user-view.php'>
+                                        <button type='button' class='btn btn-outline-primary shadow-sm m-3' data-id='' data-toggle='modal' data-backdrop='static' data-target=''>View More...</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ";
+            }
 
             $view .="
                 </div>
@@ -1147,21 +1170,6 @@ if(Input::exists()){
                                                     },
                                                 } 
                                             });
-                                            
-                                            function bgRGBcolor(){
-
-                                                var randomR = Math.floor((Math.random() * 130) + 100);
-                                                var randomG = Math.floor((Math.random() * 130) + 100);
-                                                var randomB = Math.floor((Math.random() * 130) + 100);
-                                             
-                                                var graphBackground = \"rgb(\" 
-                                                         + randomR + \", \" 
-                                                         + randomG + \", \" 
-                                                         + randomB + \")\";
-                                             
-                                             
-                                                return graphBackground;
-                                            }
                                         </script>
 
                                     </div>
