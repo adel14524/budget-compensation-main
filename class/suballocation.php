@@ -65,16 +65,7 @@ class Suballocation {
 			}
 		}
 	}
-
-	public function searchcategory($categoryID = null){
-		if($categoryID){
-			$data = $this->_db->get('budget_category',array("id", '=', $categoryID));
-			if($data->count()){
-				$this->_data = $data->results();
-				return $this->_data;
-			}
-		}
-	}
+	
 	public function searchbudgetsubid($value = null){
 		if($value){
 			$data = $this->_db->get('budget_sub_allocation',array("budgetSubAllocationID", '=', $value));
