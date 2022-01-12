@@ -384,6 +384,8 @@ if(Input::exists()){
                 var div = $(this).data('place');
                 var budgetallocated = ".$budgetallocation.";
                 var balance = $(this).data('balance');
+                
+                var newbalance = document.getElementById('balance'+month).textContent;
 
                 var alldata = 
                 {
@@ -391,9 +393,9 @@ if(Input::exists()){
                   year:year,
                   month:month,
                   budgetallocated:budgetallocated,
-                  balance:balance,
+                  balance:newbalance,
                 };
-                console.log(alldata);
+                console.log(newbalance);
                 $.ajax({
                   url:'ajax-viewexpenses.php',
                   data: alldata,
