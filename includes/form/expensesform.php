@@ -68,10 +68,12 @@ $.ajax({
     document.getElementById("saveExp").disabled = false;
     if(data.condition === "Passed"){
       document.getElementById("addexpenses").reset();
+      clearform("#datecomperror", "datecomperror", "#datecomp", );
+      clearform("#amountcomperror", "amountcomperror", "#amountcomp", );
+      clearform("#desccomperror", "desccomperror", "#desccomp", );
       $("#addCompensation1").modal("hide");
       selectmonthaddexpenses(data.month,data.balance,data.budgetallocated,data.amountcomp,data.div); 
     }else{
-
       checkvalidity("datecomperror", "#datecomperror","#datecomp",data.datecomp ); 
       checkvalidity("amountcomperror", "#amountcomperror","#amountcomp",data.amountcomp ); 
       checkvalidity("desccomperror", "#desccomperror","#desccomp",data.desccomp );
@@ -116,6 +118,7 @@ function selectmonthaddexpenses(month,balance,budget,amount,place) {
     }
   });
 }
+
 function checkvalidity(data1, data2, data3, data4){ 
   document.getElementById(data1).innerHTML = data4;
   if(data4 === "Required"){
@@ -130,7 +133,7 @@ function checkvalidity(data1, data2, data3, data4){
   }
 }
 
-function clearform(data1, data2, data3,data4, data5){ //clear the error whenever close the modal
+function clearform(data1, data2, data3){ //clear the error whenever close the modal
   $(data1).removeClass("text-success").removeClass("text-danger");
   document.getElementById(data2).textContent="";
   $(data3).removeClass("border-success").removeClass("border-danger");
@@ -1302,170 +1305,170 @@ function clearform(data1, data2, data3){
                     </script>
 
   <!-- script add revenue  -->
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $(document).on('click', ".saverev1", function(){
-        var companyID = document.getElementById("companyrevenue").value; 
-        var year = document.getElementById("revenueyear").value; 
+  <!-- <script type="text/javascript">
+  //   $(document).ready(function(){
+  //     $(document).on('click', ".saverev1", function(){
+  //       var companyID = document.getElementById("companyrevenue").value; 
+  //       var year = document.getElementById("revenueyear").value; 
 
-        { 
-          $("#addrevcompany").val(companyID);
-          $("#addrevenueyear").val(year);
-        }
-      });
-      var form = $('#getBaselineForm');
-      form.on('submit', function(e){
-      e.preventDefault();  
-      e.stopPropagation(); 
+  //       { 
+  //         $("#addrevcompany").val(companyID);
+  //         $("#addrevenueyear").val(year);
+  //       }
+  //     });
+  //     var form = $('#getBaselineForm');
+  //     form.on('submit', function(e){
+  //     e.preventDefault();  
+  //     e.stopPropagation(); 
 
-      document.getElementById("saveRev").innerHTML = "<span class='spinner-border spinner-border-sm'></span> Saving";
-      document.getElementById("saveRev").disabled = true; 
+  //     document.getElementById("saveRev").innerHTML = "<span class='spinner-border spinner-border-sm'></span> Saving";
+  //     document.getElementById("saveRev").disabled = true; 
 
-      var addCorp = document.getElementById("addrevcorporate").value;
-      var addrevcompany = document.getElementById("addrevcompany").value;
-      var addUser = document.getElementById("addrevuser").value;
-      var addRevyear = document.getElementById("addrevenueyear").value;
-      var addRevType = document.getElementById("revtype").value;
-      var addJanRev = document.getElementById("revJan").value;
-      var addFebRev = document.getElementById("revFeb").value;
-      var addMarRev = document.getElementById("revMar").value;
-      var addAprRev = document.getElementById("revApr").value;
-      var addMayRev = document.getElementById("revMay").value;
-      var addJunRev = document.getElementById("revJun").value;
-      var addJulRev = document.getElementById("revJul").value;
-      var addAugRev = document.getElementById("revAug").value;
-      var addSepRev = document.getElementById("revSep").value;
-      var addOctRev = document.getElementById("revOct").value;
-      var addNovRev = document.getElementById("revNov").value;
-      var addDecRev = document.getElementById("revDec").value;
-
-
-      var alldata = 
-      {
-       addrevcorp:addCorp,
-       addrevcompany:addrevcompany,
-       addrevuser:addUser,
-       year:addRevyear,
-       addtyperev:addRevType,
-       janrev:addJanRev,
-       febrev:addFebRev,
-       marrev:addMarRev,
-       aprrev:addAprRev,
-       mayrev:addMayRev,
-       junrev:addJunRev,
-       julrev:addJulRev,
-       augrev:addAugRev,
-       seprev:addSepRev,
-       octrev:addOctRev,
-       novrev:addNovRev,
-       decrev:addDecRev,
-
-     };
-     $.ajax({
-      url: "ajax-addrevenue.php",
-      type: "POST",
-      data: alldata,
-      dataType:"json",
-      success:function(data){
-        document.getElementById("saveRev").innerHTML = "Saving";
-        document.getElementById("saveRev").disabled = false; 
-
-        if(data.condition === "Passed"){
-         document.getElementById("getBaselineForm").reset();
-         $("#addRevenue").modal("hide");
-         getviewrev();
-
-       }else{
-        checkvalidity("revtypeerror", "#revtypeerror","#revtype",data.typeRevenue); 
-        checkvalidity("revJanerror", "#revJanerror","#revJan",data.jan); 
-        checkvalidity("revFeberror", "#revFeberror","#revFeb",data.feb); 
-        checkvalidity("revMarerror", "#revMarerror","#revMar",data.mar); 
-        checkvalidity("revAprerror", "#revAprerror","#revApr",data.apr); 
-        checkvalidity("revMayerror", "#revMayerror","#revMay",data.may); 
-        checkvalidity("revJunerror", "#revJunerror","#revJun",data.jun); 
-        checkvalidity("revJulerror", "#revJulerror","#revJul",data.jul); 
-        checkvalidity("revAugerror", "#revAugerror","#revAug",data.aug); 
-        checkvalidity("revSeperror", "#revSeperror","#revSep",data.sep); 
-        checkvalidity("revOcterror", "#revOcterror","#revOct",data.oct); 
-        checkvalidity("revNoverror", "#revNoverror","#revNov",data.nov); 
-        checkvalidity("revDecerror", "#revDecerror","#revDec",data.dec); 
-      }
-    }
-  });
-   });
-   });
-    function getviewrev($year){
-      weekpicker = $('#revenueyear');
-      weekpicker.datepicker({
-        autoclose: true,
-        forceParse: false,
-        orientation: 'bottom',
-        minViewMode: "years"
-      }).on("changeDate", function(e) {
-        monthrevenue(e.date);
-      });
-      monthrevenue(new Date);
-    }
+  //     var addCorp = document.getElementById("addrevcorporate").value;
+  //     var addrevcompany = document.getElementById("addrevcompany").value;
+  //     var addUser = document.getElementById("addrevuser").value;
+  //     var addRevyear = document.getElementById("addrevenueyear").value;
+  //     var addRevType = document.getElementById("revtype").value;
+  //     var addJanRev = document.getElementById("revJan").value;
+  //     var addFebRev = document.getElementById("revFeb").value;
+  //     var addMarRev = document.getElementById("revMar").value;
+  //     var addAprRev = document.getElementById("revApr").value;
+  //     var addMayRev = document.getElementById("revMay").value;
+  //     var addJunRev = document.getElementById("revJun").value;
+  //     var addJulRev = document.getElementById("revJul").value;
+  //     var addAugRev = document.getElementById("revAug").value;
+  //     var addSepRev = document.getElementById("revSep").value;
+  //     var addOctRev = document.getElementById("revOct").value;
+  //     var addNovRev = document.getElementById("revNov").value;
+  //     var addDecRev = document.getElementById("revDec").value;
 
 
-    function monthrevenue(date) {
+  //     var alldata = 
+  //     {
+  //      addrevcorp:addCorp,
+  //      addrevcompany:addrevcompany,
+  //      addrevuser:addUser,
+  //      year:addRevyear,
+  //      addtyperev:addRevType,
+  //      janrev:addJanRev,
+  //      febrev:addFebRev,
+  //      marrev:addMarRev,
+  //      aprrev:addAprRev,
+  //      mayrev:addMayRev,
+  //      junrev:addJunRev,
+  //      julrev:addJulRev,
+  //      augrev:addAugRev,
+  //      seprev:addSepRev,
+  //      octrev:addOctRev,
+  //      novrev:addNovRev,
+  //      decrev:addDecRev,
 
-      var day = new Date(date.getFullYear(), 1);
-      $('#revenueyear').datepicker('update', day);
-      $('#revenueyear').val(day.getFullYear());
-      var comp = document.getElementById("companyrevenue").value; 
-      var alldata = 
-      {
-        comp:comp,
-        year: day.getFullYear(),
-      };
-      console.log(alldata);
-      $.ajax({
-        url:"ajax-getviewrevenue.php",
-        data: alldata,
-        dataType: "json",
-        method: "POST",
-        success:function(data){
-          $("#showrevenueview").html(data); 
-        }
-      });
+  //    };
+  //    $.ajax({
+  //     url: "ajax-addrevenue.php",
+  //     type: "POST",
+  //     data: alldata,
+  //     dataType:"json",
+  //     success:function(data){
+  //       document.getElementById("saveRev").innerHTML = "Saving";
+  //       document.getElementById("saveRev").disabled = false; 
 
-    }
+  //       if(data.condition === "Passed"){
+  //        document.getElementById("getBaselineForm").reset();
+  //        $("#addRevenue").modal("hide");
+  //        getviewrev();
+
+  //      }else{
+  //       checkvalidity("revtypeerror", "#revtypeerror","#revtype",data.typeRevenue); 
+  //       checkvalidity("revJanerror", "#revJanerror","#revJan",data.jan); 
+  //       checkvalidity("revFeberror", "#revFeberror","#revFeb",data.feb); 
+  //       checkvalidity("revMarerror", "#revMarerror","#revMar",data.mar); 
+  //       checkvalidity("revAprerror", "#revAprerror","#revApr",data.apr); 
+  //       checkvalidity("revMayerror", "#revMayerror","#revMay",data.may); 
+  //       checkvalidity("revJunerror", "#revJunerror","#revJun",data.jun); 
+  //       checkvalidity("revJulerror", "#revJulerror","#revJul",data.jul); 
+  //       checkvalidity("revAugerror", "#revAugerror","#revAug",data.aug); 
+  //       checkvalidity("revSeperror", "#revSeperror","#revSep",data.sep); 
+  //       checkvalidity("revOcterror", "#revOcterror","#revOct",data.oct); 
+  //       checkvalidity("revNoverror", "#revNoverror","#revNov",data.nov); 
+  //       checkvalidity("revDecerror", "#revDecerror","#revDec",data.dec); 
+  //     }
+  //   }
+  // });
+  //  });
+  //  });
+  //   function getviewrev($year){
+  //     weekpicker = $('#revenueyear');
+  //     weekpicker.datepicker({
+  //       autoclose: true,
+  //       forceParse: false,
+  //       orientation: 'bottom',
+  //       minViewMode: "years"
+  //     }).on("changeDate", function(e) {
+  //       monthrevenue(e.date);
+  //     });
+  //     monthrevenue(new Date);
+  //   }
 
 
-    function checkvalidity(data1, data2, data3, data4){
-      document.getElementById(data1).innerHTML = data4;
-      if(data4 === "Required"){
-        $(data2).removeClass("text-success").addClass("text-danger");
-        $(data3).removeClass("border-success").addClass("border-danger");
-      }else if(data4 === "Valid"){
-        $(data2).removeClass("text-danger").addClass("text-success");
-        $(data3).removeClass("border-danger").addClass("border-success");
-      }else{
-        $(data2).removeClass("text-success").addClass("text-danger");
-        $(data3).removeClass("border-success").addClass("border-danger");
-      }
-    }
-    function clearform(data1, data2, data3){
-      $(data1).removeClass("text-success").removeClass("text-danger");
-      document.getElementById(data2).textContent="";
-      $(data3).removeClass("border-success").removeClass("border-danger");
-    }
+  //   function monthrevenue(date) {
+
+  //     var day = new Date(date.getFullYear(), 1);
+  //     $('#revenueyear').datepicker('update', day);
+  //     $('#revenueyear').val(day.getFullYear());
+  //     var comp = document.getElementById("companyrevenue").value; 
+  //     var alldata = 
+  //     {
+  //       comp:comp,
+  //       year: day.getFullYear(),
+  //     };
+  //     console.log(alldata);
+  //     $.ajax({
+  //       url:"ajax-getviewrevenue.php",
+  //       data: alldata,
+  //       dataType: "json",
+  //       method: "POST",
+  //       success:function(data){
+  //         $("#showrevenueview").html(data); 
+  //       }
+  //     });
+
+  //   }
 
 
-  </script>
+  //   function checkvalidity(data1, data2, data3, data4){
+  //     document.getElementById(data1).innerHTML = data4;
+  //     if(data4 === "Required"){
+  //       $(data2).removeClass("text-success").addClass("text-danger");
+  //       $(data3).removeClass("border-success").addClass("border-danger");
+  //     }else if(data4 === "Valid"){
+  //       $(data2).removeClass("text-danger").addClass("text-success");
+  //       $(data3).removeClass("border-danger").addClass("border-success");
+  //     }else{
+  //       $(data2).removeClass("text-success").addClass("text-danger");
+  //       $(data3).removeClass("border-success").addClass("border-danger");
+  //     }
+  //   }
+  //   function clearform(data1, data2, data3){
+  //     $(data1).removeClass("text-success").removeClass("text-danger");
+  //     document.getElementById(data2).textContent="";
+  //     $(data3).removeClass("border-success").removeClass("border-danger");
+  //   }
 
-  <script>
-    $('#baselineyear').datepicker({
-            autoclose: true,
-            forceParse: false,
-            orientation: 'bottom',
-            minViewMode: "years"
-    });
-  </script>
+
+  </script> -->
+
+  <!-- <script>
+    // $('#baselineyear').datepicker({
+    //         autoclose: true,
+    //         forceParse: false,
+    //         orientation: 'bottom',
+    //         minViewMode: "years"
+    // });
+  </script> -->
 
         <!-- add revenue form  -->
-        <div class="modal fade" id="baselineValue" aria-hidden="true" style="display: none;">
+        <!-- <div class="modal fade" id="baselineValue" aria-hidden="true" style="display: none;">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-body">
@@ -1496,9 +1499,9 @@ function clearform(data1, data2, data3){
                         </div>
                       </div>
                       <br>
-                      <input class="form-control" type="hidden" id="addrevcorporate" name="addrevcorporate" value="<?php echo $resultresult->corporateID ?>">
+                      <input class="form-control" type="hidden" id="addrevcorporate" name="addrevcorporate" value="">
                       <input class="form-control" type="hidden" id="compID" name="compID" value="">
-                      <input class="form-control" type="hidden" id="addrevuser" name="addrevuser" value="<?php echo $resultresult->userID ?>">
+                      <input class="form-control" type="hidden" id="addrevuser" name="addrevuser" value="">
                       <input class="form-control" type="hidden" id="addrevenueyear" name="addrevenueyear" value="">
 
                       <br>
@@ -1510,10 +1513,10 @@ function clearform(data1, data2, data3){
                       </div>
                     </form>
                   </div></div></div></div>           
-                </div></div>
+                </div></div> -->
 
                       
-    <!-- update estimated revenue script -->
+    <!-- update estimated/actual revenue script -->
     <script type="text/javascript">
       $(document).ready(function(){
 
@@ -1547,7 +1550,7 @@ function clearform(data1, data2, data3){
             success:function(data){
               if(data.condition === "Passed"){
                $("#revtable").DataTable().destroy();
-               getviewrev();
+               getviewrevenue();
               }
               else{
                 checkvalidity("estimatederror" + data.month, "#estimatederror" + data.month,"#estimated" + data.month,data.value); 
@@ -1557,7 +1560,7 @@ function clearform(data1, data2, data3){
         });
       });
 
-    function getviewrev($year){
+    function getviewrevenue($year){
       weekpicker = $('#revenueyear');
       weekpicker.datepicker({
         autoclose: true,
@@ -1571,15 +1574,12 @@ function clearform(data1, data2, data3){
     }
   
     function monthrevenue(date) {
-
-      var day = new Date(date.getFullYear(), 1);
-      $('#revenueyear').datepicker('update', day);
-      $('#revenueyear').val(day.getFullYear());
+      var year = document.getElementById("revenueyear").value;
       var comp = document.getElementById("companyrevenue").value; 
       var alldata = 
       {
         comp:comp,
-        year: day.getFullYear(),
+        year: year,
       };
       console.log(alldata);
       $.ajax({
@@ -1771,7 +1771,7 @@ function clearform(data1, data2, data3){
             dataType:"json",
             success:function(data){
               if(data.condition === "Passed"){
-               $("#revtable").DataTable().destroy();
+               $("#costtable").DataTable().destroy();
                getviewcost();
               }
               else{
@@ -1790,21 +1790,18 @@ function clearform(data1, data2, data3){
         orientation: 'bottom',
         minViewMode: "years"
       }).on("changeDate", function(e) {
-        monthrevenue(e.date);
+        monthcost(e.date);
       });
-      monthrevenue(new Date);
+      monthcost(new Date);
     }
   
-    function monthrevenue(date) {
-
-      var day = new Date(date.getFullYear(), 1);
-      $('#revenueyear').datepicker('update', day);
-      $('#revenueyear').val(day.getFullYear());
+    function monthcost(date) {
+      var year = document.getElementById("revenueyear").value;
       var comp = document.getElementById("companyrevenue").value; 
       var alldata = 
       {
         comp:comp,
-        year: day.getFullYear(),
+        year: year,
       };
       console.log(alldata);
       $.ajax({
