@@ -169,6 +169,7 @@ if(Input::exists()){
   $mainallocationobject = new Mainallocation();
   $data2 = $mainallocationobject->searchmain($comp,$year);
   $suballocationobject = new Suballocation();
+  $budgetcatObj = new Budgetcategory();
 
   $grandtotal=$Expense1object->searchexpensestotal($comp,$month,$year);
   $grandtotalbonus=$Bonusobject->searchbonustotal($comp,$month,$year);
@@ -250,30 +251,27 @@ if(Input::exists()){
           $view .="
           ";
           foreach ($data3 as $row3){
-            
-            $categorydata = $suballocationobject->searchcategory($row3->categoryID);
+            $categorydata = $budgetcatObj->searchBudgetCategoryByID($row3->categoryID);
             $totalexpenses=totalexpenses($row3->budgetSubAllocationID,$month,$year);
             $grandtotal+=$totalexpenses;
 
             if ($categorydata) {
-              foreach ($categorydata as $categoryrow) {
-                $view .= "
-                  <div class='card my-3'>
-                  <div class='card-body pb-3'>
-                    <div class='row'>
-                      <div class='col-8 text-left'>
-                        <h6 class='mb-1'><i class='fas fa-bullseye'></i>&nbsp;&nbsp;".$categoryrow->category."<i class=''></i></h6>
-                        <small><span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> <span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> </small> <br>
-                      </div>
-
-                      <div class='col-4 text-center'>
-                        <div><b>Total Amount (RM)</b></div>
-                        <div>".$totalexpenses."</div>
-                      </div>
+              $view .= "
+                <div class='card my-3'>
+                <div class='card-body pb-3'>
+                  <div class='row'>
+                    <div class='col-8 text-left'>
+                      <h6 class='mb-1'><i class='fas fa-bullseye'></i>&nbsp;&nbsp;".$categorydata->category."<i class=''></i></h6>
+                      <small><span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> <span class='badge badge-pill badge-primary' style='border: 1px solid #007bff; background-color: transparent; color: #007bff; border-color: #007bff'></span> </small> <br>
                     </div>
-                    <p><div class='dropdown-divider border-2'></div></p>
-                ";
-              }
+
+                    <div class='col-4 text-center'>
+                      <div><b>Total Amount (RM)</b></div>
+                      <div>".$totalexpenses."</div>
+                    </div>
+                  </div>
+                  <p><div class='dropdown-divider border-2'></div></p>
+              ";
             }
 
             
