@@ -41,6 +41,7 @@ if(Input::exists()){
     $mainallocationobject1 = new Mainallocation();
     $category_data = $mainallocationobject1->searchmain($comp,$year);
     $suballocationobject1 = new Suballocation();
+    $budgetcatObj = new Budgetcategory();
     $categoryList = array();
     $colorList = array();
     $amountList = array();
@@ -59,14 +60,12 @@ if(Input::exists()){
           $datasub = $suballocationobject1->searchsub($category_row->budgetMainAllocationID);
           if($datasub){
             foreach($datasub as $rowsub){
-              $categorydata = $suballocationobject1->searchcategory($rowsub->categoryID);
+              $categorydata = $budgetcatObj->searchBudgetCategoryByID($rowsub->categoryID);
               $totalexp = totalexpenses($rowsub->budgetSubAllocationID,$month,$year);
 
               if ($categorydata) {
-                foreach ($categorydata as $categoryrow) {
-                  array_push($categoryList,$categoryrow->category);
-                  array_push($colorList,$categoryrow->rgb);
-                }
+                array_push($categoryList,$categorydata->category);
+                array_push($colorList,$categorydata->rgb);
               }
               array_push($amountList,$totalexp);
               
@@ -74,6 +73,10 @@ if(Input::exists()){
           }
         }
       }
+    }
+
+    if ($balance < 0) {
+      $balance = 0;
     }
 
     array_push($categoryList,"The Amount Left (RM)");
