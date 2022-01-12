@@ -29,7 +29,7 @@ if (Input::exists()) {
             $view .="
                 <br>
                 <div class='table-responsive text-nowrap'>
-                <table style='text-align:center; width:100%;' class='table'>
+                <table style='text-align:center; width:100%;' class='table' id='costtable'>
 
                     <thead>
                         <tr>
