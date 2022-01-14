@@ -971,7 +971,7 @@ if(Input::exists()){
                         foreach ($myplandata as $planrow) {  
                             $view .="
                                     <div class='row'>
-                                        <div class='col-8'>
+                                        <div class='col-8 col-xs-6'>
                                             <h6 class='m-3'><strong>".$planrow->planName."</strong></h6>
                                             <small class='text-secondary m-3'>".$planrow->planType."</small>
                                         </div>
@@ -979,14 +979,14 @@ if(Input::exists()){
 
                             if ($targetrow->status == "Achieved") {
                                 $view .="
-                                        <div class='col-4 text-right' style='margin:0 auto;'>
+                                        <div class='col-4 col-xs-6 text-right' style='margin:0 auto;'>
                                             <h6 class='m-3' style='color:#6CDB50;'><strong>".$targetrow->status."</strong></h6>
                                         </div>
                                 ";
                             }
                             elseif ($targetrow->status == "Not Achieved") {
                                 $view .="
-                                        <div class='col-4 text-right' style='margin:0 auto;'>
+                                        <div class='col-4 col-xs-6 text-right' style='margin:0 auto;'>
                                             <h6 class='m-3' style='color:#DC3545;'><strong>".$targetrow->status."</strong></h6>
                                         </div>
                                 ";
@@ -1337,7 +1337,7 @@ if(Input::exists()){
                             <div class='card-body p-3'>
                                 <h3 class='m-3'><strong><em>Expenses vs Revenue</em></strong></h3>
                                 <div class='row'>
-                                    <div class='col-12'>
+                                    <div class='col-12 col-xs-12'>
                                         <canvas id='revexpchart' width='60' height='28'>
                                             <script type='text/javascript'>
                                                 var cntxt = document.getElementById('revexpchart').getContext('2d');
