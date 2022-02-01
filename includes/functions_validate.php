@@ -80,7 +80,7 @@ function conditions9($data1, $data2, $data3, $data4, $data5, $data6, $data7, $da
 }
 
 function conditions10($data1, $data2, $data3, $data4, $data5, $data6, $data7, $data8, $data9, $data10){
-	if($data1 === "Valid" && $data2 === "Valid" && $data3 === "Valid" && $data4 === "Valid" && $data5 === "Valid" && $data6 === "Valid" && $data7 === "Valid" && $data8 === "Valid" && $data9 === "Valid" $data10 === "Valid"){
+	if($data1 === "Valid" && $data2 === "Valid" && $data3 === "Valid" && $data4 === "Valid" && $data5 === "Valid" && $data6 === "Valid" && $data7 === "Valid" && $data8 === "Valid" && $data9 === "Valid" && $data10 === "Valid"){
 		return "Passed";
 	}else{
 		return "Failed";
