@@ -49,35 +49,37 @@ elseif ($userlevel== "Superior"){
           $(document).ready(function(){
           function monthrevenue(date) {
 
-           var day = new Date(date.getFullYear(), 1);
-           $('#revenueyear').datepicker('update', day);
-           $('#revenueyear').val(day.getFullYear());
-          var comp = document.getElementById("companyrevenue").value; 
-           var alldata = 
-           {
-             comp:comp,
-             year: day.getFullYear(),
-           };
-           console.log(alldata);
-           $.ajax({
-           url:"ajax-getviewrevenue.php",
-           data: alldata,
-           dataType: "json",
-           method: "POST",
-           success:function(data){
-           $("#showrevenueview").html(data); 
-           }
-           });
-           $.ajax({
-            url:"ajax-viewcost.php",
-            data: alldata,
-            dataType: "json",
-            method: "POST",
-            success:function(data){
-              $("#showcostview").html(data); 
-            }
-           });
-           }
+            var day = new Date(date.getFullYear(), 1);
+            $('#revenueyear').datepicker('update', day);
+            $('#revenueyear').val(day.getFullYear());
+            var comp = document.getElementById("companyrevenue").value; 
+            var alldata = 
+            {
+              comp:comp,
+              year: day.getFullYear(),
+            };
+            console.log(alldata);
+
+            $.ajax({
+              url:"ajax-getviewrevenue.php",
+              data: alldata,
+              dataType: "json",
+              method: "POST",
+              success:function(data){
+                $("#showrevenueview").html(data); 
+              }
+            });
+
+            $.ajax({
+              url:"ajax-viewcost.php",
+              data: alldata,
+              dataType: "json",
+              method: "POST",
+              success:function(data){
+                $("#showcostview").html(data); 
+              }
+            });
+          }
 
            weekpicker = $('#revenueyear');
            weekpicker.datepicker({
