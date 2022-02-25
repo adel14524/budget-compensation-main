@@ -857,6 +857,170 @@ if(Input::exists()){
         return $resultList;
     }
 
+    function netprofitgraph($revenuedata,$maindata,$costdata){
+        $suballocationobject = new Suballocation();
+        $arrayList = array();
+
+        if ($revenuedata) {
+            if ($maindata) {
+                foreach ($maindata as $row) {
+                    if ($row->categoryName == "Others") {
+                        $new = $suballocationobject->searchsub($row->budgetMainAllocationID);
+                        $amountsub = array(0,0,0,0,0,0,0,0,0,0,0,0);
+
+                        foreach ($new as $row1) {
+                            $Expense1object = new Expense();
+                            $expensesresult=$Expense1object->searchbudgetsubid($row1->budgetSubAllocationID);
+
+                            if ($expensesresult) {
+                                foreach ($expensesresult as $row2) {
+                                    $month = date("m",strtotime($row2->date));
+            
+                                    if($month=="01"){
+                                        $amountsub[0]+=$row2->amount;
+                                    }
+                                    elseif($month=="02"){
+                                        $amountsub[1]+=$row2->amount;
+                                    }
+                                    elseif($month=="03"){
+                                        $amountsub[2]+=$row2->amount;
+                                    }
+                                    elseif($month=="04"){
+                                        $amountsub[3]+=$row2->amount;
+                                    }
+                                    elseif($month=="05"){
+                                        $amountsub[4]+=$row2->amount;
+                                    }
+                                    elseif($month=="06"){
+                                        $amountsub[5]+=$row2->amount;
+                                    }
+                                    elseif($month=="07"){
+                                        $amountsub[6]+=$row2->amount;
+                                    }  
+                                    elseif($month=="08"){
+                                        $amountsub[7]+=$row2->amount;
+                                    }
+                                    elseif($month=="09"){
+                                        $amountsub[8]+=$row2->amount;
+                                    }
+                                    elseif($month=="10"){
+                                        $amountsub[9]+=$row2->amount;
+                                    }
+                                    elseif($month=="11"){
+                                        $amountsub[10]+=$row2->amount;
+                                    }
+                                    elseif($month=="12"){
+                                        $amountsub[11]+=$row2->amount;
+                                    }
+                                } 
+                            }
+                        }
+                    }
+                    elseif ($row->categoryName == "Bonus") {
+                        $Bonusobject= new Calculation();
+                        $bonusresult=$Bonusobject->searchbonusmainid($row->budgetMainAllocationID);
+                        $amountbonus = array(0,0,0,0,0,0,0,0,0,0,0,0);
+
+                        if ($bonusresult) {
+                            foreach ($bonusresult as $row) {
+                                $month = date("m",strtotime($row->date));
+
+                                if($month=="01"){
+                                $amountbonus[0]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="02"){
+                                $amountbonus[1]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="03"){
+                                $amountbonus[2]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="04"){
+                                $amountbonus[3]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="05"){
+                                $amountbonus[4]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="06"){
+                                $amountbonus[5]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="07"){
+                                $amountbonus[6]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="08"){
+                                $amountbonus[7]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="09"){
+                                $amountbonus[8]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="10"){
+                                $amountbonus[9]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="11"){
+                                $amountbonus[10]+=$row->Total_Bonus;
+                                }
+                                elseif($month=="12"){
+                                $amountbonus[11]+=$row->Total_Bonus;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $actual = array();
+
+                for ($i=0; $i < 12; $i++) { 
+                    $actual[$i] = $amountbonus[$i] + $amountsub[$i];
+                }
+
+                $months = ['january','february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+
+                if ($costdata) {
+                    $grossprofit = array();
+                    $netprofit = array();
+
+                    for ($i=0; $i < count($months); $i++) { 
+                        $month = trim($months[$i], ' " ');
+                        $grossprofit[$i] = $revenuedata->$month - $costdata->$month;
+                    }
+
+                    for ($j=0; $j < count($months); $j++) {
+                        $month = trim($months[$j], ' " ');
+                        $netprofit[$j] = $grossprofit[$j] - $actual[$j];
+                    }
+                }
+                else
+                {
+                    $grossprofit = array();
+                    $netprofit = array();
+
+                    for ($i=0; $i < count($months); $i++) { 
+                        $month = trim($months[$i], ' " ');
+                        $grossprofit[$i] = $revenuedata->$month - 0;
+                    }
+
+                    for ($j=0; $j < count($months); $j++) {
+                        $month = trim($months[$j], ' " ');
+                        $netprofit[$j] = $grossprofit[$j] - $actual[$j];
+                    }
+                }
+            }
+
+            for ($i=0; $i < count($months); $i++) { 
+                $month = trim($months[$i], ' " ');
+
+                if($revenuedata->$month == 0){
+                    $netprofit[$i] = NULL;
+                }
+            }
+        }
+        else
+        {
+            $netprofit = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        return $netprofit;
+    }
+
     $view = "";
 
     if ($compbudget) {
@@ -1069,6 +1233,7 @@ if(Input::exists()){
                                                             borderColor: 'rgba(0,123,255,1)',
                                                             fill:false,
                                                             tension:0,
+                                                            spanGaps: true,
                                                             },
                                                             {
                                                             label: 'Actual Revenue',
@@ -1076,6 +1241,7 @@ if(Input::exists()){
                                                             borderColor: 'rgba(248,90,62,1)',
                                                             fill:false,
                                                             tension:0,
+                                                            spanGaps: true,
                                                         }],
                                                     },
                                                     options: {
@@ -1351,6 +1517,7 @@ if(Input::exists()){
                                                             borderColor: 'rgba(117,200,103,1)',
                                                             fill:false,
                                                             tension:0,
+                                                            spanGaps: true,
                                                             },
                                                             {
                                                             label: 'Expenses',
@@ -1358,6 +1525,7 @@ if(Input::exists()){
                                                             borderColor: 'rgba(220,53,69,1)',
                                                             fill:false,
                                                             tension:0,
+                                                            spanGaps: true,
                                                         }],
                                                     },
                                                     options: {
@@ -1533,6 +1701,7 @@ if(Input::exists()){
                                                             borderColor: 'rgba(117,200,103,1)',
                                                             fill:false,
                                                             tension:0,
+                                                            spanGaps: true,
                                                             },
                                                             {
                                                             label: 'Expenses',
@@ -1540,6 +1709,7 @@ if(Input::exists()){
                                                             borderColor: 'rgba(220,53,69,1)',
                                                             fill:false,
                                                             tension:0,
+                                                            spanGaps: true,
                                                         }],
                                                     },
                                                     options: {
@@ -1657,362 +1827,58 @@ if(Input::exists()){
                 </div>
             ";
 
-            if ($actualrevdata) {
-                foreach ($data2 as $row) {
-                    $suballocationobject = new Suballocation();
-        
-                    if($row->categoryName == "Others"){
-                        $new = $suballocationobject->searchsub($row->budgetMainAllocationID);
-                        
-                        $amountsub1=0;$amountsub2=0;$amountsub3=0;$amountsub4=0;$amountsub5=0;$amountsub6=0;
-                        $amountsub7=0;$amountsub8=0;$amountsub9=0;$amountsub10=0;$amountsub11=0;$amountsub12=0;
-            
-                        foreach ($new as $row) { 
-                            $expensesresult=$Expense1object->searchbudgetsubid($row->budgetSubAllocationID);
-            
-                            if($expensesresult){
-                                foreach ($expensesresult as $row) {
-                                    $month = date("m",strtotime($row->date));
-                
-                                    if($month=="01"){
-                                        $amountsub1+=$row->amount;
-                                    }
-                                    elseif($month=="02"){
-                                        $amountsub2+=$row->amount;
-                                    }
-                                    elseif($month=="03"){
-                                        $amountsub3+=$row->amount;
-                                    }
-                                    elseif($month=="04"){
-                                        $amountsub4+=$row->amount;
-                                    }
-                                    elseif($month=="05"){
-                                        $amountsub5+=$row->amount;
-                                    }
-                                    elseif($month=="06"){
-                                        $amountsub6+=$row->amount;
-                                    }
-                                    elseif($month=="07"){
-                                        $amountsub7+=$row->amount;
-                                    }
-                                    elseif($month=="08"){
-                                        $amountsub8+=$row->amount;
-                                    }
-                                    elseif($month=="09"){
-                                        $amountsub9+=$row->amount;
-                                    }
-                                    elseif($month=="10"){
-                                        $amountsub10+=$row->amount;
-                                    }
-                                    elseif($month=="11"){
-                                        $amountsub11+=$row->amount;
-                                    }
-                                    elseif($month=="12"){
-                                        $amountsub12+=$row->amount;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    elseif($row->categoryName=="Bonus"){
-                        $Bonusobject= new Calculation();
-                        $bonusresult=$Bonusobject->searchbonusmainid($row->budgetMainAllocationID);
-            
-                        if($bonusresult){
-                            foreach($bonusresult as $row){
-                            $month = date("m",strtotime($row->date));
-            
-                            if($month=="01"){
-                                $amountbonus1+=$row->Total_Bonus;
-                            }
-                            elseif($month=="02"){
-                                $amountbonus2+=$row->Total_Bonus;
-                            }
-                            elseif($month=="03"){
-                                $amountbonus3+=$row->Total_Bonus;
-                            }
-                            elseif($month=="04"){
-                                $amountbonus4+=$row->Total_Bonus;
-                            }
-                            elseif($month=="05"){
-                                $amountbonus5+=$row->Total_Bonus;
-                            }
-                            elseif($month=="06"){
-                                $amountbonus6+=$row->Total_Bonus;
-                            }
-                            elseif($month=="07"){
-                                $amountbonus7+=$row->Total_Bonus;
-                            }
-                            elseif($month=="08"){
-                                $amountbonus8+=$row->Total_Bonus;
-                            }
-                            elseif($month=="09"){
-                                $amountbonus9+=$row->Total_Bonus;
-                            }
-                            elseif($month=="10"){
-                                $amountbonus10+=$row->Total_Bonus;
-                            }
-                            elseif($month=="11"){
-                                $amountbonus11+=$row->Total_Bonus;
-                            }
-                            elseif($month=="12"){
-                                $amountbonus12+=$row->Total_Bonus;
-                            }
-                            }
-                        }
-                    }
-                }
+            $condition_net = netprofitgraph($actualrevdata,$data2,$costdata1);
 
-                $actual1=$amountbonus1+$amountsub1;
-                $actual2=$amountbonus2+$amountsub2;
-                $actual3=$amountbonus3+$amountsub3;
-                $actual4=$amountbonus4+$amountsub4;
-                $actual5=$amountbonus5+$amountsub5;
-                $actual6=$amountbonus6+$amountsub6;
-                $actual7=$amountbonus7+$amountsub7;
-                $actual8=$amountbonus8+$amountsub8;
-                $actual9=$amountbonus9+$amountsub9;
-                $actual10=$amountbonus10+$amountsub10;
-                $actual11=$amountbonus11+$amountsub11;
-                $actual12=$amountbonus12+$amountsub12;
-
-                if ($costdata1) {
-                    $grossprofit1=0;$grossprofit2=0;$grossprofit3=0;$grossprofit4=0;$grossprofit5=0;$grossprofit6=0;
-                    $grossprofit7=0;$grossprofit8=0;$grossprofit9=0;$grossprofit10=0;$grossprofit11=0;$grossprofit12=0;
-
-                    $netprofit1=0;$netprofit2=0;$netprofit3=0;$netprofit4=0;$netprofit5=0;$netprofit6=0;
-                    $netprofit7=0;$netprofit8=0;$netprofit9=0;$netprofit10=0;$netprofit11=0;$netprofit12=0;
-
-
-                    $grossprofit1=$actualrevdata->january - $costdata1->january;
-                    $grossprofit2=$actualrevdata->february - $costdata1->february;
-                    $grossprofit3=$actualrevdata->march - $costdata1->march;
-                    $grossprofit4=$actualrevdata->april - $costdata1->april;
-                    $grossprofit5=$actualrevdata->may - $costdata1->may;
-                    $grossprofit6=$actualrevdata->june - $costdata1->june;
-                    $grossprofit7=$actualrevdata->july - $costdata1->july;
-                    $grossprofit8=$actualrevdata->august - $costdata1->august;
-                    $grossprofit9=$actualrevdata->september - $costdata1->september;
-                    $grossprofit10=$actualrevdata->october - $costdata1->october;
-                    $grossprofit11=$actualrevdata->november - $costdata1->november;
-                    $grossprofit12=$actualrevdata->december - $costdata1->december;
-
-                    $netprofit1=$grossprofit1 - $actual1;
-                    $netprofit2=$grossprofit2 - $actual2;
-                    $netprofit3=$grossprofit3 - $actual3;
-                    $netprofit4=$grossprofit4 - $actual4;
-                    $netprofit5=$grossprofit5 - $actual5;
-                    $netprofit6=$grossprofit6 - $actual6;
-                    $netprofit7=$grossprofit7 - $actual7;
-                    $netprofit8=$grossprofit8 - $actual8;
-                    $netprofit9=$grossprofit9 - $actual9;
-                    $netprofit10=$grossprofit10 - $actual10;
-                    $netprofit11=$grossprofit11 - $actual11;
-                    $netprofit12=$grossprofit12 - $actual12;
-
-
-                    $view .="
-                        <!-- Net Profit Card -->
-                        <div class='row'>
-                            <div class='col-12'>
-                                <div class='card mr-3 box' style='transition: box-shadow .3s; color:##2E2C38; border-radius: 11px; margin:16px 0;'>
-                                    <div class='card-body p-3 mb-3'>
-                                        <h3 class='m-3'><strong><em>Net Profit</em></strong></h3>
-                                        <div class='row'>
-                                            <div class='col-12'>
-                                                <canvas id='netprofitchart' width='50' height='16'>
-                                                    <script type='text/javascript'>
-                                                        var cntxt = document.getElementById('netprofitchart').getContext('2d');
-                                                        var rev = new Chart(cntxt, {
-                                                            type: 'line',
-                                                            data: {
-                                                                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                                                                datasets: [{
-                                                                    label: 'Net Profit',
-                                                                    data: [".$netprofit1.", ".$netprofit2.", ".$netprofit3.", ".$netprofit4.", ".$netprofit5.", ".$netprofit6.",".$netprofit7.",".$netprofit8.",".$netprofit9.",".$netprofit10.",".$netprofit11.",".$netprofit12."],
-                                                                    borderColor: 'rgba(218,36,200,1)',
-                                                                    fill:false,
-                                                                    tension:0,
-                                                                }],
-                                                            },
-                                                            options: {
-                                                                scales: {
-                                                                y: {
-                                                                    beginAtZero: true
-                                                                }
-                                                                }
-                                                            }
-                                                        });
-                                                    </script>
-                                                </canvas>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class='row'>
-                                            <div class='col-12 text-right'>
-                                                <a href='budget-netprofit.php'>
-                                                    <button type='button' class='btn btn-outline-primary shadow-sm mr-3' data-id='' data-toggle='modal' data-backdrop='static' data-target=''>View More...</button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ";
-
-                }
-                else {
-                    $grossprofit1=0;$grossprofit2=0;$grossprofit3=0;$grossprofit4=0;$grossprofit5=0;$grossprofit6=0;
-                    $grossprofit7=0;$grossprofit8=0;$grossprofit9=0;$grossprofit10=0;$grossprofit11=0;$grossprofit12=0;
-
-                    $netprofit1=0;$netprofit2=0;$netprofit3=0;$netprofit4=0;$netprofit5=0;$netprofit6=0;
-                    $netprofit7=0;$netprofit8=0;$netprofit9=0;$netprofit10=0;$netprofit11=0;$netprofit12=0;
-
-
-                    $grossprofit1=$actualrevdata->january - 0;
-                    $grossprofit2=$actualrevdata->february - 0;
-                    $grossprofit3=$actualrevdata->march - 0;
-                    $grossprofit4=$actualrevdata->april - 0;
-                    $grossprofit5=$actualrevdata->may - 0;
-                    $grossprofit6=$actualrevdata->june - 0;
-                    $grossprofit7=$actualrevdata->july - 0;
-                    $grossprofit8=$actualrevdata->august - 0;
-                    $grossprofit9=$actualrevdata->september - 0;
-                    $grossprofit10=$actualrevdata->october - 0;
-                    $grossprofit11=$actualrevdata->november - 0;
-                    $grossprofit12=$actualrevdata->december - 0;
-
-                    $netprofit1=$grossprofit1 - $actual1;
-                    $netprofit2=$grossprofit2 - $actual2;
-                    $netprofit3=$grossprofit3 - $actual3;
-                    $netprofit4=$grossprofit4 - $actual4;
-                    $netprofit5=$grossprofit5 - $actual5;
-                    $netprofit6=$grossprofit6 - $actual6;
-                    $netprofit7=$grossprofit7 - $actual7;
-                    $netprofit8=$grossprofit8 - $actual8;
-                    $netprofit9=$grossprofit9 - $actual9;
-                    $netprofit10=$grossprofit10 - $actual10;
-                    $netprofit11=$grossprofit11 - $actual11;
-                    $netprofit12=$grossprofit12 - $actual12;
-
-
-                    $view .="
-                        <!-- Net Profit Card -->
-                        <div class='row'>
-                            <div class='col-12'>
-                                <div class='card mr-3 box' style='transition: box-shadow .3s; color:##2E2C38; border-radius: 11px; margin:16px 0;'>
-                                    <div class='card-body p-3 mb-3'>
-                                        <h3 class='m-3'><strong><em>Net Profit</em></strong></h3>
-                                        <div class='row'>
-                                            <div class='col-12'>
-                                                <canvas id='netprofitchart' width='50' height='16'>
-                                                    <script type='text/javascript'>
-                                                        var cntxt = document.getElementById('netprofitchart').getContext('2d');
-                                                        var rev = new Chart(cntxt, {
-                                                            type: 'line',
-                                                            data: {
-                                                                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                                                                datasets: [{
-                                                                    label: 'Net Profit',
-                                                                    data: [".$netprofit1.", ".$netprofit2.", ".$netprofit3.", ".$netprofit4.", ".$netprofit5.", ".$netprofit6.",".$netprofit7.",".$netprofit8.",".$netprofit9.",".$netprofit10.",".$netprofit11.",".$netprofit12."],
-                                                                    borderColor: 'rgba(218,36,200,1)',
-                                                                    fill:false,
-                                                                    tension:0,
-                                                                }],
-                                                            },
-                                                            options: {
-                                                                scales: {
-                                                                y: {
-                                                                    beginAtZero: true
-                                                                }
-                                                                }
-                                                            }
-                                                        });
-                                                    </script>
-                                                </canvas>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class='row'>
-                                            <div class='col-12 text-right'>
-                                                <a href='budget-netprofit.php'>
-                                                    <button type='button' class='btn btn-outline-primary shadow-sm mr-3' data-id='' data-toggle='modal' data-backdrop='static' data-target=''>View More...</button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ";
-                }  
-            }
-            else {
-                $netprofit1=0;
-                $netprofit2=0;
-                $netprofit3=0;
-                $netprofit4=0;
-                $netprofit5=0;
-                $netprofit6=0;
-                $netprofit7=0;
-                $netprofit8=0;
-                $netprofit9=0;
-                $netprofit10=0;
-                $netprofit11=0;
-                $netprofit12=0;
-
-
-                $view .="
-                    <!-- Net Profit Card -->
-                    <div class='row'>
-                        <div class='col-12'>
-                            <div class='card mr-3 box' style='transition: box-shadow .3s; color:##2E2C38; border-radius: 11px; margin:16px 0;'>
-                                <div class='card-body p-3 mb-3'>
-                                    <h3 class='m-3'><strong><em>Net Profit</em></strong></h3>
-                                    <div class='row'>
-                                        <div class='col-12'>
-                                            <canvas id='netprofitchart' width='50' height='16'>
-                                                <script type='text/javascript'>
-                                                    var cntxt = document.getElementById('netprofitchart').getContext('2d');
-                                                    var rev = new Chart(cntxt, {
-                                                        type: 'line',
-                                                        data: {
-                                                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                                                            datasets: [{
-                                                                label: 'Net Profit',
-                                                                data: [".$netprofit1.", ".$netprofit2.", ".$netprofit3.", ".$netprofit4.", ".$netprofit5.", ".$netprofit6.",".$netprofit7.",".$netprofit8.",".$netprofit9.",".$netprofit10.",".$netprofit11.",".$netprofit12."],
-                                                                borderColor: 'rgba(218,36,200,1)',
-                                                                fill:false,
-                                                                tension:0,
-                                                            }],
-                                                        },
-                                                        options: {
-                                                            scales: {
-                                                            y: {
-                                                                beginAtZero: true
-                                                            }
-                                                            }
+            $view .="
+                <!-- Net Profit Card -->
+                <div class='row'>
+                    <div class='col-12'>
+                        <div class='card mr-3 box' style='transition: box-shadow .3s; color:##2E2C38; border-radius: 11px; margin:16px 0;'>
+                            <div class='card-body p-3 mb-3'>
+                                <h3 class='m-3'><strong><em>Net Profit</em></strong></h3>
+                                <div class='row'>
+                                    <div class='col-12'>
+                                        <canvas id='netprofitchart' width='50' height='16'>
+                                            <script type='text/javascript'>
+                                                var cntxt = document.getElementById('netprofitchart').getContext('2d');
+                                                var rev = new Chart(cntxt, {
+                                                    type: 'line',
+                                                    data: {
+                                                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                                                        datasets: [{
+                                                            label: 'Net Profit',
+                                                            data: ".json_encode($condition_net).",
+                                                            borderColor: 'rgba(218,36,200,1)',
+                                                            fill:false,
+                                                            tension:0,
+                                                            spanGaps: true,
+                                                        }],
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                        y: {
+                                                            beginAtZero: true,
                                                         }
-                                                    });
-                                                </script>
-                                            </canvas>
-                                        </div>
+                                                        }
+                                                    }
+                                                });
+                                            </script>
+                                        </canvas>
                                     </div>
-                                    <br>
-                                    <div class='row'>
-                                        <div class='col-12 text-right'>
-                                            <a href='budget-netprofit.php'>
-                                                <button type='button' class='btn btn-outline-primary shadow-sm mr-3' data-id='' data-toggle='modal' data-backdrop='static' data-target=''>View More...</button>
-                                            </a>
-                                        </div>
+                                </div>
+                                <br>
+                                <div class='row'>
+                                    <div class='col-12 text-right'>
+                                        <a href='budget-netprofit.php'>
+                                            <button type='button' class='btn btn-outline-primary shadow-sm mr-3' data-id='' data-toggle='modal' data-backdrop='static' data-target=''>View More...</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                ";
-            }
+                </div>
+            ";
         }
         else{
             $view.="
