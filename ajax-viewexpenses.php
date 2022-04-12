@@ -282,7 +282,7 @@ if(Input::exists()){
 
               $view .="
               <div class='card my-2'>
-                <div class='card-body pb-3' style='height:300px;overflow-y:scroll;'>
+                <div class='card-body pb-3' style='height: 200px;px;overflow-y:scroll;'>
               ";
               foreach ($dataexpenses as $row4){
                 $view .= "
